@@ -33,27 +33,12 @@ public class ActionField extends JPanel {
             }
         }
 
-        if (checkInterception(getQuadrant(agressor.getX(), agressor.getY()), coorditateXY)) {
+        if (getQuadrant(agressor.getX(), agressor.getY()).equals(coorditateXY)) {
             agressor.destroy();
             bullet.destroy();
             returnNewTank();
         }
 
-        return false;
-    }
-
-    private boolean checkInterception(String object, String quadrant) {
-        int oy = Integer.parseInt(object.split("_")[0]);
-        int ox = Integer.parseInt((object.split("_")[1]));
-
-        int qy = Integer.parseInt(quadrant.split("_")[0]);
-        int qx = Integer.parseInt(quadrant.split("_")[1]);
-
-        if (oy >= 0 && oy < 9 && ox >= 0 && ox < 9) {
-            if (oy == qy && ox == qx) {
-                return true;
-            }
-        }
         return false;
     }
 
