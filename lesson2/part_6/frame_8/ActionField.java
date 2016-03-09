@@ -8,22 +8,16 @@ public class ActionField extends JPanel {
     private boolean COLORDED_MODE = false;
 
     private BattleField bf;
-    private Tank tankDef;
+    private Tank defender;
     private Bullet bullet;
-    private Tank agressor;
+    private Tiger agressor;
 
     public void runTheGame() throws Exception {
 
-        //tankDef.moveToQuadrant(4, 5);
-        tankDef.turn(Direction.MOVE_UP);
+        defender.turn(Direction.MOVE_UP);
         while (true) {
-            tankDef.fire();
+            defender.fire();
         }
-        //  repaint();
-//        tankDef.moveToQuadrant(9, 8);
-//        tankDef.moveToQuadrant(9, 2);
-//        tankDef.moveRandom();
-//        tankDef.clean();
     }
 
     private boolean processInterception() throws Exception {
@@ -39,12 +33,37 @@ public class ActionField extends JPanel {
             }
         }
 
-        if (getQuadrant(agressor.getX(), agressor.getY()).equals(coorditateXY)) {
-            agressor.destroy();
-            bullet.destroy();
-            returnNewTank();
+        if (checkInterception(getQuadrant(agressor.getX(), agressor.getY()), coorditateXY)) {
+            if (agressor.getArmor() == 0) {
+                agressor.destroy();
+                bullet.destroy();
+                returnNewTank();
+                return false;
+            } else {
+                agressor.updateArmor(-1);
+                return true;
+            }
         }
+//        if (getQuadrant(defender.getX(), defender.getY()).equals(coorditateXY)) {
+//            defender.destroy();
+//            bullet.destroy();
+//            return false;
+//        }
+        return false;
+    }
 
+    private boolean checkInterception(String object, String quadrant) {
+        int oy = Integer.parseInt(object.split("_")[0]);
+        int ox = Integer.parseInt((object.split("_")[1]));
+
+        int qy = Integer.parseInt(quadrant.split("_")[0]);
+        int qx = Integer.parseInt(quadrant.split("_")[1]);
+
+        if (oy >= 0 && oy < 9 && ox >= 0 && ox < 9) {
+            if (oy == qy && ox == qx) {
+                return true;
+            }
+        }
         return false;
     }
 
@@ -77,7 +96,7 @@ public class ActionField extends JPanel {
 
     public void processMove(Tank tankDef) throws Exception {
 
-        this.tankDef = (T34) tankDef;
+        this.defender = tankDef;
 
         int step = 1;
         int index = 0;
@@ -116,14 +135,16 @@ public class ActionField extends JPanel {
     public void processFire(Bullet bull) throws Exception {
         this.bullet = bull;
 
-        while (bullet.getX() > -bullet.getSIZE_BULLET() && bullet.getX() < bf.getBF_WIDTH()
-                && bullet.getY() > -bullet.getSIZE_BULLET() && bullet.getY() < bf.getBF_HEIGHT()) {
 
-            if (tankDef.getDirection() == Direction.MOVE_UP) {
+
+        while (bullet.getX() > -bullet.getSIZE_BULLET() && bullet.getX() < bf.getBF_WIDTH() + bullet.getSIZE_BULLET()
+                && bullet.getY() > -bullet.getSIZE_BULLET() && bullet.getY() < bf.getBF_HEIGHT() + bullet.getSIZE_BULLET()) {
+
+            if (defender.getDirection() == Direction.MOVE_UP) {
                 bullet.updateY(-bullet.getButlleStep());
-            } else if (tankDef.getDirection() == Direction.MOVE_DOWN) {
+            } else if (defender.getDirection() == Direction.MOVE_DOWN) {
                 bullet.updateY(bullet.getButlleStep());
-            } else if (tankDef.getDirection() == Direction.MOVE_LEFT) {
+            } else if (defender.getDirection() == Direction.MOVE_LEFT) {
                 bullet.updateX(-bullet.getButlleStep());
             } else {
                 bullet.updateX(bullet.getButlleStep());
@@ -140,7 +161,7 @@ public class ActionField extends JPanel {
 
     public void checkQuadrant(Direction direction) throws Exception {
 
-        String koordXY = getQuadrant(tankDef.getX(), tankDef.getY());
+        String koordXY = getQuadrant(defender.getX(), defender.getY());
 
         int moveToX = Integer.parseInt(koordXY.substring(koordXY.indexOf("_") + 1));
         int moveToY = Integer.parseInt(koordXY.substring(0, koordXY.indexOf("_")));
@@ -149,19 +170,19 @@ public class ActionField extends JPanel {
 
         if (direction == Direction.MOVE_UP) {
             if (!battleField[moveToY - 1][moveToX].equals(" ")) {
-                tankDef.fire();
+                defender.fire();
             }
         } else if (direction == Direction.MOVE_DOWN) {
             if (!battleField[moveToY + 1][moveToX].equals(" ")) {
-                tankDef.fire();
+                defender.fire();
             }
         } else if (direction == Direction.MOVE_LEFT) {
             if (!battleField[moveToY][moveToX - 1].equals(" ")) {
-                tankDef.fire();
+                defender.fire();
             }
         } else if (direction == Direction.MOVE_RIGHT) {
             if (!battleField[moveToY][moveToX + 1].equals(" ")) {
-                tankDef.fire();
+                defender.fire();
             }
         }
     }
@@ -178,15 +199,15 @@ public class ActionField extends JPanel {
             }
         }
 
-        agressor = new Tank(this, bf, x, y, Direction.MOVE_DOWN);
+        agressor = new Tiger(this, bf, x, y, Direction.MOVE_DOWN);
     }
 
     public ActionField() throws Exception {
 
         bf = new BattleField();
-        tankDef = new Tank(this, bf, 256, 192, Direction.MOVE_DOWN);
+        defender = new Tank(this, bf, 256, 192, Direction.MOVE_DOWN);
 
-        agressor = new Tank(this, bf, 256, 0, Direction.MOVE_DOWN);
+        agressor = new Tiger(this, bf, 256, 0, Direction.MOVE_DOWN);
 //        createAgressor();
 //        agressor = new Tank(this,bf,Integer.parseInt(bf.getAgressorLocation().split("_")[1]),
 //                Integer.parseInt(bf.getAgressorLocation().split("_")[0]),Direction.MOVE_DOWN);
@@ -239,17 +260,17 @@ public class ActionField extends JPanel {
         }
 
         g.setColor(new Color(255, 0, 0));
-        g.fillRect(tankDef.getX(), tankDef.getY(), 64, 64);
+        g.fillRect(defender.getX(), defender.getY(), 64, 64);
 
         g.setColor(new Color(0, 255, 0));
-        if (tankDef.getDirection() == Direction.MOVE_UP) {
-            g.fillRect(tankDef.getX() + 20, tankDef.getY(), 24, 34);
-        } else if (tankDef.getDirection() == Direction.MOVE_DOWN) {
-            g.fillRect(tankDef.getX() + 20, tankDef.getY() + 30, 24, 34);
-        } else if (tankDef.getDirection() == Direction.MOVE_LEFT) {
-            g.fillRect(tankDef.getX(), tankDef.getY() + 20, 34, 24);
+        if (defender.getDirection() == Direction.MOVE_UP) {
+            g.fillRect(defender.getX() + 20, defender.getY(), 24, 34);
+        } else if (defender.getDirection() == Direction.MOVE_DOWN) {
+            g.fillRect(defender.getX() + 20, defender.getY() + 30, 24, 34);
+        } else if (defender.getDirection() == Direction.MOVE_LEFT) {
+            g.fillRect(defender.getX(), defender.getY() + 20, 34, 24);
         } else {
-            g.fillRect(tankDef.getX() + 30, tankDef.getY() + 20, 34, 24);
+            g.fillRect(defender.getX() + 30, defender.getY() + 20, 34, 24);
         }
 
         g.setColor(new Color(20, 0, 0));
@@ -266,7 +287,7 @@ public class ActionField extends JPanel {
             g.fillRect(agressor.getX() + 30, agressor.getY() + 20, 34, 24);
         }
 
-        g.setColor(new Color(255, 255, 0));
+        g.setColor(new Color(74, 73, 255));
         g.fillRect(bullet.getX(), bullet.getY(), 14, 14);
     }
 
