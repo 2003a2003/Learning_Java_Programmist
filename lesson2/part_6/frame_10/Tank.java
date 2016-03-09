@@ -116,8 +116,8 @@ public class Tank {
     }
 
     public void destroy(){
-        updateX(-600);
-        updateY(-600);
+        x = -100;
+        y = -100;
         af.repaint();
     }
 
@@ -144,5 +144,13 @@ public class Tank {
 
     public void updateY(int y) {
         this.y += y;
+    }
+
+    private void setX(int x) {
+        this.x = x;
+    }
+
+    private void setY(int y) {
+        this.y = y;
     }
 }

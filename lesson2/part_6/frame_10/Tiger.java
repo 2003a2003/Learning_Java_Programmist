@@ -4,8 +4,8 @@ public class Tiger extends Tank {
 
     private int armor;
 
-    public Tiger (ActionField af, BattleField bf){
-        super(af,bf);
+    public Tiger(ActionField af, BattleField bf) {
+        super(af, bf);
         armor = 1;
     }
 
@@ -18,7 +18,16 @@ public class Tiger extends Tank {
         return armor;
     }
 
-    public void updateArmor(int armor){
+    public void updateArmor(int armor) {
         this.armor += armor;
+    }
+
+    @Override
+    public void destroy() {
+        if (armor > 0) {
+            updateArmor(-1);
+        } else {
+            super.destroy();
+        }
     }
 }

@@ -10,13 +10,22 @@ public class ActionField extends JPanel {
     private BattleField bf;
     private Tank defender;
     private Bullet bullet;
-    private Tiger agressor;
+    private Tank agressor;
 
     public void runTheGame() throws Exception {
 
         defender.turn(Direction.MOVE_UP);
-        while (true) {
-            defender.fire();
+        int fire = 0;
+        while (fire != 1) {
+            if (agressor.getX() != -100 && agressor.getY() != -100) {
+                if (agressor.getX() == defender.getX()) {
+                    defender.fire();
+                }else{
+                    fire = 1;
+                }
+            } else {
+                addAgressor();
+            }
         }
     }
 
@@ -34,21 +43,15 @@ public class ActionField extends JPanel {
         }
 
         if (checkInterception(getQuadrant(agressor.getX(), agressor.getY()), coorditateXY)) {
-
-            if (agressor.getArmor() != 0){
-                agressor.updateArmor(-1);
-                return true;
-            }
-                agressor.destroy();
-                bullet.destroy();
-                returnNewTank();
-                return false;
+            agressor.destroy();
+            return true;
         }
 //        if (getQuadrant(defender.getX(), defender.getY()).equals(coorditateXY)) {
 //            defender.destroy();
 //            bullet.destroy();
 //            return false;
 //        }
+
         return false;
     }
 
@@ -67,7 +70,7 @@ public class ActionField extends JPanel {
         return false;
     }
 
-    private void returnNewTank() throws Exception {
+    private void addAgressor() throws Exception {
         Thread.sleep(3000);
         createAgressor();
         repaint();
@@ -134,7 +137,6 @@ public class ActionField extends JPanel {
 
     public void processFire(Bullet bull) throws Exception {
         this.bullet = bull;
-
 
 
         while (bullet.getX() > -bullet.getSIZE_BULLET() && bullet.getX() < bf.getBF_WIDTH() + bullet.getSIZE_BULLET()
@@ -205,7 +207,7 @@ public class ActionField extends JPanel {
     public ActionField() throws Exception {
 
         bf = new BattleField();
-        defender = new Tank(this, bf, 256, 192, Direction.MOVE_DOWN);
+        defender = new Tank(this, bf, 256, 320, Direction.MOVE_DOWN);
 
         agressor = new Tiger(this, bf, 256, 0, Direction.MOVE_DOWN);
 //        createAgressor();
