@@ -1,4 +1,4 @@
-package lesson2.part_6.frame_6;
+package Learning_Java_Programmist.src.lesson2.part_6.frame_6;
 
 public class T34 extends Tank{
 
