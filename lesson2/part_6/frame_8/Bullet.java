@@ -7,7 +7,7 @@ public class Bullet {
 
     private byte speed = 20;
     private Direction direction;
-    private int butlleStep = 5;
+    private int butlleStep = 10;
     private final int SIZE_BULLET = 14;
 
     public Bullet() {

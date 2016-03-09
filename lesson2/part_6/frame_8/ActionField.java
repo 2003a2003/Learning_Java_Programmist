@@ -8,24 +8,25 @@ public class ActionField extends JPanel {
     private boolean COLORDED_MODE = false;
 
     private BattleField bf;
-    private T34 tankDef;
+    private Tank tankDef;
     private Bullet bullet;
-    private BT7 agressor;
+    private Tank agressor;
 
     public void runTheGame() throws Exception {
-//        tankDef.turn(4);
-//        tankDef.fire();
-//        tankDef.fire();
-        tankDef.moveToQuadrant(4, 5);
-        tankDef.destroy();
-          repaint();
+
+        //tankDef.moveToQuadrant(4, 5);
+        tankDef.turn(Direction.MOVE_UP);
+       while (true){
+           tankDef.fire();
+       }
+        //  repaint();
 //        tankDef.moveToQuadrant(9, 8);
 //        tankDef.moveToQuadrant(9, 2);
 //        tankDef.moveRandom();
 //        tankDef.clean();
     }
 
-    private boolean processInterception() {
+    private boolean processInterception() throws Exception{
         String coorditateXY = getQuadrant(bullet.getX(), bullet.getY());
         int index = coorditateXY.indexOf("_");
         int y = Integer.parseInt(coorditateXY.substring(0, index));
@@ -37,7 +38,19 @@ public class ActionField extends JPanel {
                 return true;
             }
         }
+
+        if (getQuadrant(bf.getCoordinatesAgressorX(),bf.getCoordinatesAgressorY()).equals(coorditateXY)) {
+            agressor.destroy();
+            bullet.destroy();
+            returnNewTank();
+        }
+
         return false;
+    }
+
+    private void returnNewTank() throws Exception {
+        Thread.sleep(3000);
+        agressor = createAgressor();
     }
 
     public String getQuadrant(int x, int y) {
@@ -118,6 +131,7 @@ public class ActionField extends JPanel {
             if (processInterception()) {
                 bullet.destroy();
             }
+
             repaint();
             Thread.sleep(bullet.getSpeed());
         }
@@ -151,28 +165,28 @@ public class ActionField extends JPanel {
         }
     }
 
-    private BT7 createAgressor(){
+    private Tank createAgressor() {
         int x = 0;
         int y = 0;
 
         while (true) {
             x = bf.getCoordinatesAgressorX();
             y = bf.getCoordinatesAgressorY();
-            if(bf.scanQuadrant(getQuadrantY(y),getQuadrantX(x)).equals(" ")){
+            if (bf.scanQuadrant(getQuadrantY(y), getQuadrantX(x)).equals(" ")) {
                 break;
             }
         }
-        BT7 agressor = new BT7(this, bf, x, y, Direction.MOVE_DOWN);
+        agressor = new Tank(this, bf, x, y, Direction.MOVE_DOWN);
         return agressor;
     }
 
     public ActionField() throws Exception {
 
         bf = new BattleField();
-        tankDef = new T34(this, bf, 0, 64, Direction.MOVE_DOWN);
+        tankDef = new Tank(this, bf, 4*64, 3 * 64, Direction.MOVE_DOWN);
 
         agressor = createAgressor();
-//        agressor = new BT7(this,bf,Integer.parseInt(bf.getAgressorLocation().split("_")[1]),
+//        agressor = new Tank(this,bf,Integer.parseInt(bf.getAgressorLocation().split("_")[1]),
 //                Integer.parseInt(bf.getAgressorLocation().split("_")[0]),Direction.MOVE_DOWN);
 
         bullet = new Bullet();
