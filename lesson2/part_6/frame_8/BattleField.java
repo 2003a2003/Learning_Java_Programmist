@@ -73,17 +73,17 @@ public class BattleField {
     }
 
     public int getCoordinatesAgressorX() {
-        int coord = 4*SIZE_ONE_QUADRANT;
-//        Random r = new Random();
-//        int index = r.nextInt(3);
-//
-//        if (index == 0) {
-//            coord = 0 * SIZE_ONE_QUADRANT;
-//        } else if (index == 1) {
-//            coord = 4 * SIZE_ONE_QUADRANT;
-//        } else {
-//            coord = 8 * SIZE_ONE_QUADRANT;
-//        }
+        int coord = 4 * SIZE_ONE_QUADRANT;
+        Random r = new Random();
+        int index = r.nextInt(3);
+
+        if (index == 0) {
+            coord = 0 * SIZE_ONE_QUADRANT;
+        } else if (index == 1) {
+            coord = 4 * SIZE_ONE_QUADRANT;
+        } else {
+            coord = 8 * SIZE_ONE_QUADRANT;
+        }
         return coord;
     }
 

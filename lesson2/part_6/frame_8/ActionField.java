@@ -16,9 +16,9 @@ public class ActionField extends JPanel {
 
         //tankDef.moveToQuadrant(4, 5);
         tankDef.turn(Direction.MOVE_UP);
-       while (true){
-           tankDef.fire();
-       }
+        while (true) {
+            tankDef.fire();
+        }
         //  repaint();
 //        tankDef.moveToQuadrant(9, 8);
 //        tankDef.moveToQuadrant(9, 2);
@@ -26,20 +26,20 @@ public class ActionField extends JPanel {
 //        tankDef.clean();
     }
 
-    private boolean processInterception() throws Exception{
+    private boolean processInterception() throws Exception {
         String coorditateXY = getQuadrant(bullet.getX(), bullet.getY());
         int index = coorditateXY.indexOf("_");
         int y = Integer.parseInt(coorditateXY.substring(0, index));
         int x = Integer.parseInt(coorditateXY.substring(index + 1));
 
         if (y >= 0 && y < 9 && x >= 0 && x < 9) {
-            if (!bf.scanQuadrant(y, x).equals(" ")) {
+            if (bf.scanQuadrant(y, x).equals("B")) {
                 bf.updateQuadrant(y, x, " ");
                 return true;
             }
         }
 
-        if (getQuadrant(bf.getCoordinatesAgressorX(),bf.getCoordinatesAgressorY()).equals(coorditateXY)) {
+        if (getQuadrant(agressor.getX(), agressor.getY()).equals(coorditateXY)) {
             agressor.destroy();
             bullet.destroy();
             returnNewTank();
@@ -50,7 +50,8 @@ public class ActionField extends JPanel {
 
     private void returnNewTank() throws Exception {
         Thread.sleep(3000);
-        agressor = createAgressor();
+        createAgressor();
+        repaint();
     }
 
     public String getQuadrant(int x, int y) {
@@ -165,7 +166,7 @@ public class ActionField extends JPanel {
         }
     }
 
-    private Tank createAgressor() {
+    private void createAgressor() {
         int x = 0;
         int y = 0;
 
@@ -176,16 +177,17 @@ public class ActionField extends JPanel {
                 break;
             }
         }
+
         agressor = new Tank(this, bf, x, y, Direction.MOVE_DOWN);
-        return agressor;
     }
 
     public ActionField() throws Exception {
 
         bf = new BattleField();
-        tankDef = new Tank(this, bf, 4*64, 3 * 64, Direction.MOVE_DOWN);
+        tankDef = new Tank(this, bf, 256, 192, Direction.MOVE_DOWN);
 
-        agressor = createAgressor();
+        agressor = new Tank(this, bf, 256, 0, Direction.MOVE_DOWN);
+//        createAgressor();
 //        agressor = new Tank(this,bf,Integer.parseInt(bf.getAgressorLocation().split("_")[1]),
 //                Integer.parseInt(bf.getAgressorLocation().split("_")[0]),Direction.MOVE_DOWN);
 
