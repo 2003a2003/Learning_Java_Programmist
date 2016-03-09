@@ -10,7 +10,7 @@ public class ActionField extends JPanel {
     private BattleField bf;
     private Tank defender;
     private Bullet bullet;
-    private Tiger agressor;
+    private Tank agressor;
 
     public void runTheGame() throws Exception {
 
@@ -34,21 +34,11 @@ public class ActionField extends JPanel {
         }
 
         if (checkInterception(getQuadrant(agressor.getX(), agressor.getY()), coorditateXY)) {
-            if (agressor.getArmor() == 0) {
-                agressor.destroy();
-                bullet.destroy();
-                returnNewTank();
-                return false;
-            } else {
-                agressor.updateArmor(-1);
-                return true;
-            }
+            agressor.destroy();
+            bullet.destroy();
+            returnNewTank();
         }
-//        if (getQuadrant(defender.getX(), defender.getY()).equals(coorditateXY)) {
-//            defender.destroy();
-//            bullet.destroy();
-//            return false;
-//        }
+
         return false;
     }
 
@@ -199,7 +189,7 @@ public class ActionField extends JPanel {
             }
         }
 
-        agressor = new Tiger(this, bf, x, y, Direction.MOVE_DOWN);
+        agressor = new Tank(this, bf, x, y, Direction.MOVE_DOWN);
     }
 
     public ActionField() throws Exception {
@@ -207,7 +197,7 @@ public class ActionField extends JPanel {
         bf = new BattleField();
         defender = new Tank(this, bf, 256, 192, Direction.MOVE_DOWN);
 
-        agressor = new Tiger(this, bf, 256, 0, Direction.MOVE_DOWN);
+        agressor = new Tank(this, bf, 256, 0, Direction.MOVE_DOWN);
 //        createAgressor();
 //        agressor = new Tank(this,bf,Integer.parseInt(bf.getAgressorLocation().split("_")[1]),
 //                Integer.parseInt(bf.getAgressorLocation().split("_")[0]),Direction.MOVE_DOWN);
