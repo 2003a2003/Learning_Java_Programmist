@@ -1,15 +1,9 @@
 package lesson3.part_2.shapes;
 
-/**
- * Created by otroshenko on 11.03.2016.
- */
-public class Rectangle {
+public class Rectangle extends Shape{
 
-    public Rectangle() {
-
-    }
-
-    public void draw() {
-
-    }
+//    @Override
+//    public void draw() {
+//        System.out.println("You see a rectangle.");
+//    }
 }
