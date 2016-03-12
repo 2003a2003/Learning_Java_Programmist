@@ -6,13 +6,20 @@ public class Launche {
 
         Circle circle = new Circle();
         Rectangle rectangle = new Rectangle();
+        Triangle triangle = new Triangle();
 
-        Child child = new Child();
+        circle.draw();
+        circle.color(Color.BLACK);
+        rectangle.draw();
+        rectangle.color(Color.RED);
+        triangle.draw();
+        triangle.color(Color.BLUE);
 
-        child.drow(circle);
-        child.drow(rectangle);
-        child.drow(new Triangle());
-        child.drow(new Shape());
+//        Child child = new Child();
+//        child.drow(circle);
+//        child.drow(rectangle);
+//        child.drow(new Triangle());
+//        child.drow(new Shape());
 
     }
 
