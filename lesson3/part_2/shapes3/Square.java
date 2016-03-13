@@ -3,16 +3,22 @@ package lesson3.part_2.shapes3;
 import java.awt.*;
 import java.awt.Color;
 
-public class Square extends Shape{
+public class Square extends Rectangle{
 
 
     @Override
     public void draw(Graphics g) {
-        Graphics2D g2 = (Graphics2D)g;
-        g2.setStroke(new BasicStroke(6));
+        int x = 250;
+        int y = 210;
+        int width = 100;
+        int height = width;
 
-        g.setColor(Color.blue);
-        g.drawRect(250, 210, 100, 100);
 
+//        Graphics2D g2 = (Graphics2D)g;
+//        g2.setStroke(new BasicStroke(2));
+
+        g.setColor(Color.BLACK);
+        g.fillRect(x, y, width, height);
+        System.out.println("You see a square. ");
     }
 }

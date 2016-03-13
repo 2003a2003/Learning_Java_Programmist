@@ -14,6 +14,6 @@ public class Rectangle extends Shape {
         g.setColor(Color.DARK_GRAY);
         g.fillRect(260,110,80,80);
 
-        System.out.print("You see a rectangle. ");
+        System.out.println("You see a rectangle. ");
     }
 }

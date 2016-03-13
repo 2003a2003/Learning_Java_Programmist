@@ -15,6 +15,6 @@ public class Circle extends Shape {
         g.setColor(new Color(148, 24, 16));
         g.fillOval(115,110,70,70);
 
-        System.out.print("You see a circle. ");
+        System.out.println("You see a circle. ");
     }
 }
