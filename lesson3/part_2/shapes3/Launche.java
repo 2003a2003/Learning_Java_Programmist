@@ -8,16 +8,16 @@ public class Launche {
         Circle circle = new Circle();
         Rectangle rectangle = new Rectangle();
         Triangle triangle = new Triangle();
+        Square square = new Square();
 
-        Shape[] shape = new Shape[3];
+        Shape[] shape = new Shape[4];
         shape[0] = circle;
         shape[1] = rectangle;
         shape[2] = triangle;
+        shape[3] = square;
 
         new ShapesTemplate(shape);
 
-//        Graphics2D graphics2D = (Graphics2D);
-//        circle.draw();
 
     }
 

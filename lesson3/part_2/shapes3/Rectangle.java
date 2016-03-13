@@ -10,7 +10,7 @@ public class Rectangle extends Shape {
 
         ((Graphics2D) g).setStroke(new BasicStroke(10.0f));
         g.setColor(Color.blue);
-        g.drawRect(250, 100, 100, 100);
+        g.drawRect(210, 100, 170, 100);
         g.setColor(Color.DARK_GRAY);
         g.fillRect(260,110,80,80);
 
