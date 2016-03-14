@@ -1,6 +1,6 @@
 package lesson2.part_6.frame_10;
 
-public class BT7 extends Tank {
+public class BT7 extends AbstractTank {
 
     public BT7 (ActionField af, BattleField bf) {
         super(af, bf);

@@ -8,9 +8,9 @@ public class ActionField extends JPanel {
     private boolean COLORDED_MODE = false;
 
     private BattleField bf;
-    private Tank defender;
+    private AbstractTank defender;
     private Bullet bullet;
-    private Tank agressor;
+    private AbstractTank agressor;
 
     public void runTheGame() throws Exception {
 
@@ -97,7 +97,7 @@ public class ActionField extends JPanel {
         return null;
     }
 
-    public void processMove(Tank tankDef) throws Exception {
+    public void processMove(AbstractTank tankDef) throws Exception {
 
         this.defender = tankDef;
 
@@ -131,7 +131,7 @@ public class ActionField extends JPanel {
         }
     }
 
-    public void processTurn(Tank tankDef) throws Exception {
+    public void processTurn(AbstractTank tankDef) throws Exception {
         repaint();
     }
 
@@ -207,7 +207,7 @@ public class ActionField extends JPanel {
     public ActionField() throws Exception {
 
         bf = new BattleField();
-        defender = new Tank(this, bf, 256, 320, Direction.MOVE_DOWN);
+        defender = new T34(this, bf, 256, 320, Direction.MOVE_DOWN);
 
         agressor = new Tiger(this, bf, 256, 0, Direction.MOVE_DOWN);
 //        createAgressor();

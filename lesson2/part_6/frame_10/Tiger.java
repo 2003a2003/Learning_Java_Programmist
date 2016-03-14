@@ -1,6 +1,6 @@
 package lesson2.part_6.frame_10;
 
-public class Tiger extends Tank {
+public class Tiger extends AbstractTank {
 
     private int armor;
 
