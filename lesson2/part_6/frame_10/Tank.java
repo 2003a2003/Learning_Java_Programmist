@@ -2,7 +2,7 @@ package lesson2.part_6.frame_10;
 
 import java.util.Random;
 
-public abstract class AbstractTank {
+public abstract class Tank {
 
     protected int speed = 5;
     private Direction direction;
@@ -13,11 +13,11 @@ public abstract class AbstractTank {
     private BattleField bf;
 
     //KONSRTUKTOR
-    public AbstractTank(ActionField af, BattleField bf) {
+    public Tank(ActionField af, BattleField bf) {
         this(af, bf, 0, 0, Direction.MOVE_DOWN);
     }
 
-    public AbstractTank(ActionField af, BattleField bf, int x, int y, Direction direction) {
+    public Tank(ActionField af, BattleField bf, int x, int y, Direction direction) {
         this.x = x;
         this.y = y;
         this.direction = direction;
