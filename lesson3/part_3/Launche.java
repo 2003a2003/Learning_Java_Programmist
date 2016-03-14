@@ -9,7 +9,7 @@ public class Launche {
         Triangle triangle = new Triangle();
         Square square = new Square();
 
-        AbstractShape[] shape = new AbstractShape[4];
+        Drawable[] shape = new Drawable[4];
         shape[0] = circle;
         shape[1] = rectangle;
         shape[2] = triangle;
