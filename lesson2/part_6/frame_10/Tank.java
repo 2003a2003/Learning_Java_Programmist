@@ -2,7 +2,7 @@ package lesson2.part_6.frame_10;
 
 import java.util.Random;
 
-public abstract class Tank {
+public class Tank {
 
     protected int speed = 5;
     private Direction direction;

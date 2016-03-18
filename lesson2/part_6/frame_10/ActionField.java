@@ -207,7 +207,7 @@ public class ActionField extends JPanel {
     public ActionField() throws Exception {
 
         bf = new BattleField();
-        defender = new T34(this, bf, 256, 320, Direction.MOVE_DOWN);
+        defender = new Tank(this, bf, 256, 320, Direction.MOVE_DOWN);
 
         agressor = new Tiger(this, bf, 256, 0, Direction.MOVE_DOWN);
 //        createAgressor();

@@ -14,6 +14,9 @@ public class Launche {
         shape[1] = rectangle;
         shape[2] = triangle;
         shape[3] = square;
+        if(circle instanceof Drawable){
+            System.out.println("+++++++++++++++++++++++");
+        }
 
         new ShapesTemplate(shape);
     }

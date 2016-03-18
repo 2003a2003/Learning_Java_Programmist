@@ -15,12 +15,6 @@ public class Launche {
         triangle.draw();
         triangle.color(Color.BLUE);
 
-//        Child child = new Child();
-//        child.drow(circle);
-//        child.drow(rectangle);
-//        child.drow(new Triangle());
-//        child.drow(new Shape());
-
     }
 
 }

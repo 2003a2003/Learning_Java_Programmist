@@ -11,4 +11,8 @@ public class Glyph {
     public void draw(){
         System.out.println("Glyph#draw()");
     }
+
+    public void dd(){
+        System.out.println("DDDDDDDD++++++++++++++++++++++++++++");
+    }
 }
