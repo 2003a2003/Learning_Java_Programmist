@@ -1,8 +1,9 @@
-package lesson2.part_6.frame_10;
+package lesson3.part_4.frame_6;
 
+import java.awt.*;
 import java.util.Random;
 
-public abstract class Tank {
+public abstract class AbstractTank implements Drawable,Destroyable {
 
     protected int speed = 5;
     private Direction direction;
@@ -12,12 +13,15 @@ public abstract class Tank {
     private ActionField af;
     private BattleField bf;
 
+    protected Color colorTank;
+    protected Color colorTower;
+
     //KONSRTUKTOR
-    public Tank(ActionField af, BattleField bf) {
+    public AbstractTank(ActionField af, BattleField bf) {
         this(af, bf, 0, 0, Direction.MOVE_DOWN);
     }
 
-    public Tank(ActionField af, BattleField bf, int x, int y, Direction direction) {
+    public AbstractTank(ActionField af, BattleField bf, int x, int y, Direction direction) {
         this.x = x;
         this.y = y;
         this.direction = direction;
@@ -115,10 +119,30 @@ public abstract class Tank {
         }
     }
 
+    @Override
     public void destroy(){
         x = -100;
         y = -100;
         af.repaint();
+    }
+
+    @Override
+    public void draw(Graphics g) {
+
+        g.setColor(colorTank);
+        g.fillRect(this.x, this.y,64,64);
+
+        g.setColor(colorTower);
+
+        if (this.getDirection() == Direction.MOVE_UP) {
+            g.fillRect(this.getX() + 20, this.getY(), 24, 34);
+        } else if (this.getDirection() == Direction.MOVE_DOWN) {
+            g.fillRect(this.getX() + 20, this.getY() + 30, 24, 34);
+        } else if (this.getDirection() == Direction.MOVE_LEFT) {
+            g.fillRect(this.getX(), this.getY() + 20, 34, 24);
+        } else {
+            g.fillRect(this.getX() + 30, this.getY() + 20, 34, 24);
+        }
     }
 
     //get - set

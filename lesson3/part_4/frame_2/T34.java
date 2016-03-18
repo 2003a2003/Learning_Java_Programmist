@@ -1,6 +1,6 @@
-package lesson2.part_6.frame_10;
+package lesson3.part_4.frame_2;
 
-public class T34 extends Tank {
+public class T34 extends AbstractTank {
 
     public T34 (ActionField af, BattleField bf) {
         super(af, bf);

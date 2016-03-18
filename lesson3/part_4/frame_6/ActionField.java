@@ -1,4 +1,4 @@
-package lesson2.part_6.frame_10;
+package lesson3.part_4.frame_6;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,9 +8,9 @@ public class ActionField extends JPanel {
     private boolean COLORDED_MODE = false;
 
     private BattleField bf;
-    private Tank defender;
+    private AbstractTank defender;
     private Bullet bullet;
-    private Tank agressor;
+    private AbstractTank agressor;
 
     public void runTheGame() throws Exception {
 
@@ -27,6 +27,7 @@ public class ActionField extends JPanel {
                 addAgressor();
             }
         }
+        defender.moveRandom();
     }
 
     private boolean processInterception() throws Exception {
@@ -97,41 +98,41 @@ public class ActionField extends JPanel {
         return null;
     }
 
-    public void processMove(Tank tankDef) throws Exception {
+    public void processMove(AbstractTank defender) throws Exception {
 
-        this.defender = tankDef;
+        this.defender = defender;
 
         int step = 1;
         int index = 0;
 
-        if ((tankDef.getDirection() == Direction.MOVE_LEFT && tankDef.getX() == bf.getMIN_QUADRANT_COORDINATE())
-                || (tankDef.getDirection() == Direction.MOVE_RIGHT && tankDef.getX() == bf.getMAX_QUADRANT_COORDINATE())
-                || (tankDef.getDirection() == Direction.MOVE_UP && tankDef.getY() == bf.getMIN_QUADRANT_COORDINATE())
-                || (tankDef.getDirection() == Direction.MOVE_DOWN && tankDef.getY() == bf.getMAX_QUADRANT_COORDINATE())) {
-            System.out.println("[wrong move]: " + "tankX: " + tankDef.getX() + ", tankY: " + tankDef.getY());
+        if ((defender.getDirection() == Direction.MOVE_LEFT && defender.getX() == bf.getMIN_QUADRANT_COORDINATE())
+                || (defender.getDirection() == Direction.MOVE_RIGHT && defender.getX() == bf.getMAX_QUADRANT_COORDINATE())
+                || (defender.getDirection() == Direction.MOVE_UP && defender.getY() == bf.getMIN_QUADRANT_COORDINATE())
+                || (defender.getDirection() == Direction.MOVE_DOWN && defender.getY() == bf.getMAX_QUADRANT_COORDINATE())) {
+            System.out.println("[wrong move]: " + "tankX: " + defender.getX() + ", tankY: " + defender.getY());
             return;
         }
 
-        tankDef.turn(tankDef.getDirection());
+        defender.turn(defender.getDirection());
 
         while (index < bf.getSIZE_ONE_QUADRANT()) {
-            if (tankDef.getDirection() == Direction.MOVE_UP) {
-                tankDef.updateY(-step);
-            } else if (tankDef.getDirection() == Direction.MOVE_DOWN) {
-                tankDef.updateY(step);
-            } else if (tankDef.getDirection() == Direction.MOVE_LEFT) {
-                tankDef.updateX(-step);
+            if (defender.getDirection() == Direction.MOVE_UP) {
+                defender.updateY(-step);
+            } else if (defender.getDirection() == Direction.MOVE_DOWN) {
+                defender.updateY(step);
+            } else if (defender.getDirection() == Direction.MOVE_LEFT) {
+                defender.updateX(-step);
             } else {
-                tankDef.updateX(step);
+                defender.updateX(step);
             }
 
             index += step;
             repaint();
-            Thread.sleep(tankDef.getSpeed());
+            Thread.sleep(defender.getSpeed());
         }
     }
 
-    public void processTurn(Tank tankDef) throws Exception {
+    public void processTurn(AbstractTank tankDef) throws Exception {
         repaint();
     }
 
@@ -208,7 +209,6 @@ public class ActionField extends JPanel {
 
         bf = new BattleField();
         defender = new T34(this, bf, 256, 320, Direction.MOVE_DOWN);
-
         agressor = new Tiger(this, bf, 256, 0, Direction.MOVE_DOWN);
 //        createAgressor();
 //        agressor = new Tank(this,bf,Integer.parseInt(bf.getAgressorLocation().split("_")[1]),
@@ -261,36 +261,8 @@ public class ActionField extends JPanel {
             }
         }
 
-        g.setColor(new Color(255, 0, 0));
-        g.fillRect(defender.getX(), defender.getY(), 64, 64);
-
-        g.setColor(new Color(0, 255, 0));
-        if (defender.getDirection() == Direction.MOVE_UP) {
-            g.fillRect(defender.getX() + 20, defender.getY(), 24, 34);
-        } else if (defender.getDirection() == Direction.MOVE_DOWN) {
-            g.fillRect(defender.getX() + 20, defender.getY() + 30, 24, 34);
-        } else if (defender.getDirection() == Direction.MOVE_LEFT) {
-            g.fillRect(defender.getX(), defender.getY() + 20, 34, 24);
-        } else {
-            g.fillRect(defender.getX() + 30, defender.getY() + 20, 34, 24);
-        }
-
-        g.setColor(new Color(20, 0, 0));
-        g.fillRect(agressor.getX(), agressor.getY(), 64, 64);
-
-        g.setColor(new Color(0, 255, 0));
-        if (agressor.getDirection() == Direction.MOVE_UP) {
-            g.fillRect(agressor.getX() + 20, agressor.getY(), 24, 34);
-        } else if (agressor.getDirection() == Direction.MOVE_DOWN) {
-            g.fillRect(agressor.getX() + 20, agressor.getY() + 30, 24, 34);
-        } else if (agressor.getDirection() == Direction.MOVE_LEFT) {
-            g.fillRect(agressor.getX(), agressor.getY() + 20, 34, 24);
-        } else {
-            g.fillRect(agressor.getX() + 30, agressor.getY() + 20, 34, 24);
-        }
-
-        g.setColor(new Color(74, 73, 255));
-        g.fillRect(bullet.getX(), bullet.getY(), 14, 14);
+        defender.draw(g);
+        agressor.draw(g);
+        bullet.draw(g);
     }
-
 }

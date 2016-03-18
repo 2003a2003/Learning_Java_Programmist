@@ -1,4 +1,4 @@
-package lesson2.part_6.frame_10;
+package lesson3.part_4.frame_2;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,9 +8,9 @@ public class ActionField extends JPanel {
     private boolean COLORDED_MODE = false;
 
     private BattleField bf;
-    private Tank defender;
+    private AbstractTank defender;
     private Bullet bullet;
-    private Tank agressor;
+    private AbstractTank agressor;
 
     public void runTheGame() throws Exception {
 
@@ -97,7 +97,7 @@ public class ActionField extends JPanel {
         return null;
     }
 
-    public void processMove(Tank tankDef) throws Exception {
+    public void processMove(AbstractTank tankDef) throws Exception {
 
         this.defender = tankDef;
 
@@ -131,7 +131,7 @@ public class ActionField extends JPanel {
         }
     }
 
-    public void processTurn(Tank tankDef) throws Exception {
+    public void processTurn(AbstractTank tankDef) throws Exception {
         repaint();
     }
 
