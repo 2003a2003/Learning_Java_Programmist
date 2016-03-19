@@ -2,12 +2,12 @@ package lesson3.part_5.frame_6.products;
 
 import lesson3.part_5.frame_6.ingridients.*;
 
-public class BlackCoffee extends AbstractProducts{
-    public BlackCoffee(){
-        setProductsName("Black Coffee ");
+public class GreenTeaWithBergamot extends AbstractProducts {
+    public GreenTeaWithBergamot(){
+        setProductsName("Green Tea with Bergamot ");
 
         ingridients[0] = new Water();
-        ingridients[1] = new Coffee();
+        ingridients[1] = new TeaGreebWithBergamot();
         ingridients[2] = new Sugar();
 
         setIngridients(ingridients);

@@ -1,8 +1,21 @@
 package lesson3.part_5.frame_6.ingridients;
 
 public abstract class AbstractIngridients {
+
     private String nameOfIngredient;
     private double price;
+    private int dose;
+
+    public AbstractIngridients(){
+    }
+
+    public int getDose() {
+        return dose;
+    }
+
+    public void setDose(int dose) {
+        this.dose = dose;
+    }
 
     public String getNameOfIngredient() {
         return nameOfIngredient;
