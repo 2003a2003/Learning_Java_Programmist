@@ -1,7 +1,8 @@
 package lesson3.part_5.frame_6.ingridients;
 
-/**
- * Created by otroshenko on 18.03.2016.
- */
-public class GreebTeaWithBergamot {
+public class GreebTeaWithBergamot extends AbstractIngridients{
+    public GreebTeaWithBergamot() {
+        setNameOfIngredient("Green Tea with Bergamot.");
+        setPrice(1.5);
+    }
 }

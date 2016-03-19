@@ -1,7 +1,8 @@
 package lesson3.part_5.frame_6.ingridients;
 
-/**
- * Created by otroshenko on 18.03.2016.
- */
-public class BlackTea {
+public class BlackTea extends AbstractIngridients{
+    public BlackTea() {
+        setNameOfIngredient("Black Tea");
+        setPrice(1);
+    }
 }

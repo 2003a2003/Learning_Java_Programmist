@@ -1,7 +1,8 @@
 package lesson3.part_5.frame_6.ingridients;
 
-/**
- * Created by otroshenko on 18.03.2016.
- */
-public class Milk {
+public class Milk extends AbstractIngridients{
+    public Milk() {
+        setNameOfIngredient("Milk.");
+        setPrice(0.5);
+    }
 }
