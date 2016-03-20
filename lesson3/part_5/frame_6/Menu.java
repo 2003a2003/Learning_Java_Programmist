@@ -8,11 +8,17 @@ public class Menu {
     private AbstractIngridients[] ingridientses = new AbstractIngridients[30];
     private AbstractProducts[] productses = new AbstractProducts[30];
     private Services srv;
+    private Transactions[] transaction;
+    private int viewSale;
+    private int numberTransactions;
+
 
     public Menu() {
         srv = new Services();
         addMenuListProducts();
         addMenuListIngridients();
+        transaction = new Transactions[20];
+        numberTransactions = 0;
         //srv.addMenuListIngridients(ingridientses);
     }
 
@@ -30,6 +36,10 @@ public class Menu {
 
     public void addMenuListIngridients(){
         srv.addMenuListIngridients(ingridientses);
+    }
+
+    public void chengePriceIngridients(){
+
     }
 
 }
