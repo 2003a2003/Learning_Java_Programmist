@@ -3,7 +3,7 @@ package lesson3.part_4.frame_6;
 import java.awt.*;
 import java.util.Random;
 
-public abstract class AbstractTank implements Drawable,Destroyable {
+public abstract class AbstractTank implements Drawable, Destroyable {
 
     protected int speed = 5;
     private Direction direction;
@@ -40,7 +40,7 @@ public abstract class AbstractTank implements Drawable,Destroyable {
     }
 
     public void fire() throws Exception {
-        Bullet bullet = new Bullet(x + 25, y + 25, direction);
+        Bullet bullet = new Bullet(x + 25, y + 25, direction, this);
         af.processFire(bullet);
     }
 
@@ -67,13 +67,13 @@ public abstract class AbstractTank implements Drawable,Destroyable {
         while (true) {
             i = r.nextInt(5);
             if (i > 0) {
-                if(i == 1){
+                if (i == 1) {
                     d = Direction.MOVE_UP;
-                }else if (i==2){
+                } else if (i == 2) {
                     d = Direction.MOVE_DOWN;
-                }else if (i == 3){
+                } else if (i == 3) {
                     d = Direction.MOVE_LEFT;
-                }else{
+                } else {
                     d = Direction.MOVE_RIGHT;
                 }
 
@@ -120,7 +120,7 @@ public abstract class AbstractTank implements Drawable,Destroyable {
     }
 
     @Override
-    public void destroy(){
+    public void destroy() {
         x = -100;
         y = -100;
         af.repaint();
@@ -130,7 +130,7 @@ public abstract class AbstractTank implements Drawable,Destroyable {
     public void draw(Graphics g) {
 
         g.setColor(colorTank);
-        g.fillRect(this.x, this.y,64,64);
+        g.fillRect(this.x, this.y, 64, 64);
 
         g.setColor(colorTower);
 

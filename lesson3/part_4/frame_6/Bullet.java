@@ -11,6 +11,7 @@ public class Bullet implements Drawable, Destroyable {
     private Direction direction;
     private int butlleStep = 5;
     private final int SIZE_BULLET = 14;
+    private AbstractTank tank;
 
     public Bullet() {
         x = -100;
@@ -18,10 +19,11 @@ public class Bullet implements Drawable, Destroyable {
         direction = Direction.MOVE_UP;
     }
 
-    public Bullet(int x, int y, Direction direction) {
+    public Bullet(int x, int y, Direction direction, AbstractTank tank) {
         this.x = x;
         this.y = y;
         this.direction = direction;
+        this.tank = tank;
     }
 
     public void updateX(int x) {
@@ -64,6 +66,10 @@ public class Bullet implements Drawable, Destroyable {
 
     public int getSIZE_BULLET() {
         return SIZE_BULLET;
+    }
+
+    public AbstractTank getTank() {
+        return tank;
     }
 
     @Override

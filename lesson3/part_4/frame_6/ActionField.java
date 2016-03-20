@@ -47,11 +47,11 @@ public class ActionField extends JPanel {
             agressor.destroy();
             return true;
         }
-//        if (getQuadrant(defender.getX(), defender.getY()).equals(coorditateXY)) {
-//            defender.destroy();
-//            bullet.destroy();
-//            return false;
-//        }
+        if (getQuadrant(defender.getX(), defender.getY()).equals(coorditateXY)&& bullet.getTank() != defender) {
+            defender.destroy();
+            bullet.destroy();
+            return false;
+        }
 
         return false;
     }
