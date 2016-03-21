@@ -35,8 +35,8 @@ public class Menu {
         srv.addMenuListProducts(productses, this.price);
     }
 
-//    public AbstractIngridients[] addNewStartDefoultPrice(){
-//        return srv.addNewStartDefoultPrice(pr);
-//    }
+    public void addNewProducts(String name, double price){
+        srv.addNewProducts(productses,name,price);
+    }
 
 }

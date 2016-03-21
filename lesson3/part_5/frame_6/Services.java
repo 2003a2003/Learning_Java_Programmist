@@ -26,7 +26,7 @@ public class Services {
             if (productses[i] != null) {
                 System.out.printf("%-4s%-28s%-45s%-11s%n", "| " + (i + 1), "| " + productses[i].getProductsName(),
                         "| " + printProductIngridients(productses[i].getIngridients()),
-                        "| " + productses[i].getPriceOfProduct() + " |");
+                        "| " + productses[i].getPriceOfProduct());
 //                System.out.print("| " + (i+1) + ". " + productses[i].getProductsName());
 //                printProductIngridients(productses[i].getIngridients());
 //                System.out.println(productses[i].getPriceOfProduct());
@@ -66,30 +66,53 @@ public class Services {
         for (int i = 0; i < ingridientses.length; i++) {
             if (ingridientses[i] != null) {
                 System.out.printf("%-4s%-28s%-11s%n", "| " + (i + 1), "| " + ingridientses[i].getNameOfIngredient(),
-                        "| " + ingridientses[i].getPrice() + " |");
+                        "| " + ingridientses[i].getPrice());
             }
         }
         System.out.println("---------------------------------------");
     }
 
     public void addNewIngridients(AbstractIngridients[] i, String name, int dose, double price) {
-        int tail = updateTeil(i);
+        int tail = updateTeilIngridient(i);
         if (tail < i.length) {
             i[tail] = new NewSomeIngridients();
             i[tail].setNameOfIngredient(name);
             i[tail].setDose(dose);
             i[tail].setPrice(price);
-            tail++;
         } else {
             //create new array + add
             //addOneIngridients();
         }
     }
 
-    private int updateTeil(AbstractIngridients[] i) {
+    private int updateTeilIngridient(AbstractIngridients[] i) {
         int t = 0;
         for (AbstractIngridients ingr : i) {
             if (ingr != null) {
+                t++;
+            }
+        }
+        return t;
+    }
+
+    public void addNewProducts(AbstractProducts[] product, String name, double price) {
+        int t = updateTeilProducts(product);
+        if(t < product.length){
+            product[t] = new NewSomeProducte();
+            product[t].setProductsName(name);
+            product[t].setPriceOfProduct(price);
+
+        }else {
+            //create new array + add
+            //addOneIngridients();
+        }
+
+    }
+
+    private int updateTeilProducts(AbstractProducts[] product) {
+        int t = 0;
+        for (AbstractProducts p : product) {
+            if (p != null) {
                 t++;
             }
         }
