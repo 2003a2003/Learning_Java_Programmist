@@ -5,22 +5,17 @@ import lesson3.part_5.frame_6.products.*;
 
 public class Menu {
 
-    private AbstractIngridients[] ingridientses = new AbstractIngridients[30];
+    private AbstractIngridients[] price = new AbstractIngridients[30];
     private AbstractProducts[] productses = new AbstractProducts[30];
     private Services srv;
-    private Transactions[] transaction;
-    private int viewSale;
-    private int numberTransactions;
     private StartDefaultPriceIngridients pr;
 
 
     public Menu() {
         srv = new Services();
-        //addMenuListProducts();
-//        transaction = new Transactions[20];
-//        numberTransactions = 0;
         pr = new StartDefaultPriceIngridients();
-        ingridientses = pr.addNewStartDefoultPrice();
+        price = pr.addNewStartDefoultPrice();
+        addMenuListProducts();
         //srv.addMenuListIngridients(ingridientses);
     }
 
@@ -29,14 +24,21 @@ public class Menu {
     }
 
     public void printMenuIngridients(){
-        srv.printMenuIngridients(ingridientses);
+        srv.printMenuIngridients(price);
+    }
+
+    public void addNewIngridients(String name, int dose, double price){
+        srv.addNewIngridients(this.price,name,dose,price);
     }
 
     public void addMenuListProducts(){
-        srv.addMenuListProducts(productses);
+        srv.addMenuListProducts(productses, this.price);
     }
 
-    public void addNewIngridients(String newcl, int dose, double price){
-        pr.addNewIngridients(newcl,dose,price);
-    }
+
+
+//    public AbstractIngridients[] addNewStartDefoultPrice(){
+//        return srv.addNewStartDefoultPrice(pr);
+//    }
+
 }

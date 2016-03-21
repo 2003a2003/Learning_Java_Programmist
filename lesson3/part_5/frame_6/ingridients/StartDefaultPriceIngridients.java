@@ -20,9 +20,9 @@ public class StartDefaultPriceIngridients {
 
     public AbstractIngridients[] addNewStartDefoultPrice(){
 
-        addOneIngridients(new Water(),200,0.2);
+        addOneIngridients(new Water(),100,0.1);
         addOneIngridients(new Chocolate(),100,1);
-        addOneIngridients(new Lemon(),1,0.3);
+        addOneIngridients(new Lemon(),1,0.2);
         addOneIngridients(new Milk(),100,0.6);
         addOneIngridients(new MilkFoam(),100,0.7);
         addOneIngridients(new Sugar(),40,0.5);
@@ -47,19 +47,6 @@ public class StartDefaultPriceIngridients {
             //create new array + add
             //addOneIngridients();
 
-        }
-    }
-
-    public void addNewIngridients(String newcl, int dose, double price){
-        if(tail < ingr.length){
-            ingr[tail] = new NewSomeIngridients();
-            ingr[tail].setNameOfIngredient(newcl);
-            ingr[tail].setDose(dose);
-            ingr[tail].setPrice(price);
-            tail++;
-        }else{
-            //create new array + add
-            //addOneIngridients();
         }
     }
 
