@@ -35,18 +35,8 @@ public abstract class AbstractProducts {
     }
 
     // Metods
-    public void updateStandartPrice(AbstractIngridients[] ingridients) {
-        double price = 0;
-        for (AbstractIngridients ingr : ingridients) {
-            if (ingr != null) {
-                price += ingr.getPrice();
-            }
-        }
-        setPriceOfProduct(price);
-    }
 
     public AbstractIngridients addInfridients(AbstractIngridients name, AbstractIngridients[] price, int dose) {
-        double priceOfProducts = 0;
         for (AbstractIngridients i : price) {
             if (i.getNameOfIngredient().equals(name.getClass().getSimpleName())) {
                 priceOfProduct += (dose/i.getDose())*i.getPrice();

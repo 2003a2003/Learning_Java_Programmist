@@ -5,18 +5,15 @@ import lesson3.part_5.frame_6.products.*;
 
 public class Services {
 
-
     public void addMenuListProducts(AbstractProducts[] productses, AbstractIngridients[] price){
-//        productses[0] = new BlackCoffee(price);
-//        productses[1] = new CoffeeWithMilk(price);
-//        productses[2] = new CoffeeAmericano();
-//        productses[3] = new Cappuccino();
-//        productses[4] = new Mokachino();
-//
-//        productses[5] = new BlackTea();
-//        productses[6] = new BlackTeaWithLemon();
-//        productses[7] = new GreenTea();
-//        productses[8] = new GreenTeaWithBergamot();
+        productses[0] = new BlackCoffee(price);
+        productses[1] = new CoffeeWithMilk(price);
+        productses[2] = new CoffeeAmericano(price);
+        productses[3] = new Cappuccino(price);
+        productses[4] = new Mokachino(price);
+        productses[5] = new BlackTea(price);
+        productses[6] = new GreenTea(price);
+        productses[7] = new GreenTeaWithBergamot(price);
     }
 
     public void printMenuProducts(AbstractProducts[] productses) {

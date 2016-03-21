@@ -4,7 +4,7 @@ public abstract class AbstractIngridients {
 
     private String nameOfIngredient;
     private double price;
-    private int dose;
+    private double dose;
 
     public AbstractIngridients(){
     }
@@ -15,7 +15,7 @@ public abstract class AbstractIngridients {
         this.dose = dose;
     }
 
-    public int getDose() {
+    public double getDose() {
         return dose;
     }
 
