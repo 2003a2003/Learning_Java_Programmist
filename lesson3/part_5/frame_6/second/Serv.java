@@ -34,7 +34,6 @@ public class Serv {
         return prod;
     }
 
-
     private double addTotalPrice(Ingrid[] temp, Ingrid[] pr) {
         double price = 0;
 
@@ -43,7 +42,7 @@ public class Serv {
                 for (Ingrid pri : pr) {
                     if (pri != null) {
                         if (pri.getName().equals(i.getName())) {
-                            price += (pri.getPrice() * i.getColl());
+                            price += (pri.getPrice() * pri.getColl() * i.getColl());
                             price = new BigDecimal(price).setScale(4, RoundingMode.HALF_UP).doubleValue();
                         }
                     }
