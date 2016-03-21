@@ -11,14 +11,16 @@ public class Menu {
     private Transactions[] transaction;
     private int viewSale;
     private int numberTransactions;
+    private StartDefaultPriceIngridients pr;
 
 
     public Menu() {
         srv = new Services();
-        addMenuListProducts();
-        addMenuListIngridients();
-        transaction = new Transactions[20];
-        numberTransactions = 0;
+        //addMenuListProducts();
+//        transaction = new Transactions[20];
+//        numberTransactions = 0;
+        pr = new StartDefaultPriceIngridients();
+        ingridientses = pr.addNewStartDefoultPrice();
         //srv.addMenuListIngridients(ingridientses);
     }
 
@@ -34,12 +36,7 @@ public class Menu {
         srv.addMenuListProducts(productses);
     }
 
-    public void addMenuListIngridients(){
-        srv.addMenuListIngridients(ingridientses);
+    public void addNewIngridients(String newcl, int dose, double price){
+        pr.addNewIngridients(newcl,dose,price);
     }
-
-    public void chengePriceIngridients(){
-
-    }
-
 }

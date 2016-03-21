@@ -9,6 +9,12 @@ public abstract class AbstractIngridients {
     public AbstractIngridients(){
     }
 
+    public AbstractIngridients(String nameOfIngredient, int dose, double price){
+        this.nameOfIngredient = nameOfIngredient;
+        this.price = price;
+        this.dose = dose;
+    }
+
     public int getDose() {
         return dose;
     }
