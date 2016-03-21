@@ -15,6 +15,8 @@ public class ActionField extends JPanel {
     public void runTheGame() throws Exception {
 
         defender.turn(Direction.MOVE_UP);
+        agressor.turn(Direction.MOVE_DOWN);
+
         int fire = 0;
         while (fire != 1) {
             if (agressor.getX() != -100 && agressor.getY() != -100) {
@@ -43,7 +45,7 @@ public class ActionField extends JPanel {
             }
         }
 
-        if (checkInterception(getQuadrant(agressor.getX(), agressor.getY()), coorditateXY)) {
+        if (checkInterception(getQuadrant(agressor.getX(), agressor.getY()), coorditateXY) &&  !bullet.getTank().equals(agressor)) {
             agressor.destroy();
             return true;
         }
