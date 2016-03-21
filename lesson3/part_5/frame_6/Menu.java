@@ -16,7 +16,6 @@ public class Menu {
         pr = new StartDefaultPriceIngridients();
         price = pr.addNewStartDefoultPrice();
         addMenuListProducts();
-        //srv.addMenuListIngridients(ingridientses);
     }
 
     public void printMenuProducts(){
@@ -38,5 +37,4 @@ public class Menu {
     public void addNewProducts(String name, double price){
         srv.addNewProducts(productses,name,price);
     }
-
 }
