@@ -15,30 +15,82 @@ public class BattleField {
     private boolean COLORDED_MODE = false;
 
 
-    private String[][] battleField = {
-            {" ", "B", "B", "B", " ", "B", "B", "B", " "},
-            {" ", "B", "B", "B", "W", "B", "B", "B", " "},
-            {" ", "B", "B", "B", "B", "B", " ", "B", " "},
-            {" ", " ", " ", " ", " ", " ", " ", " ", " "},
-            {"B", "B", "B", "B", "R", "B", "B", "B", "B"},
-            {"B", "B", "B", " ", "B", "B", " ", "B", "B"},
-            {"B", " ", "B", " ", "B", "B", "B", "B", "B"},
-            {"B", " ", "B", "B", " ", "B", "B", "B", "B"},
-            {"B", "B", "B", "B", "E", "B", "B", "B", "B"}
+//    private String[][] battleField = {
+//            {" ", "B", "B", "B", " ", "B", "B", "B", " "},
+//            {" ", "B", "B", "B", "W", "B", "B", "B", " "},
+//            {" ", "B", "B", "B", "B", "B", " ", "B", " "},
+//            {" ", " ", " ", " ", " ", " ", " ", " ", " "},
+//            {"B", "B", "B", "B", "R", "B", "B", "B", "B"},
+//            {"B", "B", "B", " ", "B", "B", " ", "B", "B"},
+//            {"B", " ", "B", " ", "B", "B", "B", "B", "B"},
+//            {"B", " ", "B", "B", " ", "B", "B", "B", "B"},
+//            {"B", "B", "B", "B", "E", "B", "B", "B", "B"}
+//    };
+
+    private SomeObjectOfBattleField[][] battleField = {
+            {new Empty(0,0, this), new Brick(64,0, this), new Brick(128,0, this), new Brick(192,0, this),
+                    new Empty(256,0, this), new Brick(320,0, this),new Brick(384,0, this),new Brick(448,0, this),
+                    new Empty(512,0, this)},
+
+            {new Empty(0,64, this), new Brick(64,64, this), new Brick(128,64, this), new Brick(192,64, this),
+                    new Water(256,64, this), new Brick(320,64, this), new Brick(384,64, this), new Brick(448,64, this),
+                    new Empty(512,64, this)},
+
+            {new Empty(0,128, this), new Brick(64,128, this), new Brick(128,128, this), new Brick(192,128, this),
+                    new Brick(256,128, this), new Brick(320,128, this), new Brick(384,128, this),
+                    new Brick(448,128, this), new Empty(512,128, this)},
+
+            {new Empty(0,192, this), new Empty(64,192, this), new Empty(128,192, this), new Empty(192,192, this),
+                    new Empty(256,192, this), new Empty(320,192, this), new Empty(384,192, this),
+                    new Empty(448,192, this), new Empty(512,192, this)},
+
+            {new Brick(0,256, this), new Brick(64,256, this), new Brick(128,256, this), new Brick(192,256, this),
+                    new Rock(256,256, this), new Brick(320,256, this), new Brick(384,256, this),
+                    new Brick(448,256, this), new Brick(512,256, this)},
+
+            {new Brick(0,320, this), new Brick(64,320, this), new Brick(128,320, this), new Brick(192,320, this),
+                    new Brick(256,320, this), new Brick(320,320, this), new Brick(384,320, this),
+                    new Brick(448,320, this), new Brick(512,320, this)},
+
+            {new Brick(0,384, this), new Empty(64,384, this), new Brick(128,384, this), new Brick(192,384, this),
+                    new Brick(256,384, this), new Brick(320,384, this), new Brick(384,384, this),
+                    new Brick(448,384, this), new Brick(512,384, this)},
+
+            {new Brick(0,448, this), new Empty(64,448, this), new Brick(128,448, this), new Brick(192,448, this),
+                    new Empty(256,448, this), new Brick(320,448, this), new Brick(384,448, this),
+                    new Brick(448,448, this), new Brick(512,448, this)},
+
+            {new Brick(0,512, this), new Brick(64,512, this), new Brick(128,512, this), new Brick(192,512, this),
+                    new Eagle(256,512, this), new Brick(320,512, this), new Brick(384,512, this),
+                    new Brick(448,512, this), new Brick(512,512, this)},
     };
 
-    public BattleField() {
-    }
 
-    public BattleField(String[][] battleField) {
+
+    public BattleField() {
+
+    }
+//    public BattleField(String[][] battleField) {
+//        this.battleField = battleField;
+//    }
+//
+//    public String scanQuadrant(int v, int h) {
+//        return battleField[v][h];
+//    }
+
+    public BattleField(SomeObjectOfBattleField[][] battleField) {
         this.battleField = battleField;
     }
 
-    public String scanQuadrant(int v, int h) {
+    public SomeObjectOfBattleField scanQuadrant(int v, int h) {
         return battleField[v][h];
     }
 
-    public void updateQuadrant(int v, int h, String object) {
+//    public void updateQuadrant(int v, int h, String object) {
+//        battleField[v][h] = object;
+//    }
+
+    public void updateQuadrant(int v, int h, SomeObjectOfBattleField object) {
         battleField[v][h] = object;
     }
 
@@ -60,7 +112,11 @@ public class BattleField {
         return BF_HEIGHT;
     }
 
-    public String[][] getBattleField() {
+//    public String[][] getBattleField() {
+//        return battleField;
+//    }
+
+    public SomeObjectOfBattleField[][] getBattleField() {
         return battleField;
     }
 
@@ -148,22 +204,32 @@ public class BattleField {
                 int y = Integer.parseInt(coordinates.substring(0, separator));
                 int x = Integer.parseInt(coordinates.substring(separator + 1));
 
-                if (scanQuadrant(j, k).equals("B")) {
-                    Brick brick = new Brick(x, y, this);
-                    brick.draw(g);
-                } else if (scanQuadrant(j, k).equals("W")) {
-                    Water water = new Water(x, y, this);
-                    water.draw(g);
-                } else if (scanQuadrant(j, k).equals("R")) {
-                    g.setColor(new Color(132, 127, 152));
-                    g.fillRect(x, y, 64, 64);
-                } else if (scanQuadrant(j, k).equals("E")) {
-                    Eagle eagle = new Eagle(x, y, this);
-                    eagle.draw(g);
+                if (scanQuadrant(j,k) instanceof Empty ) {
+                    scanQuadrant(j,k).draw(g);
+                }else if(scanQuadrant(j,k) instanceof Brick){
+                    scanQuadrant(j,k).draw(g);
+                }else if(scanQuadrant(j,k) instanceof Water) {
+                    scanQuadrant(j, k).draw(g);
+                }else if(scanQuadrant(j,k) instanceof Rock) {
+                    scanQuadrant(j, k).draw(g);
+                }else if(scanQuadrant(j,k) instanceof Eagle) {
+                    scanQuadrant(j, k).draw(g);
                 }
+
+//                if (scanQuadrant(j, k) instanceof Empty ) {
+//                    //Brick brick = new Brick(x, y, this);
+//                    //brick.draw(g);
+//                } else if (scanQuadrant(j, k).equals("W")) {
+//                    Water water = new Water(x, y, this);
+//                    water.draw(g);
+//                } else if (scanQuadrant(j, k).equals("R")) {
+//                    g.setColor(new Color(132, 127, 152));
+//                    g.fillRect(x, y, 64, 64);
+//                } else if (scanQuadrant(j, k).equals("E")) {
+//                    Eagle eagle = new Eagle(x, y, this);
+//                    eagle.draw(g);
+//                }
             }
         }
     }
-
-
 }

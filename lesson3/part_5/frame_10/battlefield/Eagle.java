@@ -12,6 +12,6 @@ public class Eagle extends SomeObjectOfBattleField implements Destroyable {
 
     @Override
     public void destroy() {
-        getBf().updateQuadrant(getY(),getX()," ");
+        getBf().updateQuadrant(getY()/64,getX()/64,new Empty(getX(),getY(), getBf()));
     }
 }

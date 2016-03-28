@@ -18,6 +18,12 @@ public class SomeObjectOfBattleField implements Drawable {
         this.color = color;
     }
 
+    public SomeObjectOfBattleField(int x, int y, Color color) {
+        this.x = x;
+        this.y = y;
+        this.color = color;
+    }
+
     public int getX() {
         return x;
     }
@@ -45,6 +51,6 @@ public class SomeObjectOfBattleField implements Drawable {
     @Override
     public void draw(Graphics g) {
         g.setColor(color);
-        g.fillRect(x,y,64,64);
+        g.fillRect(getX(), getY(), 64, 64);
     }
 }

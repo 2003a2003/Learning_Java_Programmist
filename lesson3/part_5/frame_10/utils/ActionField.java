@@ -1,6 +1,6 @@
 package lesson3.part_5.frame_10.utils;
 
-import lesson3.part_5.frame_10.battlefield.BattleField;
+import lesson3.part_5.frame_10.battlefield.*;
 import lesson3.part_5.frame_10.enums.Direction;
 import lesson3.part_5.frame_10.tanks.AbstractTank;
 import lesson3.part_5.frame_10.tanks.T34;
@@ -23,14 +23,12 @@ public class ActionField extends JPanel {
         defender.turn(Direction.MOVE_UP);
         agressor.turn(Direction.MOVE_DOWN);
         agressor.fire();
-        //agressor.fire();
         defender.fire();
         defender.fire();
         defender.fire();
         agressor.fire();
         agressor.fire();
         agressor.fire();
-
 
 //        int fire = 0;
 //        while (fire != 1) {
@@ -54,11 +52,19 @@ public class ActionField extends JPanel {
         int x = Integer.parseInt(coorditateXY.substring(index + 1));
 
         if (y >= 0 && y < 9 && x >= 0 && x < 9) {
-            if (bf.scanQuadrant(y, x).equals("B") || bf.scanQuadrant(y, x).equals("E")
-                    || (bf.scanQuadrant(y, x).equals("R") && bullet.getTank() instanceof Tiger)) {
-                bf.updateQuadrant(y, x, " ");
+            if (bf.scanQuadrant(y, x) instanceof Brick ) {
+                Brick b = (Brick) bf.scanQuadrant(y, x);
+                b.destroy();
                 return true;
-            } else if (bf.scanQuadrant(y, x).equals("R") && bullet.getTank() instanceof T34) {
+            } else if ( bf.scanQuadrant(y, x) instanceof Eagle) {
+                Eagle e = (Eagle) bf.scanQuadrant(y, x);
+                e.destroy();
+                return true;
+            }else if((bf.scanQuadrant(y, x) instanceof Rock && bullet.getTank() instanceof Tiger)){
+                Rock r = (Rock) bf.scanQuadrant(y,x);
+                r.destroy();
+                return true;
+            } else if (bf.scanQuadrant(y, x) instanceof Rock && bullet.getTank() instanceof T34) {
                 return true;
             }
         }
@@ -219,7 +225,8 @@ public class ActionField extends JPanel {
         int moveToX = Integer.parseInt(koordXY.substring(koordXY.indexOf("_") + 1));
         int moveToY = Integer.parseInt(koordXY.substring(0, koordXY.indexOf("_")));
 
-        String[][] battleField = bf.getBattleField();
+//        String[][] battleField = bf.getBattleField();
+        SomeObjectOfBattleField[][] battleField = bf.getBattleField();
 
         if (direction == Direction.MOVE_UP) {
             if (!battleField[moveToY - 1][moveToX].equals(" ")) {
@@ -264,7 +271,7 @@ public class ActionField extends JPanel {
 //        agressor = new Tank(this,bf,Integer.parseInt(bf.getAgressorLocation().split("_")[1]),
 //                Integer.parseInt(bf.getAgressorLocation().split("_")[0]),Direction.MOVE_DOWN);
 
-        bullet = new Bullet();
+        //bullet = new Bullet();
 
         JFrame frame = new JFrame("BATTLE FIELD");
         frame.setLocation(350, 150);
