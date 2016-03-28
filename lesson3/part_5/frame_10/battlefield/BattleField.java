@@ -65,18 +65,9 @@ public class BattleField {
                     new Brick(448,512, this), new Brick(512,512, this)},
     };
 
-
-
     public BattleField() {
 
     }
-//    public BattleField(String[][] battleField) {
-//        this.battleField = battleField;
-//    }
-//
-//    public String scanQuadrant(int v, int h) {
-//        return battleField[v][h];
-//    }
 
     public BattleField(SomeObjectOfBattleField[][] battleField) {
         this.battleField = battleField;
@@ -85,10 +76,6 @@ public class BattleField {
     public SomeObjectOfBattleField scanQuadrant(int v, int h) {
         return battleField[v][h];
     }
-
-//    public void updateQuadrant(int v, int h, String object) {
-//        battleField[v][h] = object;
-//    }
 
     public void updateQuadrant(int v, int h, SomeObjectOfBattleField object) {
         battleField[v][h] = object;
@@ -111,10 +98,6 @@ public class BattleField {
     public int getBF_HEIGHT() {
         return BF_HEIGHT;
     }
-
-//    public String[][] getBattleField() {
-//        return battleField;
-//    }
 
     public SomeObjectOfBattleField[][] getBattleField() {
         return battleField;
@@ -199,10 +182,10 @@ public class BattleField {
 
         for (int j = 0; j < getBattleField().length; j++) {
             for (int k = 0; k < getBattleField().length; k++) {
-                String coordinates = af.getQuadrantXY(j + 1, k + 1);
-                int separator = coordinates.indexOf("_");
-                int y = Integer.parseInt(coordinates.substring(0, separator));
-                int x = Integer.parseInt(coordinates.substring(separator + 1));
+//                String coordinates = af.getQuadrantXY(j + 1, k + 1);
+//                int separator = coordinates.indexOf("_");
+//                int y = Integer.parseInt(coordinates.substring(0, separator));
+//                int x = Integer.parseInt(coordinates.substring(separator + 1));
 
                 if (scanQuadrant(j,k) instanceof Empty ) {
                     scanQuadrant(j,k).draw(g);
@@ -215,20 +198,6 @@ public class BattleField {
                 }else if(scanQuadrant(j,k) instanceof Eagle) {
                     scanQuadrant(j, k).draw(g);
                 }
-
-//                if (scanQuadrant(j, k) instanceof Empty ) {
-//                    //Brick brick = new Brick(x, y, this);
-//                    //brick.draw(g);
-//                } else if (scanQuadrant(j, k).equals("W")) {
-//                    Water water = new Water(x, y, this);
-//                    water.draw(g);
-//                } else if (scanQuadrant(j, k).equals("R")) {
-//                    g.setColor(new Color(132, 127, 152));
-//                    g.fillRect(x, y, 64, 64);
-//                } else if (scanQuadrant(j, k).equals("E")) {
-//                    Eagle eagle = new Eagle(x, y, this);
-//                    eagle.draw(g);
-//                }
             }
         }
     }
