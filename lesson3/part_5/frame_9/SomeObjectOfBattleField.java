@@ -1,15 +1,19 @@
 package lesson3.part_5.frame_9;
 
-public abstract class AbstractObjectBattleField implements Drawable{
+import java.awt.*;
+
+public class SomeObjectOfBattleField implements Drawable{
 
     private int x;
     private int y;
     private BattleField bf;
+    private Color color;
 
-    public AbstractObjectBattleField(int x, int y, BattleField bf) {
+    public SomeObjectOfBattleField(int x, int y, BattleField bf,Color color) {
         this.x = x;
         this.y = y;
         this.bf = bf;
+        this.color = color;
     }
 
     public int getX() {
@@ -34,5 +38,11 @@ public abstract class AbstractObjectBattleField implements Drawable{
 
     public void setBf(BattleField bf) {
         this.bf = bf;
+    }
+
+    @Override
+    public void draw(Graphics g) {
+        g.setColor(color);
+        g.fillRect(x,y,64,64);
     }
 }

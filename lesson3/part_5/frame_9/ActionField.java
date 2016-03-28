@@ -38,7 +38,7 @@ public class ActionField extends JPanel {
 //                addAgressor();
 //            }
 //        }
-        //defender.moveRandom();
+//        agressor.moveRandom();
     }
 
     private boolean processInterception() throws Exception {
@@ -52,7 +52,7 @@ public class ActionField extends JPanel {
                     || (bf.scanQuadrant(y, x).equals("R") && bullet.getTank() instanceof Tiger)) {
                 bf.updateQuadrant(y, x, " ");
                 return true;
-            }else if(bf.scanQuadrant(y, x).equals("R") && bullet.getTank() instanceof T34){
+            } else if (bf.scanQuadrant(y, x).equals("R") && bullet.getTank() instanceof T34) {
                 return true;
             }
         }
@@ -63,7 +63,7 @@ public class ActionField extends JPanel {
             return true;
         }
 
-        if (getQuadrant(defender.getX(), defender.getY()).equals(coorditateXY)&& bullet.getTank() != defender) {
+        if (getQuadrant(defender.getX(), defender.getY()).equals(coorditateXY) && bullet.getTank() != defender) {
             defender.destroy();
             return true;
         }
@@ -113,37 +113,46 @@ public class ActionField extends JPanel {
         return null;
     }
 
-    public void processMove(AbstractTank defender) throws Exception {
+    public void processMove(AbstractTank tank) throws Exception {
 
-        this.defender = defender;
+        if (tank instanceof T34) {
+            this.defender = tank;
+        } else {
+            this.agressor = tank;
+        }
 
         int step = 1;
         int index = 0;
 
-        if ((defender.getDirection() == Direction.MOVE_LEFT && defender.getX() == bf.getMIN_QUADRANT_COORDINATE())
-                || (defender.getDirection() == Direction.MOVE_RIGHT && defender.getX() == bf.getMAX_QUADRANT_COORDINATE())
-                || (defender.getDirection() == Direction.MOVE_UP && defender.getY() == bf.getMIN_QUADRANT_COORDINATE())
-                || (defender.getDirection() == Direction.MOVE_DOWN && defender.getY() == bf.getMAX_QUADRANT_COORDINATE())) {
-            System.out.println("[wrong move]: " + "tankX: " + defender.getX() + ", tankY: " + defender.getY());
+        if ((tank.getDirection() == Direction.MOVE_LEFT && tank.getX() == bf.getMIN_QUADRANT_COORDINATE())
+                || (tank.getDirection() == Direction.MOVE_RIGHT && tank.getX() == bf.getMAX_QUADRANT_COORDINATE())
+                || (tank.getDirection() == Direction.MOVE_UP && tank.getY() == bf.getMIN_QUADRANT_COORDINATE())
+                || (tank.getDirection() == Direction.MOVE_DOWN && tank.getY() == bf.getMAX_QUADRANT_COORDINATE())) {
+            System.out.println("[wrong move]: " + "tankX: " + tank.getX() + ", tankY: " + tank.getY());
             return;
         }
 
-        defender.turn(defender.getDirection());
+        if (tank instanceof T34) {
+            defender.turn(defender.getDirection());
+        } else {
+            agressor.turn(agressor.getDirection());
+        }
+        //tank.turn(tank.getDirection());
 
         while (index < bf.getSIZE_ONE_QUADRANT()) {
-            if (defender.getDirection() == Direction.MOVE_UP) {
-                defender.updateY(-step);
-            } else if (defender.getDirection() == Direction.MOVE_DOWN) {
-                defender.updateY(step);
-            } else if (defender.getDirection() == Direction.MOVE_LEFT) {
-                defender.updateX(-step);
+            if (tank.getDirection() == Direction.MOVE_UP) {
+                tank.updateY(-step);
+            } else if (tank.getDirection() == Direction.MOVE_DOWN) {
+                tank.updateY(step);
+            } else if (tank.getDirection() == Direction.MOVE_LEFT) {
+                tank.updateX(-step);
             } else {
-                defender.updateX(step);
+                tank.updateX(step);
             }
 
             index += step;
             repaint();
-            Thread.sleep(defender.getSpeed());
+            Thread.sleep(tank.getSpeed());
         }
     }
 
@@ -264,47 +273,48 @@ public class ActionField extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        int i = 0;
-        Color cc;
-        for (int v = 0; v < 9; v++) {
-            for (int h = 0; h < 9; h++) {
-                if (COLORDED_MODE) {
-                    if (i % 2 == 0) {
-                        cc = new Color(252, 241, 177);
-                    } else {
-                        cc = new Color(233, 243, 255);
-                    }
-                } else {
-                    cc = new Color(180, 180, 180);
-                }
-                i++;
-                g.setColor(cc);
-                g.fillRect(h * 64, v * 64, 64, 64);
-            }
-        }
+//        int i = 0;
+//        Color cc;
+//        for (int v = 0; v < 9; v++) {
+//            for (int h = 0; h < 9; h++) {
+//                if (COLORDED_MODE) {
+//                    if (i % 2 == 0) {
+//                        cc = new Color(252, 241, 177);
+//                    } else {
+//                        cc = new Color(233, 243, 255);
+//                    }
+//                } else {
+//                    cc = new Color(180, 180, 180);
+//                }
+//                i++;
+//                g.setColor(cc);
+//                g.fillRect(h * 64, v * 64, 64, 64);
+//            }
+//        }
+        bf.printComponent(g, this);
 
-        for (int j = 0; j < bf.getBattleField().length; j++) {
-            for (int k = 0; k < bf.getBattleField().length; k++) {
-                String coordinates = getQuadrantXY(j + 1, k + 1);
-                int separator = coordinates.indexOf("_");
-                int y = Integer.parseInt(coordinates.substring(0, separator));
-                int x = Integer.parseInt(coordinates.substring(separator + 1));
-
-                if (bf.scanQuadrant(j, k).equals("B")) {
-                    Brick brick = new Brick(x,y,bf);
-                    brick.draw(g);
-                }else if(bf.scanQuadrant(j, k).equals("W")){
-                    Water water = new Water(x,y,bf);
-                    water.draw(g);
-                }else if(bf.scanQuadrant(j, k).equals("R")){
-                    g.setColor(new Color(132, 127, 152));
-                    g.fillRect(x, y, 64, 64);
-                }else if(bf.scanQuadrant(j, k).equals("E")) {
-                    Eagle eagle = new Eagle(x,y,bf);
-                    eagle.draw(g);
-                }
-            }
-        }
+//        for (int j = 0; j < bf.getBattleField().length; j++) {
+//            for (int k = 0; k < bf.getBattleField().length; k++) {
+//                String coordinates = getQuadrantXY(j + 1, k + 1);
+//                int separator = coordinates.indexOf("_");
+//                int y = Integer.parseInt(coordinates.substring(0, separator));
+//                int x = Integer.parseInt(coordinates.substring(separator + 1));
+//
+//                if (bf.scanQuadrant(j, k).equals("B")) {
+//                    Brick brick = new Brick(x, y, bf);
+//                    brick.draw(g);
+//                } else if (bf.scanQuadrant(j, k).equals("W")) {
+//                    Water water = new Water(x, y, bf);
+//                    water.draw(g);
+//                } else if (bf.scanQuadrant(j, k).equals("R")) {
+//                    g.setColor(new Color(132, 127, 152));
+//                    g.fillRect(x, y, 64, 64);
+//                } else if (bf.scanQuadrant(j, k).equals("E")) {
+//                    Eagle eagle = new Eagle(x, y, bf);
+//                    eagle.draw(g);
+//                }
+//            }
+//        }
 
         defender.draw(g);
         agressor.draw(g);

@@ -2,15 +2,14 @@ package lesson3.part_5.frame_9;
 
 import java.awt.*;
 
-public class Brick extends AbstractObjectBattleField {
+public class Brick extends SomeObjectOfBattleField implements Destroyable {
 
     public Brick(int x, int y, BattleField bf) {
-        super(x, y, bf);
+        super(x, y, bf, new Color(255, 3, 9));
     }
 
     @Override
-    public void draw(Graphics g) {
-        g.setColor(new Color(255, 3, 9));
-        g.fillRect(getX(), getY(), 64, 64);
+    public void destroy() {
+        getBf().updateQuadrant(getY(), getX(), " ");
     }
 }
