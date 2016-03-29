@@ -38,11 +38,21 @@ public class Classroom {
 
     public void isPresent(String name, String secondName) {
         int index = searchStudentInTheClassRoom(name, secondName);
-        if(index >= 0 ){
-            System.out.println("This student " + students.get(index).toString() + "in the classroom.");
-        }else {
+        if (index >= 0) {
+            System.out.println("This student " + students.get(index).toString() + " in the classroom.");
+        } else {
             System.out.println("Thet student " + name + " " + secondName + " is not in the classroom.");
         }
+    }
+
+    public void isPresent(Student stud) {
+        for (Student s : students) {
+            if (s.toString().equals(stud.toString())) {
+                System.out.println("This student " + stud.toString() + " in the classroom.");
+                return;
+            }
+        }
+        System.out.println("Thet student " + stud.toString() + " is not in the classroom.");
     }
 
     public void printStudentInfo() {

@@ -3,11 +3,9 @@ package lesson4.part_01.frame_5.second;
 public class Demo2 {
     public static void main(String[] args) {
         Classroom c1 = new Classroom();
+
         c1.getStudentCount();
-        c1.openClassRoom();
-
         printSeparator();
-
         c1.cameTheCrowdOfStudents();
         c1.getStudentCount();
         c1.printStudentInfo();
@@ -15,19 +13,18 @@ public class Demo2 {
         c1.enter(new Student("Kotovskiy", "Aleksey"));
         c1.printStudentInfo();
         c1.getStudentCount();
-//        printSeparator();
-//        c.isPresent("Petrov", "Ivan");
-//        c.isPresent("Kotovskiy", "Aleksey");
-//        c.addStudentInTheClassroom("Kumar", "Sergey");
-//        printSeparator();
-//        c.printStudentInfo();
-//        printSeparator();
+        printSeparator();
+
+        c1.isPresent("Petrov", "Ivan");
+        Student petrov = new Student();
+        petrov.setName("Petrov");
+        petrov.setSecondName("Michail");
+
+        c1.isPresent(petrov);
+        c1.isPresent(new Student("Ivanchenko", "Aleksey"));
+        printSeparator();
+
 //        c.leave();
-//        c.getStudentCount();
-//        printSeparator();
-//        c.enter();
-//        c.removeStudent("Kumar", "Sergey");
-//        c.getStudentCount();
 //        c.printStudentInfo();
 
 
