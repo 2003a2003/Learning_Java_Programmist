@@ -1,4 +1,4 @@
-package lesson4.part_01.frame_5;
+package lesson4.part_01.frame_5.second;
 
 public class Student {
     private String name;
@@ -23,5 +23,10 @@ public class Student {
 
     public void setSecondName(String secondName) {
         this.secondName = secondName;
+    }
+
+    @Override
+    public String toString() {
+        return name + " " + secondName;
     }
 }
