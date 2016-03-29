@@ -2,6 +2,7 @@ package lesson4.part_01.frame_5.second;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Arrays;
 
 public class Classroom {
 
@@ -28,8 +29,31 @@ public class Classroom {
         students.add(stud);
     }
 
-    public void leave() {
+    public void enter(String name, String secondName) {
+        System.out.println("Student " + name + " " + secondName + " entered");
+        students.add(new Student(name,secondName));
+    }
 
+    public void leave(Student stud) {
+        int index = searchStudentInTheClassRoom(stud);
+
+        if(index >= 0) {
+            students.remove(index);
+            System.out.println("The student: " + stud.toString() + " left the classroom.");
+        }else{
+            System.out.println("Wrong!!!!");
+        }
+    }
+
+    public void leave(String name, String secondName) {
+        int index = searchStudentInTheClassRoom(name, secondName);
+
+        if(index >= 0) {
+            System.out.println("The student: " + students.get(index).toString() + " left the classroom.");
+            students.remove(index);
+        }else{
+            System.out.println("Wrong!!!!");
+        }
     }
 
     public void getStudentCount() {
@@ -57,31 +81,29 @@ public class Classroom {
 
     public void printStudentInfo() {
         for (int i = 0; i < students.size(); i++) {
-            System.out.println((i + 1) + ". " + students.get(i).getName() + " " +
-                    students.get(i).getSecondName());
+            System.out.println((i + 1) + ". " + students.get(i).toString());
         }
     }
 
-    private List<Student> getStudents() {
+    public List<Student> getStudents() {
         return students;
-    }
-
-    public void addStudentInTheClassroom(String name, String secondName) {
-
-    }
-
-    private void printYouAreNoInClassroom() {
-        System.out.println("You are not in the classroom.");
-    }
-
-    public void removeStudent(String name, String secondName) {
-
     }
 
     private int searchStudentInTheClassRoom(String name, String secondName) {
         int index = 0;
         for (Student s : students) {
             if (s.getName().trim().equals(name.trim()) && s.getSecondName().trim().equals(secondName.trim())) {
+                return index;
+            }
+            index++;
+        }
+        return -1;
+    }
+
+    private int searchStudentInTheClassRoom(Student o) {
+        int index = 0;
+        for (Student s: students){
+            if(s.toString().equals(o.toString())){
                 return index;
             }
             index++;
