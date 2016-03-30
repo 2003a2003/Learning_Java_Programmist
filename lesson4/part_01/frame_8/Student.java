@@ -35,7 +35,8 @@ public class Student {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof Student && name.equals(((Student) obj).getName()) && secondName.equals(((Student) obj).getSecondName())){
+        if (obj instanceof Student && (((Student) obj).getName() != null && ((Student) obj).getSecondName() != null) &&
+                (name.equals(((Student) obj).getName()) && secondName.equals(((Student) obj).getSecondName()))){
             return true;
         }
         return false;
