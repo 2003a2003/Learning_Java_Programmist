@@ -5,9 +5,7 @@ public class SimpleLinkedList {
     private int size;
 
     public SimpleLinkedList() {
-        root = new Node();
         size = 0;
-
     }
 
     public void addFirst(Object o){
