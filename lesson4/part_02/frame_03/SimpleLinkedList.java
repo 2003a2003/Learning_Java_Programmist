@@ -24,8 +24,8 @@ public class SimpleLinkedList {
     }
 
     private class Node {
-        private Object o;
-        private Node node;
+        Object obj;
+        Node node;
     }
 
 }
