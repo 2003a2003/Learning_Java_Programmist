@@ -41,4 +41,12 @@ public class SimpleLinkedList<S> {
     public Node getRoot() {
         return root;
     }
+
+    private void setRoot(Node root) {
+        this.root = root;
+    }
+
+    public void updateSize(int size) {
+        this.size += size;
+    }
 }
