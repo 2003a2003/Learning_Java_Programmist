@@ -1,4 +1,4 @@
-package lesson4.part_02.frame_03;
+package lesson4.part_02;
 
 public class Demo {
     public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package lesson4.part_02.frame_03;
+package lesson4.part_02;
 
 public class SimpleLinkedList {
     private Node root;
