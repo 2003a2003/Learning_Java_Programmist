@@ -4,30 +4,45 @@ public class Demo {
     public static void main(String[] args) {
         SimpleLinkedList s = new SimpleLinkedList();
 
-        System.out.println("Size start: " + s.getSize());
-        s.addFirst("Kasper");
+        System.out.println("Start program");
 
-        System.out.println("Size: " + s.getSize());
+        s.addFirst("test01");
+        System.out.print("Size: " + s.getSize());
         s.printList();
 
-        s.addLast("Pupsik");
-        System.out.println("Size: " + s.getSize());
+        s.addLast("test02");
+        System.out.print("Size: " + s.getSize());
         s.printList();
 
-        s.addLast("test");
-        System.out.println("Size: " + s.getSize());
+        s.addLast("test03");
+        System.out.print("Size: " + s.getSize());
         s.printList();
 
-        s.addAfter("KASPER2", "Pupsik");
-        System.out.println("Size: " + s.getSize());
+        s.addAfter("test02+1", "test02");
+        System.out.print("Size: " + s.getSize());
         s.printList();
 
-        s.addAfter("KASPER34", "test");
-        System.out.println("Size: " + s.getSize());
+        s.addAfter("test03+1", "test03");
+        System.out.print("Size: " + s.getSize());
         s.printList();
 
-        s.addAfter("KASPER44", "Kasper");
-        System.out.println("Size: " + s.getSize());
+        s.addAfter("test01+1", "test01");
+        System.out.print("Size: " + s.getSize());
         s.printList();
+
+        System.out.println("Test one element.....");
+
+        s = new SimpleLinkedList();
+        s.addFirst("test01");
+        System.out.print("Size: " + s.getSize());
+        s.printList();
+
+        s.addAfter("test01+1", "test01");
+        System.out.print("Size: " + s.getSize());
+        s.printList();
+
+        System.out.println("Test IllegalStateException");
+        s = new SimpleLinkedList();
+        s.addAfter("01test01", "test01");
     }
 }
