@@ -22,17 +22,20 @@ public class SimpleLinkedList<S> {
     }
 
     public void addLast(Object obj) {
-        Node second = new Node();
-        second.obj = obj;
-        if (root != null) {
-            Node first = root;
-            while (first.node != null) {
-                first = first.node;
+
+        Node n = new Node();
+        n.obj = obj;
+
+        if (root == null){
+            root = n;
+        }else {
+            Node last = root;
+            Node cp = root;
+            while (cp.node != null) {
+                last = cp;
+                cp = cp.node;
             }
-            first.node = second;
-            second.obj = obj;
-        } else {
-            root.obj = obj;
+            last.node = n;
         }
         size++;
     }

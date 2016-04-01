@@ -8,7 +8,5 @@ public class Demo {
         System.out.println("Size: " + s.getSize());
         s.addLast("Pupsik");
         System.out.println("Size: " + s.getSize());
-        System.out.println("First elememt: " + s);
-        System.out.println("Second element: " + s.toString());
     }
 }
