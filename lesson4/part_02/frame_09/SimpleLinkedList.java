@@ -51,8 +51,12 @@ public class SimpleLinkedList<S> {
 
         for (int i = 0; i < size; i++) {
 
-            if (cp.obj.equals(prev)) {
-                n.node = cp.node;
+            if (cp.obj == prev) {
+
+                if(cp.node != null){
+                    n.node = cp.node;
+                }
+
                 cp.node = n;
                 size++;
                 return;
@@ -70,5 +74,21 @@ public class SimpleLinkedList<S> {
     private class Node {
         Object obj;
         Node node;
+    }
+
+    public void printList(){
+        if(size == 0){
+            System.out.println("List is empty...");
+        }
+        System.out.print("[ ");
+        Node cp = root;
+
+        while (cp.node != null){
+            System.out.print(cp.obj + ". ");
+            cp = cp.node;
+        }
+
+        System.out.print(cp.obj);
+        System.out.println(" ]");
     }
 }
