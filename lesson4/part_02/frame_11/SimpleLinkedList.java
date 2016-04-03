@@ -81,14 +81,18 @@ public class SimpleLinkedList implements Iterable<Object> {
 
     private class SLLIterator implements Iterator<Object> {
 
-        protected Node cp;
+        private Node cp;
+
+        public SLLIterator() {
+        }
 
         @Override
         public boolean hasNext() {
-            if (cp != null && cp.node != null) {
-                return true;
-            }
-            return false;
+//            if (cp != null && cp.node != null) {
+//                return true;
+//            }
+//            return false;
+            return (cp == null && root != null) || (cp != null && cp.node != null);
         }
 
         @Override
@@ -104,7 +108,7 @@ public class SimpleLinkedList implements Iterable<Object> {
                 return cp.obj;
             }
 
-            return cp.obj;
+            throw new IllegalStateException("List has no more elements.");
         }
     }
 
