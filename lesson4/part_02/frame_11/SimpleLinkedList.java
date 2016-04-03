@@ -1,8 +1,6 @@
 package lesson4.part_02.frame_11;
 
 import java.util.Iterator;
-import java.util.Spliterator;
-import java.util.function.Consumer;
 
 public class SimpleLinkedList implements Iterable<Object> {
     private Node root;

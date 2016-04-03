@@ -1,48 +1,28 @@
 package lesson4.part_02.frame_11;
 
+
+import java.util.Iterator;
+
 public class Demo {
     public static void main(String[] args) {
         SimpleLinkedList s = new SimpleLinkedList();
 
-        System.out.println("Start program");
+        System.out.println("Start program.");
 
         s.addFirst("test01");
-        System.out.print("Size: " + s.getSize());
-        s.printList();
-
         s.addLast("test02");
-        System.out.print("Size: " + s.getSize());
-        s.printList();
-
         s.addLast("test03");
-        System.out.print("Size: " + s.getSize());
-        s.printList();
-
         s.addAfter("test02+1", "test02");
-        System.out.print("Size: " + s.getSize());
-        s.printList();
-
         s.addAfter("test03+1", "test03");
-        System.out.print("Size: " + s.getSize());
-        s.printList();
-
         s.addAfter("test01+1", "test01");
-        System.out.print("Size: " + s.getSize());
-        s.printList();
+//        for (Object o: s){
+//            System.out.println(o);
+//        }
 
-        System.out.println("Test one element.....");
-
-        s = new SimpleLinkedList();
-        s.addFirst("test01");
-        System.out.print("Size: " + s.getSize());
-        s.printList();
-
-        s.addAfter("test01+1", "test01");
-        System.out.print("Size: " + s.getSize());
-        s.printList();
-
-//        System.out.println("Test IllegalStateException");
-//        s = new SimpleLinkedList();
-//        s.addAfter("01test01", "test01");
+        for (Iterator<Object> it = s.iterator(); it.hasNext(); ){
+            Object o = it.next();
+            System.out.println(o);
+        }
+        System.out.println("End program.");
     }
 }
