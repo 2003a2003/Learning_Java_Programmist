@@ -38,7 +38,7 @@ public class SimpleLinkedList implements Iterable<Object> {
         size++;
     }
 
-    public void addAfter(Object obj, Object prev){
+    public void addAfter(Object obj, Object prev) {
 
         if (prev == null) {
             throw new IllegalStateException("This object is NULL!!!");
@@ -72,7 +72,7 @@ public class SimpleLinkedList implements Iterable<Object> {
         private Node node;
     }
 
-    public void remove(Object obj){
+    public void remove(Object obj) {
 
         Node cp = root;
         Node pred = root;
@@ -86,7 +86,7 @@ public class SimpleLinkedList implements Iterable<Object> {
             pred = cp;
             cp = cp.node;
         }
-        throw  new IllegalStateException("Cann't search object");
+        throw new IllegalStateException("Cann't search object");
     }
 
     @Override
@@ -96,9 +96,32 @@ public class SimpleLinkedList implements Iterable<Object> {
 
     private class SLLIterator implements Iterator<Object> {
 
+        private Node prev;
         private Node cp;
 
         public SLLIterator() {
+        }
+
+        @Override
+        public void remove() {
+            if (!hasNext() && prev == null) {
+                //only one element
+                cp = null;
+                root = null;
+            } else if (!hasNext() && prev != null) {
+                //last element
+                prev.node = null;
+                cp = null;
+            }else if(hasNext() && prev == null){
+                //first element
+                root = cp.node;
+                cp = root;
+            }else{
+                //middle element
+                prev.node = cp.node;
+                cp = cp.node;
+            }
+            size--;
         }
 
         @Override
@@ -109,10 +132,12 @@ public class SimpleLinkedList implements Iterable<Object> {
         @Override
         public Object next() {
             if (root != null && cp == null) {
+                //first
                 cp = root;
                 return cp.obj;
             }
-            if(hasNext()){
+            if (hasNext()) {
+                prev = cp;
                 cp = cp.node;
                 return cp.obj;
             }

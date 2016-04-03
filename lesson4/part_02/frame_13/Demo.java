@@ -7,22 +7,22 @@ public class Demo {
     public static void main(String[] args) {
         SimpleLinkedList s = new SimpleLinkedList();
 
-        System.out.println("Start program.");
+        System.out.println("Start program. Add elements.");
 
         s.addFirst("test01");
         s.addFirst("test02");
         s.addFirst("test03");
+        s.printList();
 
-        for (Iterator<Object> it = s.iterator(); it.hasNext(); ){
-            Object o = it.next();
-            System.out.println(o);
-        }
-        System.out.println("End program.");
+        System.out.println("Remove elements.");
 
         s.remove("test01");
+        s.printList();
         for (Iterator<Object> it = s.iterator(); it.hasNext(); ){
-            Object o = it.next();
-            System.out.println(o);
+            it.next();
+            it.remove();
+            break;
         }
+        s.printList();
     }
 }
