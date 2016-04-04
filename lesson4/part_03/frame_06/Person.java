@@ -46,6 +46,16 @@ public class Person {
             rez = perem * rez + ((Long) salary).hashCode();
         }
 
+        /*
+        primer Olega
+        int result = 25;
+        result = 37 * result + name.hashCode();
+        result = 37 * result + age;
+        result = 37 * result + new Long(salary).hashCode();
+        //faster, copy implementation
+        //result = 37 * result + ((int)(salary^(salary >>> 32)));
+        */
+
         return rez;
     }
 
