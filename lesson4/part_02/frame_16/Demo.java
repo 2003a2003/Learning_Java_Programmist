@@ -17,6 +17,7 @@ public class Demo {
         str.add("Hand");
         str.add("Not");
 
+        Collections.sort(str);
         printList(str);
 
         Collections.sort(str,new Comparator());
