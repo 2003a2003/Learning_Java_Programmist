@@ -6,7 +6,7 @@ import java.util.Collections;
 public class Demo {
     public static void main(String[] args) {
         ArrayList<String> str = new ArrayList<>();
-        str.add("Alex");
+        str.add(new String("Alex"));
         str.add("Boris");
         str.add("Ciner");
         str.add("Dodge");
@@ -28,7 +28,8 @@ public class Demo {
         int index = 0;
         for (String s : str){
             System.out.print(s);
-            if(index < str.size()-1){
+            index++;
+            if(index < str.size()){
                 System.out.print(", ");
             }
         }
