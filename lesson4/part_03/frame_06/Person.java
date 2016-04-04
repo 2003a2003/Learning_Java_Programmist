@@ -3,7 +3,7 @@ package lesson4.part_03.frame_06;
 public class Person {
     private String name;
     private int age;
-    long salary;
+    private long salary;
 
     public Person() {
     }
