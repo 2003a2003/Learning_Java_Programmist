@@ -59,7 +59,7 @@ public abstract class AbstractTank implements Tank {
 			bulletX = x + 64;
 			bulletY = y + 25;
 		}
-		return new Bullet(bulletX, bulletY, direction);
+		return new Bullet(bulletX, bulletY, direction, this);
 	}
 	
 	public void draw(Graphics g) {
