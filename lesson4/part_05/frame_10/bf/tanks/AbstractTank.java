@@ -126,4 +126,8 @@ public abstract class AbstractTank implements Tank {
 	public int getMovePath() {
 		return movePath;
 	}
+
+	public BattleField getBf() {
+		return bf;
+	}
 }

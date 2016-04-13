@@ -1,11 +1,6 @@
 package lesson4.part_05.frame_10;
 
-import lesson3.part_5.frame_10.battlefield.Brick;
-import lesson3.part_5.frame_10.battlefield.Eagle;
-import lesson3.part_5.frame_10.battlefield.Rock;
-import lesson4.part_05.frame_10.bf.BFObject;
-import lesson4.part_05.frame_10.bf.BattleField;
-import lesson4.part_05.frame_10.bf.Blank;
+import lesson4.part_05.frame_10.bf.*;
 import lesson4.part_05.frame_10.bf.tanks.Action;
 import lesson4.part_05.frame_10.bf.tanks.*;
 
@@ -46,13 +41,13 @@ public class ActionField extends JPanel {
 
 
         while (true) {
-            //if (!aggressor.isDestroyed() && !defender.isDestroyed()) {
-            if (!aggressor.isDestroyed()) {
+            if (!aggressor.isDestroyed() && !defender.isDestroyed()) {
+            //if (!aggressor.isDestroyed()) {
                 processAction(aggressor.setUp(), aggressor);
             }
-//			if (!aggressor.isDestroyed() && !defender.isDestroyed()) {
-//				processAction(defender.setUp(), defender);
-//			}
+			if (!aggressor.isDestroyed() && !defender.isDestroyed()) {
+				processAction(defender.setUp(), defender);
+			}
         }
     }
 
@@ -180,7 +175,7 @@ public class ActionField extends JPanel {
                     battleField.destroyObject(y, x);
                 } else if (bfObject instanceof Rock && bullet.getTank() instanceof Tiger) {
                     battleField.destroyObject(y, x);
-                }else if(bfObject instanceof Blank){
+                }else if(bfObject instanceof Blank || bfObject instanceof Water){
                     return false;
                 }
                 return true;
@@ -236,6 +231,10 @@ public class ActionField extends JPanel {
         }
 
         aggressor = new BT7(battleField, x, y, Direction.DOWN);
+    }
+
+    public boolean checkQuadrant(){
+        return true;
     }
 
     public ActionField() throws Exception {

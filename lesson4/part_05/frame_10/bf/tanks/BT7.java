@@ -1,7 +1,8 @@
 package lesson4.part_05.frame_10.bf.tanks;
 
-import lesson4.part_05.frame_10.bf.BattleField;
+import lesson4.part_05.frame_10.bf.*;
 import lesson4.part_05.frame_10.Direction;
+import test.Direct;
 
 import java.awt.*;
 
@@ -42,66 +43,75 @@ public class BT7 extends AbstractTank {
 
     public void destoryEagle() {
 
-        if ((getX() >= 0 && getX() <= 512) && (getY() >= 0 && getY() <= 512)) {
-            if (getDirection() == Direction.DOWN) {
-                if (getY() != 512) {
-                    actoins = new Object[]{
-                            Action.FIRE,
-                            Action.MOVE,
-                    };
-                } else if (getX() == 0) {
-                    actoins = new Object[]{
-                            Direction.RIGHT,
-                            Action.FIRE,
-                    };
-                } else if (getX() == 512) {
-                    actoins = new Object[]{
-                            Direction.LEFT,
-                            Action.FIRE,
-                    };
-                }
+//        int x = getX() / 64;
+//        int y = getY() / 64;
+//
+//        if (getDirection() == Direction.DOWN && checkQuadrant(x, y + 1)) {
+//            if (getBf().scanQuadrant(y + 1, x) instanceof Destroyable) {
+//                if (!(getBf().scanQuadrant(y + 1, x) instanceof Rock)) {
+//                    actoins = new Object[]{
+//                            Action.FIRE,
+//                            Action.MOVE,
+//                    };
+//                } else {
+//                    actoins = new Object[]{
+//                            Direction.LEFT,
+//                    };
+//                }
+//            }else {
+//                actoins = new Object[]{
+//                        Direction.LEFT,
+//                };
+//            }
+//        }
+        if (getX() == 0) {
+            actoins = new Object[]{
+                    Action.FIRE,
+                    Action.FIRE,
+                    Action.FIRE,
 
-            } else if (getDirection() == Direction.UP) {
-                if (getY() != 0) {
-                    actoins = new Object[]{
-                            Action.FIRE,
-                            Action.MOVE,
-                    };
-                } else if (getX() == 0) {
-                    actoins = new Object[]{
-                            Direction.LEFT,
-                    };
-                }
-            } else if (getDirection() == Direction.RIGHT) {
+                    Action.MOVE,
+                    Action.MOVE,
+                    Action.MOVE,
+                    Direction.RIGHT,
 
-                if (getX() != 512) {
-                    actoins = new Object[]{
-                            Action.FIRE,
-                            Action.MOVE,
-                    };
-                } else if (getY() == 512) {
-                    actoins = new Object[]{
-                            Direction.UP,
-                            Action.FIRE,
-                    };
-                }
+                    Action.FIRE,
+                    Action.FIRE,
+                    Action.MOVE,
+                    Action.MOVE,
+                    Action.MOVE,
 
-            } else if (getDirection() == Direction.LEFT) {
+                    Direction.DOWN,
+            };
 
-                if (getX() != 0) {
-                    actoins = new Object[]{
-                            Action.FIRE,
-                            Action.MOVE,
-                    };
-                } else if (getX() == 0 && getY() == 512) {
-                    actoins = new Object[]{
-                            Direction.UP,
-                            Action.FIRE,
-                    };
-                }
+        } else if (getX() == 256){
+            actoins = new Object[]{
+                    Direction.DOWN,
+                    Action.FIRE,
+                    Action.FIRE,
+                    Action.FIRE,
+                    Action.FIRE,
+                    Action.NONE,
+            };
 
-            }
+        }else if(getX() == 512){
+            actoins = new Object[]{
+                    Action.FIRE,
+                    Action.FIRE,
+                    Action.FIRE,
+                    Action.FIRE,
+                    Action.NONE,
+            };
         }
+    }
+
+
+    private boolean checkQuadrant(int x, int y) {
+
+        if (x >= 0 && x <= 512 && y >= 0 && y <= 512) {
+            return true;
+        }
+        return false;
     }
 
     @Override
