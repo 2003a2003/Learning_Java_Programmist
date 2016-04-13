@@ -1,6 +1,8 @@
 package lesson4.part_05.frame_08;
 
-public class SimpleArrayList {
+import java.util.Iterator;
+
+public class SimpleArrayList implements Iterable<Object>{
     private Object[] obj;
     private int size;
 
@@ -130,5 +132,29 @@ public class SimpleArrayList {
     private void printNoObject(Object object) {
         System.out.println("This object: " + object + " no in that list.");
         System.out.println("-------------------------------");
+    }
+
+
+    @Override
+    public Iterator<Object> iterator() {
+        return new SALIterator();
+    }
+
+    private class SALIterator implements Iterator<Object> {
+
+        private int index = 0;
+
+        @Override
+        public boolean hasNext() {
+            return (index < size);
+        }
+
+        @Override
+        public Object next() {
+            if(size != 0 && index < size ){
+                return obj[index++];
+            }
+            throw new IllegalStateException("List has no elements.");
+        }
     }
 }

@@ -50,6 +50,12 @@ public class Demo {
 
         list.remove(10);
         list.printList();
+        System.out.println();
+        System.out.println("++++++++++++");
+
+        for(Object l : list){
+            System.out.println(l);
+        }
 
     }
 }
