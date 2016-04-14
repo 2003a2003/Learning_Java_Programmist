@@ -1,10 +1,10 @@
 package lesson4.part_05.frame_10.bf.tanks;
 
-import lesson4.part_05.frame_10.bf.*;
 import lesson4.part_05.frame_10.Direction;
-import test.Direct;
+import lesson4.part_05.frame_10.bf.*;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public class BT7 extends AbstractTank {
 
@@ -25,6 +25,7 @@ public class BT7 extends AbstractTank {
 
     private Object[] actoins;
     private int step = 0;
+    private ArrayList<Object> list = new ArrayList<>();
 
     public BT7(BattleField bf) {
         super(bf);
@@ -41,7 +42,60 @@ public class BT7 extends AbstractTank {
     }
 
 
-    public void destoryEagle() {
+    public void scanMap() {
+
+        //получить следующий квадрант по директу и темп директу присвоить предідущий директ
+        Direction direction = getDirection();
+        Direction lastDirection;
+
+        int x = getX() / 64;
+        int y = getY() / 64;
+
+        if (direction != Direction.DOWN) {
+            lastDirection = Direction.DOWN;
+            list.add(Direction.DOWN);
+        }
+
+        while (y != 8) {
+            // check next quadrant before move
+            System.out.println(list.size());
+            if (x < 5) {
+                if (y < 8) {
+                    if (direction == Direction.UP) {
+                        y--;
+                    } else if (direction == Direction.DOWN) {
+                        y++;
+                    } else if (direction == Direction.RIGHT) {
+                        x++;
+                    } else if (direction == Direction.LEFT) {
+                        x--;
+                    }
+
+                    BFObject bfobject = getBf().scanQuadrant(y, x);
+
+                    if (bfobject instanceof Water && bfobject instanceof Rock) {
+                        lastDirection = direction;
+                        if (direction == Direction.DOWN) {
+                            direction = Direction.LEFT;
+                        } else if (direction == Direction.LEFT) {
+                            direction = Direction.RIGHT;
+                        } else if (direction == Direction.RIGHT) {
+                            direction = Direction.UP;
+                        } else if (direction == Direction.UP) {
+                            direction = Direction.DOWN;
+                        }
+
+                        System.out.println("STOP NOT MOVE");
+                    } else if (bfobject instanceof Blank) {
+                        list.add(Action.MOVE);
+                    } else {
+                        list.add(Action.FIRE);
+                        list.add(Action.MOVE);
+                    }
+                }
+            }
+        }
+
 
 //        int x = getX() / 64;
 //        int y = getY() / 64;
@@ -64,51 +118,52 @@ public class BT7 extends AbstractTank {
 //                };
 //            }
 //        }
-        if (getX() == 0) {
-            actoins = new Object[]{
-                    Action.FIRE,
-                    Action.FIRE,
-                    Action.FIRE,
+//        if (getX() == 0) {
+    actoins=new Object[] {
+        Direction.DOWN,
+                Action.FIRE,
+                Action.MOVE,
+                Action.MOVE,
+                Action.MOVE,
+                Direction.RIGHT,
+                Action.FIRE,
+                Action.MOVE,
+                Direction.LEFT,
+                Action.FIRE,
+                Action.MOVE,
+                Direction.UP,
+                Action.FIRE,
+                Action.MOVE,
 
-                    Action.MOVE,
-                    Action.MOVE,
-                    Action.MOVE,
-                    Direction.RIGHT,
-
-                    Action.FIRE,
-                    Action.FIRE,
-                    Action.MOVE,
-                    Action.MOVE,
-                    Action.MOVE,
-
-                    Direction.DOWN,
-            };
-
-        } else if (getX() == 256){
-            actoins = new Object[]{
-                    Direction.DOWN,
-                    Action.FIRE,
-                    Action.FIRE,
-                    Action.FIRE,
-                    Action.FIRE,
-                    Action.NONE,
-            };
-
-        }else if(getX() == 512){
-            actoins = new Object[]{
-                    Action.FIRE,
-                    Action.FIRE,
-                    Action.FIRE,
-                    Action.FIRE,
-                    Action.NONE,
-            };
-        }
     }
+
+    ;
+//
+//        } else if (getX() == 256){
+//            actoins = new Object[]{
+//                    Direction.DOWN,
+//                    Action.FIRE,
+//                    Action.FIRE,
+//                    Action.FIRE,
+//                    Action.FIRE,
+//                    Action.NONE,
+//            };
+//
+//        }else if(getX() == 512){
+//            actoins = new Object[]{
+//                    Action.FIRE,
+//                    Action.FIRE,
+//                    Action.FIRE,
+//                    Action.FIRE,
+//                    Action.NONE,
+//            };
+//        }
+}
 
 
     private boolean checkQuadrant(int x, int y) {
 
-        if (x >= 0 && x <= 512 && y >= 0 && y <= 512) {
+        if (x >= 0 && x < 9 && y >= 0 && y < 9) {
             return true;
         }
         return false;
@@ -116,7 +171,6 @@ public class BT7 extends AbstractTank {
 
     @Override
     public Action setUp() {
-        destoryEagle();
         if (step >= actoins.length) {
             step = 0;
         }
@@ -128,5 +182,4 @@ public class BT7 extends AbstractTank {
         }
         return (Action) actoins[step++];
     }
-
 }

@@ -13,7 +13,7 @@ public class ActionField extends JPanel {
 
     private BattleField battleField;
     private Tank defender;
-    private Tank aggressor;
+    private BT7 aggressor;
     private Bullet bullet;
 
     /**
@@ -39,15 +39,15 @@ public class ActionField extends JPanel {
 //		aggressor.fire();
 //		aggressor.fire();
 
-
+        aggressor.scanMap();
         while (true) {
             if (!aggressor.isDestroyed() && !defender.isDestroyed()) {
             //if (!aggressor.isDestroyed()) {
                 processAction(aggressor.setUp(), aggressor);
             }
-			if (!aggressor.isDestroyed() && !defender.isDestroyed()) {
-				processAction(defender.setUp(), defender);
-			}
+//			if (!aggressor.isDestroyed() && !defender.isDestroyed()) {
+//				processAction(defender.setUp(), defender);
+//			}
         }
     }
 
@@ -103,12 +103,11 @@ public class ActionField extends JPanel {
 //				return;
 //			}
 
-            if (!(bfobject instanceof Blank) && !bfobject.isDestroyed()) {
-//				System.out.println("[illegal move] direction: " + direction
-//						+ " tankX: " + tank.getX() + ", tankY: " + tank.getY());
+            if (!(bfobject instanceof Blank) && !bfobject.isDestroyed() ) {
+				System.out.println("[illegal move] direction: " + direction
+						+ " tankX: " + tank.getX() + ", tankY: " + tank.getY());
                 return;
             }
-
 
             // process move
             while (covered < 64) {
@@ -131,6 +130,11 @@ public class ActionField extends JPanel {
                 Thread.sleep(tank.getSpeed());
             }
         }
+    }
+
+    private boolean checkQuadrant(int v, int h){
+
+        return true;
     }
 
     private void processFire(Bullet bullet) throws Exception {
@@ -183,7 +187,8 @@ public class ActionField extends JPanel {
 
 
             // check aggressor
-            if (!aggressor.isDestroyed() && checkInterception(getQuadrant(aggressor.getX(), aggressor.getY()), coordinates)) {
+            if (!aggressor.isDestroyed() && checkInterception(getQuadrant(aggressor.getX(), aggressor.getY()),
+                    coordinates) && !bullet.getTank().equals(aggressor)) {
                 aggressor.destroy();
                 return true;
             }
@@ -231,10 +236,6 @@ public class ActionField extends JPanel {
         }
 
         aggressor = new BT7(battleField, x, y, Direction.DOWN);
-    }
-
-    public boolean checkQuadrant(){
-        return true;
     }
 
     public ActionField() throws Exception {

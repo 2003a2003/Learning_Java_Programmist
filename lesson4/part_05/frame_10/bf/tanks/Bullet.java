@@ -44,7 +44,7 @@ public class Bullet implements Drawable, Destroyable {
 	@Override
 	public void draw(Graphics g) {
 		if (!destroyed) {
-			g.setColor(new Color(90, 255, 71));
+			g.setColor(new Color(8, 2, 6));
 			g.fillRect(this.x, this.y, 14, 14);
 		}
 	}
