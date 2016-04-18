@@ -246,7 +246,7 @@ public class ActionField extends JPanel {
 //		aggressor = new BT7(battleField,
 //			Integer.parseInt(location.split("_")[1]), Integer.parseInt(location.split("_")[0]), Direction.RIGHT);
 
-        //bullet = new Bullet(-100, -100, Direction.NONE);
+//        bullet = new Bullet(-100, -100, Direction.NONE);
 
         JFrame frame = new JFrame("BATTLE FIELD");
         frame.setLocation(350, 150);
@@ -283,6 +283,6 @@ public class ActionField extends JPanel {
         battleField.draw(g);
         defender.draw(g);
         aggressor.draw(g);
-        bullet.draw(g);
+        //bullet.draw(g);
     }
 }
