@@ -44,120 +44,62 @@ public class BT7 extends AbstractTank {
 
     public void scanMap() {
 
-        //получить следующий квадрант по директу и темп директу присвоить предідущий директ
-        Direction direction = getDirection();
-        Direction lastDirection;
-
-        int x = getX() / 64;
-        int y = getY() / 64;
-
-        if (direction != Direction.DOWN) {
-            lastDirection = Direction.DOWN;
-            list.add(Direction.DOWN);
-        }
-
-        while (y != 8) {
-            // check next quadrant before move
-            System.out.println(list.size());
-            if (x < 5) {
-                if (y < 8) {
-                    if (direction == Direction.UP) {
-                        y--;
-                    } else if (direction == Direction.DOWN) {
-                        y++;
-                    } else if (direction == Direction.RIGHT) {
-                        x++;
-                    } else if (direction == Direction.LEFT) {
-                        x--;
-                    }
-
-                    BFObject bfobject = getBf().scanQuadrant(y, x);
-
-                    if (bfobject instanceof Water && bfobject instanceof Rock) {
-                        lastDirection = direction;
-                        if (direction == Direction.DOWN) {
-                            direction = Direction.LEFT;
-                        } else if (direction == Direction.LEFT) {
-                            direction = Direction.RIGHT;
-                        } else if (direction == Direction.RIGHT) {
-                            direction = Direction.UP;
-                        } else if (direction == Direction.UP) {
-                            direction = Direction.DOWN;
-                        }
-
-                        System.out.println("STOP NOT MOVE");
-                    } else if (bfobject instanceof Blank) {
-                        list.add(Action.MOVE);
-                    } else {
-                        list.add(Action.FIRE);
-                        list.add(Action.MOVE);
-                    }
-                }
-            }
-        }
-
-
+//        Direction direction = getDirection();
+//        Direction lastDirection;
+//
 //        int x = getX() / 64;
 //        int y = getY() / 64;
 //
-//        if (getDirection() == Direction.DOWN && checkQuadrant(x, y + 1)) {
-//            if (getBf().scanQuadrant(y + 1, x) instanceof Destroyable) {
-//                if (!(getBf().scanQuadrant(y + 1, x) instanceof Rock)) {
-//                    actoins = new Object[]{
-//                            Action.FIRE,
-//                            Action.MOVE,
-//                    };
-//                } else {
-//                    actoins = new Object[]{
-//                            Direction.LEFT,
-//                    };
+//        if (direction != Direction.DOWN) {
+//            lastDirection = Direction.DOWN;
+//            list.add(Direction.DOWN);
+//        }
+//
+//        while (y != 8) {
+//            // check next quadrant before move
+//            System.out.println(list.size());
+//            if (x < 5) {
+//                if (y < 8) {
+//                    if (direction == Direction.UP) {
+//                        y--;
+//                    } else if (direction == Direction.DOWN) {
+//                        y++;
+//                    } else if (direction == Direction.RIGHT) {
+//                        x++;
+//                    } else if (direction == Direction.LEFT) {
+//                        x--;
+//                    }
+//
+//                    BFObject bfobject = getBf().scanQuadrant(y, x);
+//
+//                    if (bfobject instanceof Water && bfobject instanceof Rock) {
+//                        lastDirection = direction;
+//                        if (direction == Direction.DOWN) {
+//                            direction = Direction.LEFT;
+//                        } else if (direction == Direction.LEFT) {
+//                            direction = Direction.RIGHT;
+//                        } else if (direction == Direction.RIGHT) {
+//                            direction = Direction.UP;
+//                        } else if (direction == Direction.UP) {
+//                            direction = Direction.DOWN;
+//                        }
+//
+//                        System.out.println("STOP NOT MOVE");
+//                    } else if (bfobject instanceof Blank) {
+//                        list.add(Action.MOVE);
+//                    } else {
+//                        list.add(Action.FIRE);
+//                        list.add(Action.MOVE);
+//                    }
 //                }
-//            }else {
-//                actoins = new Object[]{
-//                        Direction.LEFT,
-//                };
 //            }
 //        }
-//        if (getX() == 0) {
+
     actoins=new Object[] {
-        Direction.DOWN,
+                Direction.DOWN,
                 Action.FIRE,
                 Action.MOVE,
-                Action.MOVE,
-                Action.MOVE,
-                Direction.RIGHT,
-                Action.FIRE,
-                Action.MOVE,
-                Direction.LEFT,
-                Action.FIRE,
-                Action.MOVE,
-                Direction.UP,
-                Action.FIRE,
-                Action.MOVE,
-
-    }
-
-    ;
-//
-//        } else if (getX() == 256){
-//            actoins = new Object[]{
-//                    Direction.DOWN,
-//                    Action.FIRE,
-//                    Action.FIRE,
-//                    Action.FIRE,
-//                    Action.FIRE,
-//                    Action.NONE,
-//            };
-//
-//        }else if(getX() == 512){
-//            actoins = new Object[]{
-//                    Action.FIRE,
-//                    Action.FIRE,
-//                    Action.FIRE,
-//                    Action.FIRE,
-//                    Action.NONE,
-//            };
-//        }
+    };
 }
 
 
