@@ -4,7 +4,8 @@ import lesson4.part_05.frame_10.Direction;
 import lesson4.part_05.frame_10.bf.*;
 
 import java.awt.*;
-import java.util.ArrayList;
+import java.util.*;
+import java.util.List;
 
 public class BT7 extends AbstractTank {
 
@@ -26,6 +27,8 @@ public class BT7 extends AbstractTank {
     private Object[] actoins;
     private int step = 0;
     private ArrayList<Object> list = new ArrayList<>();
+    private int size = 0;
+
 
     public BT7(BattleField bf) {
         super(bf);
@@ -43,21 +46,49 @@ public class BT7 extends AbstractTank {
 
 
     public void scanMap() {
-        int xStart = getX() / 64;
-        int yStart = getY() / 64;
-        if (xStart == 0) {
-            if (scanVLine(xStart, yStart) == 0) {
-                addVActions(xStart, yStart);
-            }
-        } else if (xStart == 4) {
-            if (scanVLine(xStart, yStart) == 0) {
-                addVActions(xStart, yStart);
-            }
-        } else {
-            if (scanVLine(xStart, yStart) == 0) {
-                addVActions(yStart,yStart);
-            }
+
+        if(list.size() == 0){
+            ArrayList<Object> ll = new ArrayList<>();
         }
+
+
+
+
+
+
+
+//        }else{
+//            System.out.println("You doun't have List......");
+//        }
+        list.add(new ArrayList());
+        list.add(new ArrayList());
+
+
+
+
+
+        System.out.println(list.size());
+        System.out.println("*******************");
+
+
+//        int xStart = getX() / 64;
+//        int yStart = getY() / 64;
+//        if (xStart == 0) {
+//            if (scanVLine(xStart, yStart) == 0) {
+//                addVActions(xStart, yStart);
+//            }
+//        } else if (xStart == 4) {
+//            if (scanVLine(xStart, yStart) == 0) {
+//                addVActions(xStart, yStart);
+//            }
+//        } else {
+//            if (scanVLine(xStart, yStart) == 0) {
+//                addVActions(yStart,yStart);
+//            }
+//        }
+
+
+
 
 
     }
