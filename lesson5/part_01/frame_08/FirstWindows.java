@@ -32,11 +32,12 @@ public class FirstWindows extends JPanel {
     public static void main(String[] args) throws Exception {
         FirstWindows f = new FirstWindows();
 
-            Thread.sleep(1500);
-            System.out.println("woke up");
-
+        Thread.sleep(1500);
+        System.out.println("woke up");
+        while (x < 300) {
             x += 50;
             y += 50;
             f.repaint();
+        }
     }
 }
