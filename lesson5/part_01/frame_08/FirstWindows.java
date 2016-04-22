@@ -5,8 +5,8 @@ import java.awt.*;
 
 public class FirstWindows extends JPanel {
 
-    public static int x = 50;
-    public static int y = 50;
+    public static int x = 0;
+    public static int y = 0;
 
     public FirstWindows() {
         JFrame win = new JFrame("First Windows");
@@ -25,18 +25,12 @@ public class FirstWindows extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        g.setColor(Color.BLACK);
-        g.fillRect(x, y, 200, 200);
+        g.setColor(Color.MAGENTA);
+        g.fillRect(x, y, 800, 600);
     }
 
     public static void main(String[] args) throws Exception {
         FirstWindows f = new FirstWindows();
 
-        while (x < 300) {
-            Thread.sleep(1000);
-            x += 50;
-            y += 50;
-            f.repaint();
-        }
     }
 }
