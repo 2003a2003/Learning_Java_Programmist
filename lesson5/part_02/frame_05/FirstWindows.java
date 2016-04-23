@@ -9,7 +9,7 @@ import java.io.IOException;
 
 public class FirstWindows extends JPanel {
 
-    private final static String IMAGE_NAME = "firstImage.gif";
+    private final static String IMAGE_NAME = "iTankUP.png";
     private Image myPicher;
 
     public FirstWindows() {
@@ -42,11 +42,7 @@ public class FirstWindows extends JPanel {
 
         g.setColor(Color.BLACK);
         g.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 20));
-        g.drawString("My First TEXT on Panel ^).............", 50, 50);
-
-        g.setColor(Color.RED);
-        g.setFont(new Font("Verdana", Font.PLAIN, 20));
-        g.drawString("My First TEXT on Panel ^).............", 50, 80);
+        g.drawString("My First TEXT and Image on Panel ^).............", 50, 50);
 
         g.drawImage(myPicher, 50, 100, new ImageObserver() {
 
