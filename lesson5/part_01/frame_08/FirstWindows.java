@@ -25,7 +25,7 @@ public class FirstWindows extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        g.setColor(Color.MAGENTA);
+        g.setColor(Color.green);
         g.fillRect(x, y, 800, 600);
     }
 
