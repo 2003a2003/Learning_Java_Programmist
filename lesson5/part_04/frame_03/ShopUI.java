@@ -50,7 +50,6 @@ public class ShopUI {
 
         JLabel lProducts = new JLabel("Product: ");
         String[] products = getLaptops();
-        Arrays.sort(products);
         ButtonGroup productsGroup = new ButtonGroup();
 
         JPanel pProducts = new JPanel();
