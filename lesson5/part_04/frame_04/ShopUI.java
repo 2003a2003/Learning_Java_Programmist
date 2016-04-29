@@ -88,7 +88,7 @@ public class ShopUI {
 
                 Customer cust = new Customer();
                 cust.setName(tfName.getText());
-
+                //My Variant - Ne mog naiti index --(
                 Product product = shop.getProducts().get(productIndex);
 
                 int count = Integer.parseInt(tfCount.getText());
