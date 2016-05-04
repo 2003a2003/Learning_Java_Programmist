@@ -61,6 +61,7 @@ public class Shop {
         t.setProduct(p);
         t.setCustomer(c);
         t.setCount(count);
+        t.setPrice(p.getPrice());
 
         System.out.println(t.toString());
     }
