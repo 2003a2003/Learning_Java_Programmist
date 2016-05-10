@@ -2,9 +2,7 @@ package lesson3.part_5.frame_10.utils;
 
 import lesson3.part_5.frame_10.battlefield.*;
 import lesson3.part_5.frame_10.enums.Direction;
-import lesson3.part_5.frame_10.tanks.AbstractTank;
-import lesson3.part_5.frame_10.tanks.T34;
-import lesson3.part_5.frame_10.tanks.Tiger;
+import lesson3.part_5.frame_10.tanks.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,26 +21,13 @@ public class ActionField extends JPanel {
         defender.turn(Direction.MOVE_UP);
         agressor.turn(Direction.MOVE_DOWN);
         agressor.fire();
+        //agressor.fire();
         defender.fire();
         defender.fire();
         defender.fire();
         agressor.fire();
         agressor.fire();
         agressor.fire();
-
-//        int fire = 0;
-//        while (fire != 1) {
-//            if (agressor.getX() != -100 && agressor.getY() != -100) {
-//                if (agressor.getX() == defender.getX()) {
-//                    defender.fire();
-//                }else{
-//                    fire = 1;
-//                }
-//            } else {
-//                addAgressor();
-//            }
-//        }
-//        agressor.moveRandom();
     }
 
     private boolean processInterception() throws Exception {
@@ -52,7 +37,7 @@ public class ActionField extends JPanel {
         int x = Integer.parseInt(coorditateXY.substring(index + 1));
 
         if (y >= 0 && y < 9 && x >= 0 && x < 9) {
-            if (bf.scanQuadrant(y, x) instanceof Brick ) {
+            if (bf.scanQuadrant(y, x) instanceof Brick) {
                 Brick b = (Brick) bf.scanQuadrant(y, x);
                 b.destroy();
                 return true;
@@ -178,27 +163,6 @@ public class ActionField extends JPanel {
         while (bullet.getX() > -bullet.getSIZE_BULLET() && bullet.getX() < bf.getBF_WIDTH() + bullet.getSIZE_BULLET()
                 && bullet.getY() > -bullet.getSIZE_BULLET() && bullet.getY() < bf.getBF_HEIGHT() + bullet.getSIZE_BULLET()) {
 
-//            if(bullet.getTank().equals(defender)) {
-//                if (defender.getDirection() == Direction.MOVE_UP) {
-//                    bullet.updateY(-bullet.getButlleStep());
-//                } else if (defender.getDirection() == Direction.MOVE_DOWN) {
-//                    bullet.updateY(bullet.getButlleStep());
-//                } else if (defender.getDirection() == Direction.MOVE_LEFT) {
-//                    bullet.updateX(-bullet.getButlleStep());
-//                } else {
-//                    bullet.updateX(bullet.getButlleStep());
-//                }
-//            }else {
-//                if (agressor.getDirection() == Direction.MOVE_UP) {
-//                    bullet.updateY(-bullet.getButlleStep());
-//                } else if (agressor.getDirection() == Direction.MOVE_DOWN) {
-//                    bullet.updateY(bullet.getButlleStep());
-//                } else if (agressor.getDirection() == Direction.MOVE_LEFT) {
-//                    bullet.updateX(-bullet.getButlleStep());
-//                } else {
-//                    bullet.updateX(bullet.getButlleStep());
-//                }
-//            }
             if (bullet.getDirection() == Direction.MOVE_UP) {
                 bullet.updateY(-bullet.getButlleStep());
             } else if (bullet.getDirection() == Direction.MOVE_DOWN) {
@@ -225,7 +189,6 @@ public class ActionField extends JPanel {
         int moveToX = Integer.parseInt(koordXY.substring(koordXY.indexOf("_") + 1));
         int moveToY = Integer.parseInt(koordXY.substring(0, koordXY.indexOf("_")));
 
-//        String[][] battleField = bf.getBattleField();
         SomeObjectOfBattleField[][] battleField = bf.getBattleField();
 
         if (direction == Direction.MOVE_UP) {
@@ -271,7 +234,7 @@ public class ActionField extends JPanel {
 //        agressor = new Tank(this,bf,Integer.parseInt(bf.getAgressorLocation().split("_")[1]),
 //                Integer.parseInt(bf.getAgressorLocation().split("_")[0]),Direction.MOVE_DOWN);
 
-        //bullet = new Bullet();
+        bullet = new Bullet();
 
         JFrame frame = new JFrame("BATTLE FIELD");
         frame.setLocation(350, 150);
@@ -286,51 +249,12 @@ public class ActionField extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-//        int i = 0;
-//        Color cc;
-//        for (int v = 0; v < 9; v++) {
-//            for (int h = 0; h < 9; h++) {
-//                if (COLORDED_MODE) {
-//                    if (i % 2 == 0) {
-//                        cc = new Color(252, 241, 177);
-//                    } else {
-//                        cc = new Color(233, 243, 255);
-//                    }
-//                } else {
-//                    cc = new Color(180, 180, 180);
-//                }
-//                i++;
-//                g.setColor(cc);
-//                g.fillRect(h * 64, v * 64, 64, 64);
-//            }
-//        }
         bf.printComponent(g, this);
 
-//        for (int j = 0; j < bf.getBattleField().length; j++) {
-//            for (int k = 0; k < bf.getBattleField().length; k++) {
-//                String coordinates = getQuadrantXY(j + 1, k + 1);
-//                int separator = coordinates.indexOf("_");
-//                int y = Integer.parseInt(coordinates.substring(0, separator));
-//                int x = Integer.parseInt(coordinates.substring(separator + 1));
-//
-//                if (bf.scanQuadrant(j, k).equals("B")) {
-//                    Brick brick = new Brick(x, y, bf);
-//                    brick.draw(g);
-//                } else if (bf.scanQuadrant(j, k).equals("W")) {
-//                    Water water = new Water(x, y, bf);
-//                    water.draw(g);
-//                } else if (bf.scanQuadrant(j, k).equals("R")) {
-//                    g.setColor(new Color(132, 127, 152));
-//                    g.fillRect(x, y, 64, 64);
-//                } else if (bf.scanQuadrant(j, k).equals("E")) {
-//                    Eagle eagle = new Eagle(x, y, bf);
-//                    eagle.draw(g);
-//                }
-//            }
-//        }
-
         defender.draw(g);
+
         agressor.draw(g);
+
         bullet.draw(g);
     }
 }
