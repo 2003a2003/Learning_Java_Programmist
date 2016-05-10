@@ -1,11 +1,10 @@
 package lesson3.part_5.frame_10.tanks;
 
-import lesson3.part_5.frame_10.utils.ActionField;
-import lesson3.part_5.frame_10.battlefield.BattleField;
-import lesson3.part_5.frame_10.utils.Bullet;
-import lesson3.part_5.frame_10.enums.Direction;
-import lesson3.part_5.frame_10.interfaces.Destroyable;
-import lesson3.part_5.frame_10.interfaces.Drawable;
+import lesson3.part_5.frame_10.utils.*;
+import lesson3.part_5.frame_10.battlefield.*;
+import lesson3.part_5.frame_10.enums.*;
+import lesson3.part_5.frame_10.interfaces.*;
+
 
 import java.awt.*;
 import java.util.Random;
