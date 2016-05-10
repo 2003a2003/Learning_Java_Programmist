@@ -3,14 +3,15 @@ package lesson5.part_02.frame_05;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.ImageObserver;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+
 
 public class FirstWindows extends JPanel {
 
     private final static String IMAGE_NAME = "iTankUP.png";
-    private Image myPicher;
+    private BufferedImage myPicher;
 
     public FirstWindows() {
 
@@ -34,8 +35,8 @@ public class FirstWindows extends JPanel {
     }
 
     @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
+    public void paint(Graphics g) {
+//        super.paintComponent(g);
 
         g.setColor(Color.green);
         g.fillRect(0, 0, 800, 600);
@@ -44,13 +45,7 @@ public class FirstWindows extends JPanel {
         g.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 20));
         g.drawString("My First TEXT and Image on Panel ^).............", 50, 50);
 
-        g.drawImage(myPicher, 50, 100, new ImageObserver() {
-
-            @Override
-            public boolean imageUpdate(Image img, int infoflags, int x, int y, int width, int height) {
-                return false;
-            }
-        });
+        g.drawImage(myPicher, 50, 100, null);
     }
 
     public static void main(String[] args) throws Exception {
