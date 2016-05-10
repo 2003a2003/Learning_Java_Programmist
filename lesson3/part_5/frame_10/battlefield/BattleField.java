@@ -14,19 +14,6 @@ public class BattleField {
     private final int MAX_QUADRANT_COORDINATE = 512;
     private boolean COLORDED_MODE = false;
 
-
-//    private String[][] battleField = {
-//            {" ", "B", "B", "B", " ", "B", "B", "B", " "},
-//            {" ", "B", "B", "B", "W", "B", "B", "B", " "},
-//            {" ", "B", "B", "B", "B", "B", " ", "B", " "},
-//            {" ", " ", " ", " ", " ", " ", " ", " ", " "},
-//            {"B", "B", "B", "B", "R", "B", "B", "B", "B"},
-//            {"B", "B", "B", " ", "B", "B", " ", "B", "B"},
-//            {"B", " ", "B", " ", "B", "B", "B", "B", "B"},
-//            {"B", " ", "B", "B", " ", "B", "B", "B", "B"},
-//            {"B", "B", "B", "B", "E", "B", "B", "B", "B"}
-//    };
-
     private SomeObjectOfBattleField[][] battleField = {
             {new Empty(0,0, this), new Brick(64,0, this), new Brick(128,0, this), new Brick(192,0, this),
                     new Empty(256,0, this), new Brick(320,0, this),new Brick(384,0, this),new Brick(448,0, this),
@@ -65,8 +52,9 @@ public class BattleField {
                     new Brick(448,512, this), new Brick(512,512, this)},
     };
 
-    public BattleField() {
 
+
+    public BattleField() {
     }
 
     public BattleField(SomeObjectOfBattleField[][] battleField) {
@@ -182,10 +170,7 @@ public class BattleField {
 
         for (int j = 0; j < getBattleField().length; j++) {
             for (int k = 0; k < getBattleField().length; k++) {
-//                String coordinates = af.getQuadrantXY(j + 1, k + 1);
-//                int separator = coordinates.indexOf("_");
-//                int y = Integer.parseInt(coordinates.substring(0, separator));
-//                int x = Integer.parseInt(coordinates.substring(separator + 1));
+                String coordinates = af.getQuadrantXY(j + 1, k + 1);
 
                 if (scanQuadrant(j,k) instanceof Empty ) {
                     scanQuadrant(j,k).draw(g);
