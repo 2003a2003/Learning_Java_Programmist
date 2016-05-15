@@ -27,13 +27,16 @@ public abstract class SimpleBFObject implements BFObject {
     @Override
     public void draw(Graphics g) {
         if (!isDestroyed) {
-
             g.drawImage(img, x, y, 65,65, new ImageObserver() {
-				@Override
-				public boolean imageUpdate(Image img, int infoflags, int x, int y, int width, int height) {
-					return false;
-				}
-			});
+                @Override
+                public boolean imageUpdate(Image img, int infoflags, int x, int y, int width, int height) {
+                    return false;
+                }
+            });
+
+        }else{
+            Blank b = new Blank(x,y);
+            b.draw(g);
         }
     }
 

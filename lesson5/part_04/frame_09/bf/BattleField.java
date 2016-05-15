@@ -51,8 +51,6 @@ public class BattleField implements Drawable {
 	};
 
 
-	//private SomeObjectOfBattleField[][] battleField = {};
-
 	private BFObject[][] battleField = new BFObject[9][9];
 
 	public BattleField() {
