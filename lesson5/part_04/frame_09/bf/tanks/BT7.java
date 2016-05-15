@@ -1,10 +1,11 @@
-package lesson5.part_04.frame_09.bf.bf.tanks;
+package lesson5.part_04.frame_09.bf.tanks;
 
-import lesson5.part_04.frame_09.bf.Direction;
-import lesson5.part_04.frame_09.bf.bf.*;
+import lesson5.part_04.frame_09.Direction;
+import lesson5.part_04.frame_09.bf.*;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.ImageObserver;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -26,17 +27,16 @@ public class BT7 extends AbstractTank {
             Direction.UP,
     };
 
-    //private Object[] actoins;
     private int step = 0;
     private ArrayList<Object> list = new ArrayList<>();
     private int size = 0;
 
-    private String I_UP = "bt7_UP.png";
-    private String I_DOWN = "bt7_Down.png";
-    private String I_LEFT = "bt7_Left.png";
-    private String I_RIGTH = "bt7_Rigth.png";
+    private final String I_UP = "bt7_UP.png";
+    private final String I_DOWN = "bt7_Down.png";
+    private final String I_LEFT = "bt7_Left.png";
+    private final String I_RIGTH = "bt7_Rigth.png";
 
-
+    private String NAME_IMAGE;
 
 
     public BT7(BattleField bf) {
@@ -51,22 +51,39 @@ public class BT7 extends AbstractTank {
         tankColor = new Color(255, 0, 0);
         towerColor = new Color(0, 255, 0);
         movePath = 1;
-        setImages();
     }
 
-    protected void setImages(){
+    private void setImages() {
 
-        images = new Image[4];
-        try{
-            images[0] = ImageIO.read(new File(I_UP));
-            images[1] = ImageIO.read(new File(I_DOWN));
-            images[2] = ImageIO.read(new File(I_LEFT));
-            images[3] = ImageIO.read(new File(I_RIGTH));
-        }catch(IOException e){
-            for(Image i : images){
-                System.err.println("Can't find image of BT7: " + i.toString());
-            }
+        if (this.getDirection() == Direction.UP) {
+            NAME_IMAGE = I_UP;
+        } else if (this.getDirection() == Direction.DOWN) {
+            NAME_IMAGE = I_DOWN;
+        } else if (this.getDirection() == Direction.LEFT) {
+            NAME_IMAGE = I_LEFT;
+        } else {
+            NAME_IMAGE = I_RIGTH;
         }
+
+        try {
+            img = ImageIO.read(new File(NAME_IMAGE));
+        } catch (IOException e) {
+            System.err.println("Can't find image of BT7: " + NAME_IMAGE);
+        }
+    }
+
+    @Override
+    public void draw(Graphics g) {
+        super.draw(g);
+        setImages();
+
+        g.drawImage(img, getX(), getY(), 64, 64, new ImageObserver() {
+
+            @Override
+            public boolean imageUpdate(Image img, int infoflags, int x, int y, int width, int height) {
+                return false;
+            }
+        });
     }
 
     public void scanMap() {
@@ -124,7 +141,6 @@ public class BT7 extends AbstractTank {
             }
             y++;
         }
-
 
 
         if (move == false && fire == true) {

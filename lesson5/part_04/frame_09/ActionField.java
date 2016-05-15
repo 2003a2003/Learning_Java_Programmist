@@ -1,8 +1,8 @@
-package lesson5.part_04.frame_09.bf;
+package lesson5.part_04.frame_09;
 
-import lesson5.part_04.frame_09.bf.bf.*;
-import lesson5.part_04.frame_09.bf.bf.tanks.Action;
-import lesson5.part_04.frame_09.bf.bf.tanks.*;
+import lesson5.part_04.frame_09.bf.*;
+import lesson5.part_04.frame_09.bf.tanks.Action;
+import lesson5.part_04.frame_09.bf.tanks.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -34,7 +34,7 @@ public class ActionField extends JPanel {
     }
 
     private void processAction(Action a, Tank t) throws Exception {
-        if (a == lesson5.part_04.frame_09.bf.bf.tanks.Action.MOVE) {
+        if (a == Action.MOVE) {
             processMove(t);
         } else if (a == Action.FIRE) {
             processTurn(t);
@@ -114,11 +114,6 @@ public class ActionField extends JPanel {
         }
     }
 
-    private boolean checkQuadrant(int v, int h){
-
-        return true;
-    }
-
     private void processFire(Bullet bullet) throws Exception {
         this.bullet = bullet;
         int step = 1;
@@ -136,6 +131,7 @@ public class ActionField extends JPanel {
             if (processInterception()) {
                 bullet.destroy();
             }
+
             repaint();
             Thread.sleep(bullet.getSpeed());
             if (bullet.isDestroyed()) {
@@ -166,7 +162,6 @@ public class ActionField extends JPanel {
                 }
                 return true;
             }
-
 
             // check aggressor
             if (!aggressor.isDestroyed() && checkInterception(getQuadrant(aggressor.getX(), aggressor.getY()),
@@ -242,25 +237,6 @@ public class ActionField extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-
-        int i = 0;
-        Color cc;
-        for (int v = 0; v < 9; v++) {
-            for (int h = 0; h < 9; h++) {
-                if (COLORDED_MODE) {
-                    if (i % 2 == 0) {
-                        cc = new Color(252, 241, 177);
-                    } else {
-                        cc = new Color(233, 243, 255);
-                    }
-                } else {
-                    cc = new Color(180, 180, 180);
-                }
-                i++;
-                g.setColor(cc);
-                g.fillRect(h * 64, v * 64, 64, 64);
-            }
-        }
 
         battleField.draw(g);
         defender.draw(g);

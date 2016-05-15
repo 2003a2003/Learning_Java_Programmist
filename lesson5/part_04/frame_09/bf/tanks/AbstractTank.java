@@ -1,7 +1,7 @@
-package lesson5.part_04.frame_09.bf.bf.tanks;
+package lesson5.part_04.frame_09.bf.tanks;
 
-import lesson5.part_04.frame_09.bf.Direction;
-import lesson5.part_04.frame_09.bf.bf.BattleField;
+import lesson5.part_04.frame_09.Direction;
+import lesson5.part_04.frame_09.bf.BattleField;
 
 import java.awt.*;
 import java.awt.image.ImageObserver;
@@ -24,14 +24,7 @@ public abstract class AbstractTank implements Tank {
 
     protected Color tankColor;
     protected Color towerColor;
-    protected Image iTank;
-
-    protected Image[] images;
-    protected String I_UP;
-    protected String I_DOWN;
-    protected String I_LEFT;
-    protected String I_RIGHT;
-
+    protected Image img;
 
     public AbstractTank(BattleField bf) {
         this(bf, 128, 512, Direction.UP);
@@ -74,34 +67,13 @@ public abstract class AbstractTank implements Tank {
 
     public void draw(Graphics g) {
         if (!destroyed) {
-            //g.setColor(tankColor);
+            g.drawImage(img, getX(), getY(), 63,63, new ImageObserver() {
 
-            g.drawImage(images[0], getX(), getY(), new ImageObserver() {
                 @Override
                 public boolean imageUpdate(Image img, int infoflags, int x, int y, int width, int height) {
                     return false;
                 }
             });
-            //g.fillRect(this.getX(), this.getY(), 64, 64);
-
-            //g.setColor(towerColor);
-//            if (this.getDirection() == Direction.UP) {
-//                g.fillRect(this.getX() + 20, this.getY(), 24, 34);
-//            } else if (this.getDirection() == Direction.DOWN) {
-//                g.fillRect(this.getX() + 20, this.getY() + 30, 24, 34);
-//            } else if (this.getDirection() == Direction.LEFT) {
-//                g.fillRect(this.getX(), this.getY() + 20, 34, 24);
-//            } else {
-//                g.fillRect(this.getX() + 30, this.getY() + 20, 34, 24);
-//            }
-
-//            g.drawImage(images[getIndexDirection()], getX(), getY(), new ImageObserver() {
-//
-//                @Override
-//                public boolean imageUpdate(Image img, int infoflags, int x, int y, int width, int height) {
-//                    return false;
-//                }
-//            });
 
         }
     }

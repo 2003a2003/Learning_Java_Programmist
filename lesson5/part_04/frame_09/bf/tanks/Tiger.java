@@ -1,7 +1,7 @@
-package lesson5.part_04.frame_09.bf.bf.tanks;
+package lesson5.part_04.frame_09.bf.tanks;
 
-import lesson5.part_04.frame_09.bf.Direction;
-import lesson5.part_04.frame_09.bf.bf.BattleField;
+import lesson5.part_04.frame_09.Direction;
+import lesson5.part_04.frame_09.bf.BattleField;
 
 import java.awt.*;
 

@@ -1,8 +1,8 @@
-package lesson5.part_04.frame_09.bf.bf.tanks;
+package lesson5.part_04.frame_09.bf.tanks;
 
-import lesson5.part_04.frame_09.bf.Direction;
-import lesson5.part_04.frame_09.bf.bf.Destroyable;
-import lesson5.part_04.frame_09.bf.bf.Drawable;
+import lesson5.part_04.frame_09.Direction;
+import lesson5.part_04.frame_09.bf.Destroyable;
+import lesson5.part_04.frame_09.bf.Drawable;
 
 import java.awt.*;
 
