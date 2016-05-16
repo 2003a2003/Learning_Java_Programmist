@@ -1,7 +1,6 @@
 package lesson5.part_04.frame_09.bf;
 
 import java.awt.*;
-import java.awt.image.ImageObserver;
 
 
 public abstract class SimpleBFObject implements BFObject {
@@ -27,13 +26,13 @@ public abstract class SimpleBFObject implements BFObject {
     @Override
     public void draw(Graphics g) {
         if (!isDestroyed) {
-            g.drawImage(img, x, y, 65,65, new ImageObserver() {
-                @Override
-                public boolean imageUpdate(Image img, int infoflags, int x, int y, int width, int height) {
-                    return false;
-                }
-            });
-
+//            g.drawImage(img, x, y, 65,65, new ImageObserver() {
+//                @Override
+//                public boolean imageUpdate(Image img, int infoflags, int x, int y, int width, int height) {
+//                    return false;
+//                }
+//            });
+            g.drawImage(img, x, y, 65,65, null);
         }else{
             Blank b = new Blank(x,y);
             b.draw(g);

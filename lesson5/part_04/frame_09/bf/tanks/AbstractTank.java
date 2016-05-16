@@ -49,20 +49,20 @@ public abstract class AbstractTank implements Tank {
     public Bullet fire() {
         int bulletX = -100;
         int bulletY = -100;
-//		if (direction == Direction.UP) {
-//			bulletX = x + 25;
-//			bulletY = y - 64;
-//		} else if (direction == Direction.DOWN) {
-//			bulletX = x + 25;
-//			bulletY = y + 64;
-//		} else if (direction == Direction.LEFT) {
-//			bulletX = x - 64;
-//			bulletY = y + 25;
-//		} else if (direction == Direction.RIGHT) {
-//			bulletX = x + 64;
-//			bulletY = y + 25;
-//		}
-        return new Bullet(x + 25, y + 25, direction, this);
+		if (direction == Direction.UP) {
+			bulletX = x + 25;
+			bulletY = y - 64;
+		} else if (direction == Direction.DOWN) {
+			bulletX = x + 25;
+			bulletY = y + 64;
+		} else if (direction == Direction.LEFT) {
+			bulletX = x - 64;
+			bulletY = y + 25;
+		} else if (direction == Direction.RIGHT) {
+			bulletX = x + 64;
+			bulletY = y + 25;
+		}
+        return new Bullet(bulletX,bulletY, direction, this); //Bullet(x + 25, y + 25, direction, this);
     }
 
     public void draw(Graphics g) {
