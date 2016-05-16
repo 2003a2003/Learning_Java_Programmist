@@ -12,7 +12,7 @@ public class ActionField extends JPanel {
     private boolean COLORDED_MODE = false;
 
     private BattleField battleField;
-    private Tank defender;
+    private T34 defender;
     private BT7 aggressor;
     private Bullet bullet;
 
@@ -21,7 +21,6 @@ public class ActionField extends JPanel {
      */
     void runTheGame() throws Exception {
 
-        aggressor.scanMap();
         while (true) {
             if (!aggressor.isDestroyed() && !defender.isDestroyed()) {
             //if (!aggressor.isDestroyed()) {
@@ -237,7 +236,6 @@ public class ActionField extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-
         battleField.draw(g);
         defender.draw(g);
         aggressor.draw(g);

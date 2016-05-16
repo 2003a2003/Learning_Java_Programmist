@@ -24,7 +24,8 @@ public abstract class AbstractTank implements Tank {
 
     protected Color tankColor;
     protected Color towerColor;
-    protected Image img;
+
+    protected Image[] images;
 
     public AbstractTank(BattleField bf) {
         this(bf, 128, 512, Direction.UP);
@@ -62,12 +63,12 @@ public abstract class AbstractTank implements Tank {
 			bulletX = x + 64;
 			bulletY = y + 25;
 		}
-        return new Bullet(bulletX,bulletY, direction, this); //Bullet(x + 25, y + 25, direction, this);
+        return new Bullet(bulletX,bulletY, direction, this);
     }
 
     public void draw(Graphics g) {
         if (!destroyed) {
-            g.drawImage(img, getX(), getY(), 63,63, new ImageObserver() {
+            g.drawImage(images[getDirection().getId()-1], getX(), getY(), 63,63, new ImageObserver() {
 
                 @Override
                 public boolean imageUpdate(Image img, int infoflags, int x, int y, int width, int height) {

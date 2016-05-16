@@ -6,107 +6,91 @@ import lesson5.part_04.frame_09.bf.Drawable;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.ImageObserver;
 import java.io.File;
 import java.io.IOException;
 
 public class Bullet implements Drawable, Destroyable {
 
-	private int speed = 5;
-	
-	private int x;
-	private int y;
-	private Direction direction;
-	private AbstractTank tank;
+    private int speed = 5;
+    private int x;
+    private int y;
+    private Direction direction;
+    private AbstractTank tank;
+    private Image[] images;
+    private boolean destroyed;
 
-	private final String B_UP = "bullet_up.png";
-	private final String B_DOWN = "bullet_down.png";
-	private final String B_LEFT = "bullet_left.png";
-	private final String B_RIGTH = "bullet_rigth.png";
+    public Bullet(int x, int y, Direction direction, AbstractTank tank) {
+        this.x = x;
+        this.y = y;
+        this.direction = direction;
+        this.destroyed = false;
+        this.tank = tank;
+        setImages();
+    }
 
-	private String NAME_IMAGE;
-	private Image img;
+    public void updateX(int x) {
+        this.x += x;
+    }
 
-	public AbstractTank getTank() {
-		return tank;
-	}
+    public void updateY(int y) {
+        this.y += y;
+    }
 
-	public void setTank(AbstractTank tank) {
-		this.tank = tank;
-	}
+    @Override
+    public void draw(Graphics g) {
+        if (!destroyed) {
+            g.drawImage(images[getDirection().getId()-1], getX(), getY(), new ImageObserver() {
+                @Override
+                public boolean imageUpdate(Image img, int infoflags, int x, int y, int width, int height) {
+                    return false;
+                }
+            });
+        }
+    }
 
-	private boolean destroyed;
+    public void destroy() {
+        destroyed = true;
+    }
 
-	public Bullet(int x, int y, Direction direction, AbstractTank tank) {
-		this.x = x;
-		this.y = y;
-		this.direction = direction;
-		this.destroyed = false;
-		this.tank = tank;
-	}
+    @Override
+    public boolean isDestroyed() {
+        return destroyed;
+    }
 
-	public void updateX(int x) {
-		this.x += x;
-	}
+    public int getSpeed() {
+        return speed;
+    }
 
-	public void updateY(int y) {
-		this.y += y;
-	}
-	
-	@Override
-	public void draw(Graphics g) {
-		setImages();
+    public int getX() {
+        return x;
+    }
 
-		if (!destroyed) {
-			if(img != null){
-				g.drawImage(img, getX(), getY(), null);
-			}else {
-				g.setColor(new Color(234, 246, 76));
-				g.fillRect(this.x, this.y, 14, 14);
-			}
-		}
-	}
-	
-	public void destroy() {
-		destroyed = true;
-	}
-	
-	@Override
-	public boolean isDestroyed() {
-		return destroyed;
-	}
+    public int getY() {
+        return y;
+    }
 
-	public int getSpeed() {
-		return speed;
-	}
+    public Direction getDirection() {
+        return direction;
+    }
 
-	public int getX() {
-		return x;
-	}
+    private void setImages() {
+        images = new Image[4];
+        try {
+            images[0] = ImageIO.read(new File("bullet_up.png").getAbsoluteFile());
+            images[1] = ImageIO.read(new File("bullet_down.png").getAbsoluteFile());
+            images[2] = ImageIO.read(new File("bullet_left.png").getAbsoluteFile());
+            images[3] = ImageIO.read(new File("bullet_rigth.png").getAbsoluteFile());
+        } catch (IOException e) {
+            System.err.println("Can't find images.");
+        }
+    }
 
-	public int getY() {
-		return y;
-	}
-	
-	public Direction getDirection() {
-		return direction;
-	}
+    public AbstractTank getTank() {
+        return tank;
+    }
 
-	private void setImages() {
-
-		if (this.getDirection() == Direction.UP) {
-			NAME_IMAGE = B_UP;
-		} else if (this.getDirection() == Direction.DOWN) {
-			NAME_IMAGE = B_DOWN;
-		} else if (this.getDirection() == Direction.LEFT) {
-			NAME_IMAGE = B_LEFT;
-		} else {
-			NAME_IMAGE = B_RIGTH;
-		}
-
-		try {
-			img = ImageIO.read(new File(NAME_IMAGE));
-		} catch (IOException e) {
-			System.err.println("Can't find image: " + NAME_IMAGE);
-		}
-	}
+    public void setTank(AbstractTank tank) {
+        this.tank = tank;
+    }
 }

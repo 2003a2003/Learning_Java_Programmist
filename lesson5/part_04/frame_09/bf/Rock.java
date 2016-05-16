@@ -6,16 +6,12 @@ import java.io.IOException;
 
 public class Rock extends SimpleBFObject {
 
-	private final static String NAME_IMAGE = "iRock.png";
-
 	public Rock(int x, int y) {
 		super(x, y);
-		//color = new Color(136, 128, 143);
 		try{
-			img = ImageIO.read(new File(NAME_IMAGE));
+			img = ImageIO.read(new File("iRock.png").getAbsoluteFile());
 		}catch (IOException e){
-			System.out.println("Can't find image: " + NAME_IMAGE);
+			System.out.println("Can't find image Rock.");
 		}
 	}
-
 }

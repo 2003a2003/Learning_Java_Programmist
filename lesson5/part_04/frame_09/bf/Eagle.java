@@ -6,15 +6,12 @@ import java.io.IOException;
 
 public class Eagle extends SimpleBFObject {
 
-	private final static String NAME_IMAGE = "iEagle.png";
-
 	public Eagle(int x, int y) {
 		super(x, y);
-//		color = new Color(168, 168, 0);
 		try{
-			img = ImageIO.read(new File(NAME_IMAGE));
+			img = ImageIO.read(new File("iEagle.png").getAbsoluteFile());
 		}catch (IOException e){
-			System.out.println("Can't find image: " + NAME_IMAGE);
+			System.out.println("Can't find image Eagle.");
 		}
 	}
 }
