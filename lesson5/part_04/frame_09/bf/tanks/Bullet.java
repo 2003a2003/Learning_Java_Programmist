@@ -106,7 +106,7 @@ public class Bullet implements Drawable, Destroyable {
 		try {
 			img = ImageIO.read(new File(NAME_IMAGE));
 		} catch (IOException e) {
-			System.err.println("Can't find image of BT7: " + NAME_IMAGE);
+			System.err.println("Can't find image: " + NAME_IMAGE);
 		}
 	}
 }
