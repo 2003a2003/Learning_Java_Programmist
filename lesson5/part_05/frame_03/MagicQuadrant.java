@@ -14,7 +14,7 @@ public class MagicQuadrant {
     public MagicQuadrant() {
 
         JFrame magicQuadrant = new JFrame("Magic Quadrant");
-        magicQuadrant.setMinimumSize(new Dimension(800, 600));
+        magicQuadrant.setMinimumSize(new Dimension(600, 600));
         magicQuadrant.setLocation(300, 300);
 
         magicQuadrant.getContentPane().add(createMyPanel());
@@ -22,7 +22,6 @@ public class MagicQuadrant {
         magicQuadrant.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         magicQuadrant.pack();
         magicQuadrant.setVisible(true);
-
     }
 
     private JPanel createMyPanel() {
