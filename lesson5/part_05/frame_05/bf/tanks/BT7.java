@@ -15,16 +15,16 @@ public class BT7 extends AbstractTank {
     private Object[] actoins = new Object[]{
             Action.FIRE,
             Action.MOVE,
-            Direction.RIGHT,
-            Action.FIRE,
-            Action.MOVE,
-            Direction.LEFT,
-            Action.FIRE,
-            Action.MOVE,
-            Direction.DOWN,
-            Action.FIRE,
-            Action.MOVE,
-            Direction.UP,
+           // Direction.RIGHT,
+           // Action.FIRE,
+           // Action.MOVE,
+            //Direction.LEFT,
+           // Action.FIRE,
+           // Action.MOVE,
+//            Direction.DOWN,
+//            Action.FIRE,
+//            Action.MOVE,
+           // Direction.UP,
     };
 
     public BT7(BattleField bf) {

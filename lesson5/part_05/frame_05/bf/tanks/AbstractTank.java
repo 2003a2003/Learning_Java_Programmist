@@ -68,7 +68,7 @@ public abstract class AbstractTank implements Tank {
 
     public void draw(Graphics g) {
         if (!destroyed) {
-            g.drawImage(images[getDirection().getId()-1], getX(), getY(), 63,63, new ImageObserver() {
+            g.drawImage(images[getDirection().getId()-1], getX(), getY(), 64,64, new ImageObserver() {
 
                 @Override
                 public boolean imageUpdate(Image img, int infoflags, int x, int y, int width, int height) {
