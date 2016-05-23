@@ -21,9 +21,16 @@ public class ActionField extends JPanel {
      */
     void runTheGame() throws Exception {
 
-        while (true) {
+        boolean i = true;
+
+        while (i) {
             if (!aggressor.isDestroyed() && !defender.isDestroyed()) {
-            //if (!aggressor.isDestroyed()) {
+                if (battleField.scanQuadrant(8, 4) instanceof Blank) {
+                    i = false;
+                    System.out.println("Game OVER!!!");
+                    break;
+                }
+                //if (!aggressor.isDestroyed()) {
                 processAction(aggressor.setUp(), aggressor);
             }
 //			if (!aggressor.isDestroyed() && !defender.isDestroyed()) {
@@ -85,8 +92,8 @@ public class ActionField extends JPanel {
 //			}
 
             if (!(bfobject instanceof Blank) && !bfobject.isDestroyed() && !(bfobject instanceof Water)) {
-				System.out.println("[illegal move] direction: " + direction
-						+ " tankX: " + tank.getX() + ", tankY: " + tank.getY());
+                System.out.println("[illegal move] direction: " + direction
+                        + " tankX: " + tank.getX() + ", tankY: " + tank.getY());
                 return;
             }
 
@@ -156,7 +163,7 @@ public class ActionField extends JPanel {
                     battleField.destroyObject(y, x);
                 } else if (bfObject instanceof Rock && bullet.getTank() instanceof Tiger) {
                     battleField.destroyObject(y, x);
-                }else if(bfObject instanceof Blank || bfObject instanceof Water){
+                } else if (bfObject instanceof Blank || bfObject instanceof Water) {
                     return false;
                 }
                 return true;

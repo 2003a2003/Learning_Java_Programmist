@@ -11,7 +11,7 @@ import java.io.IOException;
 public class BT7 extends AbstractTank {
 
     private int step;
-
+    private AggressorLogic ai;
     private Object[] actoins = new Object[]{
             Action.FIRE,
             Action.MOVE,
@@ -33,6 +33,8 @@ public class BT7 extends AbstractTank {
         towerColor = new Color(0, 255, 0);
         movePath = 2;
         setImages();
+        ai = new AggressorLogic(getX(), getY(), bf);
+
     }
 
     public BT7(BattleField bf, int x, int y, Direction direction) {
@@ -41,6 +43,7 @@ public class BT7 extends AbstractTank {
         towerColor = new Color(0, 255, 0);
         movePath = 2;
         setImages();
+        ai = new AggressorLogic(x, y, bf);
     }
 
     private void setImages() {
@@ -69,4 +72,14 @@ public class BT7 extends AbstractTank {
         }
         return (Action) actoins[step++];
     }
+
+    private void chengeHLine(){
+        int rez = ai.scanCenterLineH();
+        if(rez < 0){
+            System.out.println("falsh");
+        }
+
+        System.out.println("true");
+    }
+
 }

@@ -30,7 +30,7 @@ public class T34 extends AbstractTank {
             images[0] = ImageIO.read(new File("t34_up.png").getAbsoluteFile());
             images[1] = ImageIO.read(new File("t34_down.png").getAbsoluteFile());
             images[2] = ImageIO.read(new File("t34_left.png").getAbsoluteFile());
-            images[3] = ImageIO.read(new File("t34_rigth.png").getAbsoluteFile());
+            images[3] = ImageIO.read(new File("t34_right.png").getAbsoluteFile());
 
         } catch (IOException e) {
             System.err.println("Can't find image of t34.");
