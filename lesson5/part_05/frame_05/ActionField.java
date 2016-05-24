@@ -21,7 +21,8 @@ public class ActionField extends JPanel {
      */
     void runTheGame() throws Exception {
 
-        boolean i = true;
+          boolean i = true;
+        aggressor.attackEagle();
 
         while (i) {
             if (!aggressor.isDestroyed() && !defender.isDestroyed()) {
@@ -222,14 +223,17 @@ public class ActionField extends JPanel {
     }
 
     public ActionField() throws Exception {
+
         battleField = new BattleField();
         defender = new T34(battleField);
+
         createAgressor();
+
 //		String location = battleField.getAggressorLocation();
 //		aggressor = new BT7(battleField,
 //			Integer.parseInt(location.split("_")[1]), Integer.parseInt(location.split("_")[0]), Direction.RIGHT);
 
-//        bullet = new Bullet(-100, -100, Direction.NONE);
+        bullet = new Bullet(-100, -100, Direction.DOWN, aggressor);
 
         JFrame frame = new JFrame("BATTLE FIELD");
         frame.setLocation(350, 150);
@@ -243,6 +247,7 @@ public class ActionField extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+
         battleField.draw(g);
         defender.draw(g);
         aggressor.draw(g);

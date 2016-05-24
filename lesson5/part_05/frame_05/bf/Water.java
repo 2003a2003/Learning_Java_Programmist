@@ -1,7 +1,5 @@
 package lesson5.part_05.frame_05.bf;
 
-import com.sun.xml.internal.ws.client.sei.ResponseBuilder;
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.ImageObserver;
@@ -25,10 +23,14 @@ public class Water extends SimpleBFObject {
 
     @Override
     public void draw(Graphics g) {
-        super.draw(g);
-        Graphics2D g2d = (Graphics2D) g;
+        //super.draw(g);
+        Graphics2D g2d = (Graphics2D) g.create();
         Composite org = g2d.getComposite();
-        Composite translucent = AlphaComposite.getInstance(AlphaComposite.DST_OUT, 0.5f);
+
+        Composite translucent = AlphaComposite.getInstance(AlphaComposite.DST_OVER, 0.2f);
+        Composite t = AlphaComposite.DstOver;
+        //g2d.setPaintMode();
+
         g2d.setComposite(translucent);
 
         g.drawImage(img, getX(), getY(), 64, 64, new ImageObserver() {
@@ -38,6 +40,7 @@ public class Water extends SimpleBFObject {
             }
         });
 
+        //g2d.dispose();
         g2d.setComposite(org);
     }
 }

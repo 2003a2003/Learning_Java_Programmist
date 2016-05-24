@@ -1,9 +1,8 @@
 package lesson5.part_05.frame_05.bf.tanks;
 
-import lesson5.part_05.frame_05.bf.*;
-
-import java.util.ArrayList;
-import java.util.List;
+import lesson5.part_05.frame_05.bf.BattleField;
+import lesson5.part_05.frame_05.bf.Brick;
+import lesson5.part_05.frame_05.bf.Rock;
 
 public class AggressorLogic {
 

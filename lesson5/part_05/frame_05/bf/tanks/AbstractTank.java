@@ -44,7 +44,7 @@ public abstract class AbstractTank implements Tank {
         this.direction = direction;
     }
 
-    public void move() {
+    public void move() throws Exception {
     }
 
     public Bullet fire() {
@@ -69,13 +69,11 @@ public abstract class AbstractTank implements Tank {
     public void draw(Graphics g) {
         if (!destroyed) {
             g.drawImage(images[getDirection().getId()-1], getX(), getY(), 64,64, new ImageObserver() {
-
                 @Override
                 public boolean imageUpdate(Image img, int infoflags, int x, int y, int width, int height) {
                     return false;
                 }
             });
-
         }
     }
 
@@ -108,6 +106,7 @@ public abstract class AbstractTank implements Tank {
     public Direction getDirection() {
         return direction;
     }
+
     // 0 - up, 1 - down, 2 - left, 3 - right
     private int getIndexDirection(){
         int rez = 0;
@@ -142,5 +141,9 @@ public abstract class AbstractTank implements Tank {
 
     public BattleField getBf() {
         return bf;
+    }
+
+    public void setDirection(Direction direction) {
+        this.direction = direction;
     }
 }

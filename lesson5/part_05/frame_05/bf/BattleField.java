@@ -40,7 +40,7 @@ public class BattleField implements Drawable {
 
 	private String[][] battleFieldTemplate = {
 			{" ", " ", " ", "B", " ", "B", "R", "W", " "},
-			{"W", " ", " ", " ", "W", " ", " ", " ", "W"},
+			{" ", " ", " ", " ", " ", " ", " ", " ", " "},
 			{" ", "B", "B", " ", " ", " ", "R", "B", " "},
 			{" ", " ", " ", " ", " ", " ", " ", " ", " "},
 			{"B", "B", "B", " ", " ", " ", "B", "B", "B"},
@@ -49,7 +49,6 @@ public class BattleField implements Drawable {
 			{"B", " ", " ", "B", "B", "B", " ", " ", "B"},
 			{" ", " ", " ", "B", "E", "B", " ", " ", " "}
 	};
-
 
 	private BFObject[][] battleField = new BFObject[9][9];
 
@@ -76,23 +75,19 @@ public class BattleField implements Drawable {
 
 				String obj = battleFieldTemplate[i][j];
 				BFObject bfObject;
+
 				if (obj.equals(BRICK)) {
-					//bfObject = new Brick(x, y);
-					battleField[i][j] = new Brick(x, y);
+					bfObject = new Brick(x, y);
 				} else if (obj.equals(ROCK)) {
-					//bfObject = new Rock(x, y);
-					battleField[i][j] = new Rock(x, y);
+					bfObject = new Rock(x, y);
 				} else if (obj.equals(EAGLE)) {
-//					bfObject = new Eagle(x, y);
-					battleField[i][j] = new Eagle(x, y);
+					bfObject = new Eagle(x, y);
 				} else if (obj.equals(WATER)) {
-//					bfObject = new Water(x, y);
-					battleField[i][j] = new Water(x, y);
+					bfObject = new Water(x, y);
 				} else {
-//					bfObject = new Blank(x, y);
-					battleField[i][j] = new Blank(x, y);
+					bfObject = new Blank(x, y);
 				}
-				//battleField[i][j] = bfObject;
+				battleField[i][j] = bfObject;
 			}
 		}
 	}
@@ -142,5 +137,9 @@ public class BattleField implements Drawable {
 
 	public int getBfHeight() {
 		return bfHeight;
+	}
+
+	public int getSIZE_ONE_QUADRANT() {
+		return SIZE_ONE_QUADRANT;
 	}
 }

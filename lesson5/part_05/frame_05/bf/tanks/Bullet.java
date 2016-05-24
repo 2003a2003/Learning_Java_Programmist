@@ -40,7 +40,7 @@ public class Bullet implements Drawable, Destroyable {
     @Override
     public void draw(Graphics g) {
         if (!destroyed) {
-            g.drawImage(images[getDirection().getId()-1], getX(), getY(), new ImageObserver() {
+            g.drawImage(images[getDirection().getId() - 1], getX(), getY(), new ImageObserver() {
                 @Override
                 public boolean imageUpdate(Image img, int infoflags, int x, int y, int width, int height) {
                     return false;
