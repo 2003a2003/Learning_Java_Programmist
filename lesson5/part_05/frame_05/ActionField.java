@@ -12,31 +12,38 @@ public class ActionField extends JPanel {
     private boolean COLORDED_MODE = false;
 
     private BattleField battleField;
+
     private T34 defender;
     private BT7 aggressor;
     private Bullet bullet;
+
+    private AggressorLogic al;
 
     /**
      * Write your code here.
      */
     void runTheGame() throws Exception {
 
-          boolean i = true;
+        boolean i = true;
         aggressor.attackEagle();
 
         while (i) {
             if (!aggressor.isDestroyed() && !defender.isDestroyed()) {
+
                 if (battleField.scanQuadrant(8, 4) instanceof Blank) {
                     i = false;
                     System.out.println("Game OVER!!!");
                     break;
                 }
-                //if (!aggressor.isDestroyed()) {
-                processAction(aggressor.setUp(), aggressor);
+
+                if (!aggressor.isDestroyed()) {
+                    processAction(aggressor.setUp(), aggressor);
+                }
+
+//                if (!aggressor.isDestroyed() && !defender.isDestroyed()) {
+//                    processAction(defender.setUp(), defender);
+//                }
             }
-//			if (!aggressor.isDestroyed() && !defender.isDestroyed()) {
-//				processAction(defender.setUp(), defender);
-//			}
         }
     }
 
@@ -86,11 +93,11 @@ public class ActionField extends JPanel {
 
             BFObject bfobject = battleField.scanQuadrant(v, h);
 
-//			if (!(bfobject instanceof Blank) && !bfobject.isDestroyed()) {
-//				System.out.println("[illegal move] direction: " + direction
-//						+ " tankX: " + tank.getX() + ", tankY: " + tank.getY());
-//				return;
-//			}
+			if (!(bfobject instanceof Blank) && !bfobject.isDestroyed()) {
+				System.out.println("[illegal move] direction: " + direction
+						+ " tankX: " + tank.getX() + ", tankY: " + tank.getY());
+				return;
+			}
 
             if (!(bfobject instanceof Blank) && !bfobject.isDestroyed() && !(bfobject instanceof Water)) {
                 System.out.println("[illegal move] direction: " + direction
@@ -202,7 +209,7 @@ public class ActionField extends JPanel {
     }
 
     public String getQuadrant(int x, int y) {
-            return y / 64 + "_" + x / 64;
+        return y / 64 + "_" + x / 64;
     }
 
     private void createAgressor() {

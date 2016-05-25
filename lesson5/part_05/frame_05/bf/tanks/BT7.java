@@ -7,47 +7,48 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.*;
+import java.util.List;
 
 public class BT7 extends AbstractTank {
 
     private int step;
-    private AggressorLogic ai;
+    private AggressorLogic aiDestroyEagle;
 
-    private Object[] actoins = new Object[]{
-            Action.FIRE,
-            Action.MOVE,
-    };
+//    private Object[] actoins = new Object[]{
+//            Action.FIRE,
+//            Action.MOVE,
+//    };
 
-    private ArrayList act;
-    private int[][] workArray;
-    private final int MAX_ITER = 9 * 9;
-    private int countIter;
+    private List<Object> act;
 
 
     public BT7(BattleField bf) {
         super(bf);
+
         tankColor = new Color(255, 0, 0);
         towerColor = new Color(0, 255, 0);
+
         movePath = 2;
+
         setImages();
-        act = new ArrayList<Action>();
-        workArray = new int[9][9];
-        countIter = 0;
-        initWorkArray();
+
+        act = new ArrayList<Object>();
 
     }
 
     public BT7(BattleField bf, int x, int y, Direction direction) {
         super(bf, x, y, direction);
+
         tankColor = new Color(255, 0, 0);
         towerColor = new Color(0, 255, 0);
+
         movePath = 2;
+
         setImages();
-        act = new ArrayList<Action>();
-        workArray = new int[9][9];
-        countIter = 0;
-        initWorkArray();
+
+        act = new ArrayList<Object>();
+        aiDestroyEagle = new AggressorLogic(bf, this);
     }
 
     private void setImages() {
@@ -101,24 +102,25 @@ public class BT7 extends AbstractTank {
             System.out.println("GAME OVER!!!!!!!");
         }
 
-        int x = getX() / 64;
-        int y = getY() / 64;
-
-        int v = y;
-        int h = x;
-
-        int min = 9 * 9;
-
-        if (x == 0) {
-            act.add(Action.FIRE);
-            act.add(Action.MOVE);
-        } else if (x == 4) {
-            //second logic
-            attakeEagleCenterLine();
-        } else {
-            act.add(Action.FIRE);
-            act.add(Action.MOVE);
-        }
+        act = aiDestroyEagle.startDestroyEagle();
+//        int x = getX() / 64;
+//        int y = getY() / 64;
+//
+//        int v = y;
+//        int h = x;
+//
+//        int min = 9 * 9;
+//
+//        if (x == 0) {
+//            act.add(Action.FIRE);
+//            act.add(Action.MOVE);
+//        } else if (x == 4) {
+//            //second logic
+//            attakeEagleCenterLine();
+//        } else {
+//            act.add(Action.FIRE);
+//            act.add(Action.MOVE);
+//        }
 
     }
 
@@ -165,40 +167,40 @@ public class BT7 extends AbstractTank {
         return rez;
     }
 
-    private void initWorkArray() {
-
-        for (int i = 0; i < 9; i++) {
-            for (int j = 0; j < 9; j++) {
-                if (getBf().scanQuadrant(j, i) instanceof Blank) {
-                    workArray[i][j] = 1;
-                } else if (getBf().scanQuadrant(j, i) instanceof Water) {
-                    workArray[i][j] = 3;
-                } else if (getBf().scanQuadrant(j, i) instanceof Brick) {
-                    workArray[i][j] = 2;
-                } else if (getBf().scanQuadrant(j, i) instanceof Eagle) {
-                    workArray[i][j] = 0;
-                } else if (getBf().scanQuadrant(j, i) instanceof Rock) {
-                    workArray[i][j] = 4;
-                }
-
-                if (getX() == 0 || getX() == 64 * 4 || getX() == 512) {
-                    workArray[i][j] = 100;
-                }
-            }
-        }
-
-        System.out.println("Init +");
-
-
-        for (int i = 0; i < 9; i++) {
-            for (int j = 0; j < 9; j++) {
-                if (i == countIter) {
-
-                }
-
-            }
-        }
-
-
-    }
+//    private void initWorkArray() {
+//
+//        for (int i = 0; i < 9; i++) {
+//            for (int j = 0; j < 9; j++) {
+//                if (getBf().scanQuadrant(j, i) instanceof Blank) {
+//                    workArray[i][j] = 1;
+//                } else if (getBf().scanQuadrant(j, i) instanceof Water) {
+//                    workArray[i][j] = 3;
+//                } else if (getBf().scanQuadrant(j, i) instanceof Brick) {
+//                    workArray[i][j] = 2;
+//                } else if (getBf().scanQuadrant(j, i) instanceof Eagle) {
+//                    workArray[i][j] = 0;
+//                } else if (getBf().scanQuadrant(j, i) instanceof Rock) {
+//                    workArray[i][j] = 4;
+//                }
+//
+//                if (getX() == 0 || getX() == 64 * 4 || getX() == 512) {
+//                    workArray[i][j] = 100;
+//                }
+//            }
+//        }
+//
+//        System.out.println("Init +");
+//
+//
+//        for (int i = 0; i < 9; i++) {
+//            for (int j = 0; j < 9; j++) {
+//                if (i == countIter) {
+//
+//                }
+//
+//            }
+//        }
+//
+//
+//    }
 }
