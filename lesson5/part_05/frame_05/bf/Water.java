@@ -8,7 +8,7 @@ import java.io.IOException;
 
 public class Water extends SimpleBFObject {
 
-    private final static String NAME_IMAGE = "iWater.png";
+    private final static String NAME_IMAGE = "iWater.jpg";
 
     public Water(int x, int y) {
         super(x, y);

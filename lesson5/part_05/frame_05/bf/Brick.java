@@ -9,7 +9,7 @@ public class Brick extends SimpleBFObject {
 	public Brick(int x, int y) {
 		super(x, y);
 		try{
-			img = ImageIO.read(new File("iBrick.png").getAbsoluteFile());
+			img = ImageIO.read(new File("iBrick01.png").getAbsoluteFile());
 		}catch (IOException e){
 			System.out.println("Can't find image Brick.");
 		}
