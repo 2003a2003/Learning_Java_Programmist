@@ -21,7 +21,7 @@ public class BT7 extends AbstractTank {
 
     private ArrayList act;
     private int[][] workArray;
-    private final int MAX_ITER = 9*9;
+    private final int MAX_ITER = 9 * 9;
     private int countIter;
 
 
@@ -107,15 +107,17 @@ public class BT7 extends AbstractTank {
         int v = y;
         int h = x;
 
-        int min = 9*9;
+        int min = 9 * 9;
 
         if (x == 0) {
             act.add(Action.FIRE);
-        } else if (x == 4 ) {
+            act.add(Action.MOVE);
+        } else if (x == 4) {
             //second logic
             attakeEagleCenterLine();
         } else {
             act.add(Action.FIRE);
+            act.add(Action.MOVE);
         }
 
     }
@@ -154,7 +156,7 @@ public class BT7 extends AbstractTank {
     public int scanCenterLineH() {
         int rez = 0;
         for (int i = 1; i < 9; i++) {
-            if (getBf().scanQuadrant(i, 4) instanceof Brick || getBf().scanQuadrant(i,4) instanceof Eagle) {
+            if (getBf().scanQuadrant(i, 4) instanceof Brick || getBf().scanQuadrant(i, 4) instanceof Eagle) {
                 rez = 1;
             } else if (getBf().scanQuadrant(i, 4) instanceof Rock) {
                 rez = -1;
@@ -163,23 +165,23 @@ public class BT7 extends AbstractTank {
         return rez;
     }
 
-    private void initWorkArray(){
+    private void initWorkArray() {
 
-        for (int i = 0 ; i < 9; i++){
-            for (int j = 0 ; j < 9; j++){
-                if(getBf().scanQuadrant(j,i) instanceof Blank){
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (getBf().scanQuadrant(j, i) instanceof Blank) {
                     workArray[i][j] = 1;
-                }else if(getBf().scanQuadrant(j,i) instanceof Water){
+                } else if (getBf().scanQuadrant(j, i) instanceof Water) {
                     workArray[i][j] = 3;
-                }else if (getBf().scanQuadrant(j,i) instanceof Brick){
+                } else if (getBf().scanQuadrant(j, i) instanceof Brick) {
                     workArray[i][j] = 2;
-                }else if (getBf().scanQuadrant(j,i) instanceof Eagle){
+                } else if (getBf().scanQuadrant(j, i) instanceof Eagle) {
                     workArray[i][j] = 0;
-                }else if (getBf().scanQuadrant(j,i) instanceof Rock) {
+                } else if (getBf().scanQuadrant(j, i) instanceof Rock) {
                     workArray[i][j] = 4;
                 }
 
-                if(getX() == 0 || getX() == 64*4 || getX() == 512){
+                if (getX() == 0 || getX() == 64 * 4 || getX() == 512) {
                     workArray[i][j] = 100;
                 }
             }
@@ -188,9 +190,9 @@ public class BT7 extends AbstractTank {
         System.out.println("Init +");
 
 
-        for (int i = 0 ; i < 9; i++){
-            for (int j = 0 ; j < 9 ; j ++){
-                if( i == countIter){
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (i == countIter) {
 
                 }
 
@@ -198,11 +200,5 @@ public class BT7 extends AbstractTank {
         }
 
 
-
-
-
-
-
     }
-
 }

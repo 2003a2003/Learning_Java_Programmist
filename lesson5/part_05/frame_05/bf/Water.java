@@ -23,14 +23,11 @@ public class Water extends SimpleBFObject {
 
     @Override
     public void draw(Graphics g) {
-        //super.draw(g);
+        super.draw(g);
         Graphics2D g2d = (Graphics2D) g.create();
         Composite org = g2d.getComposite();
 
         Composite translucent = AlphaComposite.getInstance(AlphaComposite.DST_OVER, 0.2f);
-        Composite t = AlphaComposite.DstOver;
-        //g2d.setPaintMode();
-
         g2d.setComposite(translucent);
 
         g.drawImage(img, getX(), getY(), 64, 64, new ImageObserver() {

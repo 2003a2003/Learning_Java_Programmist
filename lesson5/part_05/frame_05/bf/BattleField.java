@@ -40,7 +40,7 @@ public class BattleField implements Drawable {
 
 	private String[][] battleFieldTemplate = {
 			{" ", " ", " ", "B", " ", "B", "R", "W", " "},
-			{" ", " ", " ", " ", " ", " ", " ", " ", " "},
+			{"W", " ", " ", " ", "W", " ", " ", " ", "W"},
 			{" ", "B", "B", " ", " ", " ", "R", "B", " "},
 			{" ", " ", " ", " ", " ", " ", " ", " ", " "},
 			{"B", "B", "B", " ", " ", " ", "B", "B", "B"},

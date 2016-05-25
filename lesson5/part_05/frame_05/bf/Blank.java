@@ -9,7 +9,7 @@ public class Blank extends SimpleBFObject {
 	public Blank(int x, int y) {
 		super(x, y);
 		try{
-			img = ImageIO.read(new File("iBlank.png").getAbsoluteFile());
+			img = ImageIO.read(new File("iBlank.jpg").getAbsoluteFile());
 		}catch (IOException e){
 			System.out.println("Can't find image Blank.");
 		}

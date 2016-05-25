@@ -202,8 +202,7 @@ public class ActionField extends JPanel {
     }
 
     public String getQuadrant(int x, int y) {
-        // input data should be correct
-        return y / 64 + "_" + x / 64;
+            return y / 64 + "_" + x / 64;
     }
 
     private void createAgressor() {

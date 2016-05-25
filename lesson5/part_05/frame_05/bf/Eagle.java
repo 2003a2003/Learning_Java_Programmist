@@ -9,7 +9,7 @@ public class Eagle extends SimpleBFObject {
 	public Eagle(int x, int y) {
 		super(x, y);
 		try{
-			img = ImageIO.read(new File("iEagle.png").getAbsoluteFile());
+			img = ImageIO.read(new File("iEagle.jpg").getAbsoluteFile());
 		}catch (IOException e){
 			System.out.println("Can't find image Eagle.");
 		}
