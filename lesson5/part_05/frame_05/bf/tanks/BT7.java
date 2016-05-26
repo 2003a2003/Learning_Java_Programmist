@@ -48,7 +48,7 @@ public class BT7 extends AbstractTank {
         setImages();
 
         act = new ArrayList<Object>();
-        aiDestroyEagle = new AggressorLogic(bf, this);
+        aiDestroyEagle = new AggressorLogic();
     }
 
     private void setImages() {
@@ -98,109 +98,18 @@ public class BT7 extends AbstractTank {
 
     public void attackEagle() {
 
-        if (getBf().scanQuadrant(8, 4).isDestroyed()) {
-            System.out.println("GAME OVER!!!!!!!");
-        }
+        if (getBf().scanQuadrant(8, 4).isDestroyed()) {System.out.println("GAME OVER!!!!!!!");}
 
-        act = aiDestroyEagle.startDestroyEagle();
-//        int x = getX() / 64;
-//        int y = getY() / 64;
-//
-//        int v = y;
-//        int h = x;
-//
-//        int min = 9 * 9;
-//
-//        if (x == 0) {
-//            act.add(Action.FIRE);
-//            act.add(Action.MOVE);
-//        } else if (x == 4) {
-//            //second logic
-//            attakeEagleCenterLine();
-//        } else {
-//            act.add(Action.FIRE);
-//            act.add(Action.MOVE);
-//        }
+        initStartParameterInWorkArraAgressorBT7();
+        aiDestroyEagle.startDestroyEagle();
 
     }
 
-    private void attakeEagleCenterLine() {
-
-        int lineReadyToFire = scanCenterLineH();
-
-        if (lineReadyToFire == 0) {
-            act.add(Action.FIRE);
-            act.add(Action.NONE);
-        } else if (lineReadyToFire == 1 || lineReadyToFire == 2) {
-
-            int number = searchNumberAction();
-            for (int i = number; i >= 0; i--) {
-                act.add(Action.FIRE);
-            }
-            act.add(Action.NONE);
-        } else {
-            //next line
-        }
+    private void initStartParameterInWorkArraAgressorBT7(){
+        aiDestroyEagle.setsX(getX() / 64);
+        aiDestroyEagle.setsY(getY() / 64);
+        aiDestroyEagle.seteX(4);
+        aiDestroyEagle.seteY(8);
+        aiDestroyEagle.setBf(getBf());
     }
-
-    private int searchNumberAction() {
-        int x = 4; //Eagle (4,8)
-        int rez = 0;
-        for (int i = 1; i < 9; i++) {
-            if (getBf().scanQuadrant(i, x) instanceof Brick || getBf().scanQuadrant(i, x) instanceof Eagle) {
-                rez++;
-            }
-        }
-        return rez;
-    }
-
-
-    public int scanCenterLineH() {
-        int rez = 0;
-        for (int i = 1; i < 9; i++) {
-            if (getBf().scanQuadrant(i, 4) instanceof Brick || getBf().scanQuadrant(i, 4) instanceof Eagle) {
-                rez = 1;
-            } else if (getBf().scanQuadrant(i, 4) instanceof Rock) {
-                rez = -1;
-            }
-        }
-        return rez;
-    }
-
-//    private void initWorkArray() {
-//
-//        for (int i = 0; i < 9; i++) {
-//            for (int j = 0; j < 9; j++) {
-//                if (getBf().scanQuadrant(j, i) instanceof Blank) {
-//                    workArray[i][j] = 1;
-//                } else if (getBf().scanQuadrant(j, i) instanceof Water) {
-//                    workArray[i][j] = 3;
-//                } else if (getBf().scanQuadrant(j, i) instanceof Brick) {
-//                    workArray[i][j] = 2;
-//                } else if (getBf().scanQuadrant(j, i) instanceof Eagle) {
-//                    workArray[i][j] = 0;
-//                } else if (getBf().scanQuadrant(j, i) instanceof Rock) {
-//                    workArray[i][j] = 4;
-//                }
-//
-//                if (getX() == 0 || getX() == 64 * 4 || getX() == 512) {
-//                    workArray[i][j] = 100;
-//                }
-//            }
-//        }
-//
-//        System.out.println("Init +");
-//
-//
-//        for (int i = 0; i < 9; i++) {
-//            for (int j = 0; j < 9; j++) {
-//                if (i == countIter) {
-//
-//                }
-//
-//            }
-//        }
-//
-//
-//    }
 }
