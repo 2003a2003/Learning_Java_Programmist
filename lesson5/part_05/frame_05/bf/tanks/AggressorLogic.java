@@ -127,8 +127,8 @@ public class AggressorLogic {
         }
 //--------------------------------------------------------------------------------
         countIter = 0;
-        maxCountIter = 20;
-        int iter = 6;
+        maxCountIter = 50;
+        int iter = 20;
 
         step = 0;
 
