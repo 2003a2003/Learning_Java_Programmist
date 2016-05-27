@@ -1,14 +1,13 @@
 package lesson5.part_05.frame_05.bf.tanks;
 
 import lesson5.part_05.frame_05.Direction;
-import lesson5.part_05.frame_05.bf.*;
+import lesson5.part_05.frame_05.bf.BattleField;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
-import java.util.List;
+import java.util.LinkedList;
 
 public class BT7 extends AbstractTank {
 
@@ -20,7 +19,7 @@ public class BT7 extends AbstractTank {
 //            Action.MOVE,
 //    };
 
-    private List<Object> act;
+    private LinkedList<Object> act;
 
 
     public BT7(BattleField bf) {
@@ -33,7 +32,7 @@ public class BT7 extends AbstractTank {
 
         setImages();
 
-        act = new ArrayList<Object>();
+        act = new LinkedList<>();
 
     }
 
@@ -47,7 +46,7 @@ public class BT7 extends AbstractTank {
 
         setImages();
 
-        act = new ArrayList<Object>();
+        act = new LinkedList<>();
         aiDestroyEagle = new AggressorLogic();
     }
 
@@ -102,6 +101,7 @@ public class BT7 extends AbstractTank {
 
         initStartParameterInWorkArraAgressorBT7();
         aiDestroyEagle.startDestroyEagle();
+        act = aiDestroyEagle.getPart();
 
     }
 
@@ -111,5 +111,6 @@ public class BT7 extends AbstractTank {
         aiDestroyEagle.seteX(4);
         aiDestroyEagle.seteY(8);
         aiDestroyEagle.setBf(getBf());
+        aiDestroyEagle.setAt(this);
     }
 }

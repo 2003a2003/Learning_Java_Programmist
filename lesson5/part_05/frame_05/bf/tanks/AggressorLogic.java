@@ -1,19 +1,16 @@
 package lesson5.part_05.frame_05.bf.tanks;
 
+import lesson5.part_05.frame_05.Direction;
 import lesson5.part_05.frame_05.bf.*;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
+import java.util.LinkedList;
+import java.util.Random;
 
 public class AggressorLogic {
 
     private BattleField bf;
-
-    private int[][] workArray;
-    private List<Object> actions;
-
-    private int step;
+    private AbstractTank at;
 
     private int sX;
     private int sY;
@@ -21,213 +18,221 @@ public class AggressorLogic {
     private int eX;
     private int eY;
 
-    private int x;
-    private int y;
-
-    private int sizeBfH;
-    private int sizeBfV;
-
     private int countIter;
     private int maxCountIter;
+
+    private int mapWidth;
+    private int mapHeight;
+
+    private int[][] workArray;
+    private int[][] workDirs;
+
+    private int maxIteration = 30;
+
+    private int freeCell = 100;
+    private int destroyCell = 111;
+    private int startPoint = 909;
+    private int stopPoint = 0;
+    private LinkedList<Object> part;
 
 
     public AggressorLogic() {
     }
 
     public void startDestroyEagle() {
+        mapWidth = bf.getBfWidth() / bf.getSIZE_ONE_QUADRANT();
+        mapHeight = bf.getBfHeight() / bf.getSIZE_ONE_QUADRANT();
+        part = new LinkedList<>();
+        workArray = new int[mapHeight][mapWidth];
+
         initWorkArray();
-        searchMinimalPath();
-    }
+        initPath();
 
-    private void searchMinimalPath() {
-        x = sX;
-        y = sY;
-
-        Action[] road = new Action[20];
-        Action[] last = new Action[20];
-        actions = new ArrayList<>();
-        int[] index = new int[4];
-
-
-        int minActions = 0;
-
-        for (int v = 0; v < bf.getBfWidth() / bf.getSIZE_ONE_QUADRANT(); v++) {
-            for (int h = sX; h < bf.getBfWidth() / bf.getSIZE_ONE_QUADRANT(); h++) {
-                if (!checkOnBoard(v + 1, h) && !checkLastCounters(workArray[v + 1][h])) { //rename metod checkLastCounter
-                    index[1] = workArray[v + 1][h];
-                }else {
-                    index[1] = -1;
-                }
-
-                if (!checkOnBoard(v - 1, h) && checkLastCounters(workArray[v - 1][h])) {
-                    index[0] = workArray[v - 1][h];
-                }else {
-                    index[0] = -1;
-                }
-
-                if (!checkOnBoard(v, h + 1) && checkLastCounters(workArray[v][h + 1])) {
-                    index[3] = workArray[v][h + 1];
-                }else {
-                    index[3] = -1;
-                }
-
-                if (!checkOnBoard(v, h - 1) && checkLastCounters(workArray[v][h - 1])) {
-                    index[2] = workArray[v][h - 1];
-                }else {
-                    index[2] = -1;
-                }
-
-                int rez = findMinValue(index);
-
-
-
-
-            }
-        }
-    }
-
-    private int findMinValue(int[] index) {
-
-
-        return -1;
     }
 
     private void initWorkArray() {
-        workArray = new int[9][9];
-        sizeBfH = bf.getBfWidth() / bf.getSIZE_ONE_QUADRANT();
-        sizeBfV = bf.getBfHeight() / bf.getSIZE_ONE_QUADRANT();
 
         int rez = 0;
 
-        for (int v = 0; v < sizeBfV; v++) {
-            for (int h = 0; h < sizeBfH; h++) {
+        for (int v = 0; v < mapHeight; v++) {
+            for (int h = 0; h < mapWidth; h++) {
                 if (h == sX && v == sY) {
-                    rez = 909;
+                    rez = startPoint;
                 } else if (h == eX && v == eY) {
-                    rez = 0;
+                    rez = stopPoint;
                 } else {
 
                     if (bf.scanQuadrant(v, h) instanceof Blank) {
-                        rez = 100;
+                        rez = freeCell;
                     } else if (bf.scanQuadrant(v, h) instanceof Brick) {
-                        rez = 111;
+                        rez = destroyCell;
                     } else if (bf.scanQuadrant(v, h) instanceof Water) {
                         rez = 222;
                     } else if (bf.scanQuadrant(v, h) instanceof Rock) {
                         rez = 333;
                     }
-
                 }
                 workArray[v][h] = rez;
             }
         }
-//---------------------------------------------------------------------------------
         for (int[] array : workArray) {
             System.out.println(Arrays.toString(array));
         }
-//--------------------------------------------------------------------------------
+
         countIter = 0;
         maxCountIter = 50;
-        int iter = 20;
+        boolean printArray = true;
 
-        step = 0;
-
-        for (int v = 8; v >= 0; v--) {
-            while (step < 4) {
+        do {
+            for (int v = 8; v >= 0; v--) {
                 for (int h = 0; h < 9; h++) {
                     if (workArray[v][h] == countIter) {
-                        if (!checkOnBoard(v + 1, h) && checkLastCounters(workArray[v + 1][h])) {
+                        if (inMap(v + 1, h) && checkFreeCell(workArray[v + 1][h])) {
                             workArray[v + 1][h] = countIter + 1;
                         }
-                        if (!checkOnBoard(v - 1, h) && checkLastCounters(workArray[v - 1][h])) {
+                        if (inMap(v - 1, h) && checkFreeCell(workArray[v - 1][h])) {
                             workArray[v - 1][h] = countIter + 1;
                         }
-                        if (!checkOnBoard(v, h + 1) && checkLastCounters(workArray[v][h + 1])) {
+                        if (inMap(v, h + 1) && checkFreeCell(workArray[v][h + 1])) {
                             workArray[v][h + 1] = countIter + 1;
                         }
-                        if (!checkOnBoard(v, h - 1) && checkLastCounters(workArray[v][h - 1])) {
+                        if (inMap(v, h - 1) && checkFreeCell(workArray[v][h - 1])) {
                             workArray[v][h - 1] = countIter + 1;
                         }
                     }
                 }
-                if (countIter < maxCountIter) {
-                    countIter++;
-                }
-                step++;
             }
-            step = 0;
-            countIter = countIter - 3;
-        }
+            countIter++;
+            if (countIter == maxCountIter) {
+                printArray = false;
+            }
+        } while (workArray[getsY()][getsX()] != countIter && countIter < maxCountIter);
 
-        System.out.println("*******************************************************");
-        for (int[] array : workArray) {
-            System.out.println(Arrays.toString(array));
+        if (printArray) {
+            System.out.println("*******************************************************");
+            for (int[] array : workArray) {
+                System.out.println(Arrays.toString(array));
+
+            }
+            System.out.println("*******************************************************");
         }
-        System.out.println("*******************************************************");
     }
 
-    private boolean checkLastCounters(int number) {
+    private void initPath() {
+        part = new LinkedList<>();
+        if (workArray[getsY()][getsX()] == countIter) {
 
-        if (number == 100 || number == 111) {
+            int h = getsX();
+            int v = getsY();
+
+            int[] index = new int[4];
+
+            do {
+   //             for (; v < mapHeight; v++) {
+   //                 for (; h < mapWidth; h++) {
+                        int i=0;
+
+                        if (inMap(v + 1, h) && workArray[v + 1][h] < workArray[v][h]) {
+                            index[i] = 2;
+                            i++;
+                        }
+                        if (inMap(v - 1, h) && workArray[v - 1][h] < workArray[v][h]) {
+                            index[i] = 1;
+                            i++;
+                        }
+                        if (inMap(v, h + 1) && workArray[v][h + 1] < workArray[v][h]) {
+                            index[i] = 3;
+                            i++;
+                        }
+                        if (inMap(v, h - 1) && workArray[v][h - 1] < workArray[v][h]) {
+                            index[i] = 4;
+                            i++;
+                        }
+     //               }
+                int indexVibora = 0;
+                indexVibora = randomPath(index);
+
+                    //Закинуть в массив и рандомно выбрать среди тех путей что найдены точку и добавить дейчтвие
+
+                   // System.out.println("*********************************************************************");
+
+                    String str = "";
+
+                    if (indexVibora == 1) {
+                        v = v - 1;
+                        str = "UP";
+                        if(at.getDirection() != Direction.UP){
+                            part.add(Direction.UP);
+                        }
+                        part.add(Action.MOVE);
+                    } else if (indexVibora == 2) {
+                        v = v + 1;
+                        str = "DOWN";
+                        if(at.getDirection() != Direction.DOWN){
+                            part.add(Direction.DOWN);
+                        }
+                        part.add(Action.MOVE);
+                    } else if (indexVibora == 3) {
+                        h = h + 1;
+                        str = "RIGHT";
+                        if(at.getDirection() != Direction.RIGHT){
+                            part.add(Direction.RIGHT);
+                        }
+                        part.add(Action.MOVE);
+                    } else if (indexVibora == 4) {
+                        h = h - 1;
+                        str = "LEFT";
+                        if(at.getDirection() != Direction.LEFT){
+                            part.add(Direction.LEFT);
+                        }
+                        part.add(Action.MOVE);
+                    }
+
+                   // System.out.println("Index = " + indexVibora + " Dvigenie: " + str);
+ //               }
+
+            } while (workArray[v][h] != 0 && inMap(v, h));
+
+           // System.out.println("*********************************************************************");
+
+
+        } else {
+            System.out.println("*******************************************************");
+            System.out.println("STOP GAME, THERE IS NO WAY!!!!!!!!!");
+            System.out.println("*******************************************************");
+        }
+    }
+
+    private int randomPath(int[] array) {
+
+        Random r = new Random();
+        int index = 0;
+
+        for (int i = 0; i < array.length; i++) {
+            if (array[i] != 0) {
+                index++;
+            }
+        }
+        int rez = r.nextInt(index);
+
+        return array[index];
+    }
+
+    private boolean checkFreeCell(int number) {
+
+        if (number == freeCell || number == destroyCell || number == startPoint) {
             return true;
         }
         return false;
     }
 
-    private void firsIteration(int v, int h) {
-
-        for (; h < sizeBfH; h++) {
-            if (workArray[v][h] == step) {
-                if (!checkOnBoard(v - 1, h)) {
-                    if (workArray[v - 1][h] != -83 && workArray[v - 1][h] != -84) {
-                        workArray[v - 1][h] = step + 1;
-                    }
-                }
-                if (!checkOnBoard(v, h + 1)) {
-                    if (workArray[v][h + 1] != -83 && workArray[v][h + 1] != -84) {
-                        workArray[v][h + 1] = step + 1;
-                    }
-                }
-                if (!checkOnBoard(v, h - 1)) {
-                    if (workArray[v][h - 1] != -83 && workArray[v][h - 1] != -84) {
-                        workArray[v][h - 1] = step + 1;
-                    }
-                }
-            }
-        }
-    }
-
-    private void nexIteration(int v, int h, int lastStep) {
-
-        for (; h < sizeBfH; h++) {
-            if (workArray[v][h] == step) {
-                if (!checkOnBoard(v - 1, h)) {
-                    if (workArray[v - 1][h] != -83 && workArray[v - 1][h] != -84) {
-                        workArray[v - 1][h] = step + 1;
-                    }
-                }
-                if (!checkOnBoard(v, h + 1)) {
-                    if (workArray[v][h + 1] != -83 && workArray[v][h + 1] != -84) {
-                        workArray[v][h + 1] = step + 1;
-                    }
-                }
-                if (!checkOnBoard(v, h - 1)) {
-                    if (workArray[v][h - 1] != -83 && workArray[v][h - 1] != -84) {
-                        workArray[v][h - 1] = step + 1;
-                    }
-                }
-            }
-        }
-    }
-
-
-    private boolean checkOnBoard(int y, int x) {
-        if (x >= 0 && x < 9 && y >= 0 && y < 9) {
+    private boolean inMap(int v, int h) {
+        if (h >= 0 && h < mapWidth && v >= 0 && v < mapHeight) {
+            return true;
+        } else {
             return false;
         }
-        return true;
     }
-
 
     //Getter and Setter
 
@@ -265,6 +270,22 @@ public class AggressorLogic {
 
     public void setBf(BattleField bf) {
         this.bf = bf;
+    }
+
+    public AbstractTank getAt() {
+        return at;
+    }
+
+    public void setAt(AbstractTank at) {
+        this.at = at;
+    }
+
+    public LinkedList<Object> getPart() {
+        return part;
+    }
+
+    public void setPart(LinkedList<Object> part) {
+        this.part = part;
     }
 }
 
