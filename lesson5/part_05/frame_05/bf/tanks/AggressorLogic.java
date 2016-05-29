@@ -3,6 +3,7 @@ package lesson5.part_05.frame_05.bf.tanks;
 import lesson5.part_05.frame_05.Direction;
 import lesson5.part_05.frame_05.bf.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Random;
@@ -33,7 +34,7 @@ public class AggressorLogic {
     private int destroyCell = 111;
     private int startPoint = 909;
     private int stopPoint = 0;
-    private LinkedList<Object> part;
+    private ArrayList<Object> part;
 
 
     public AggressorLogic() {
@@ -42,7 +43,7 @@ public class AggressorLogic {
     public void startDestroyEagle() {
         mapWidth = bf.getBfWidth() / bf.getSIZE_ONE_QUADRANT();
         mapHeight = bf.getBfHeight() / bf.getSIZE_ONE_QUADRANT();
-        part = new LinkedList<>();
+        part = new ArrayList<>();
         workArray = new int[mapHeight][mapWidth];
 
         initWorkArray();
@@ -112,14 +113,13 @@ public class AggressorLogic {
             System.out.println("*******************************************************");
             for (int[] array : workArray) {
                 System.out.println(Arrays.toString(array));
-
             }
             System.out.println("*******************************************************");
         }
     }
 
     private void initPath() {
-        part = new LinkedList<>();
+
         if (workArray[getsY()][getsX()] == countIter) {
 
             int h = getsX();
@@ -127,75 +127,85 @@ public class AggressorLogic {
 
             int[] index = new int[4];
 
-            do {
-   //             for (; v < mapHeight; v++) {
-   //                 for (; h < mapWidth; h++) {
-                        int i=0;
+            while (workArray[v][h] != 0 && inMap(v, h)) {
 
-                        if (inMap(v + 1, h) && workArray[v + 1][h] < workArray[v][h]) {
-                            index[i] = 2;
-                            i++;
-                        }
-                        if (inMap(v - 1, h) && workArray[v - 1][h] < workArray[v][h]) {
-                            index[i] = 1;
-                            i++;
-                        }
-                        if (inMap(v, h + 1) && workArray[v][h + 1] < workArray[v][h]) {
-                            index[i] = 3;
-                            i++;
-                        }
-                        if (inMap(v, h - 1) && workArray[v][h - 1] < workArray[v][h]) {
-                            index[i] = 4;
-                            i++;
-                        }
-     //               }
                 int indexVibora = 0;
+                int i = 0;
+
+                if (inMap(v + 1, h) && workArray[v + 1][h] < workArray[v][h]) {
+                    index[i] = 2;
+                    i++;
+                }
+                if (inMap(v - 1, h) && workArray[v - 1][h] < workArray[v][h]) {
+                    index[i] = 1;
+                    i++;
+                }
+                if (inMap(v, h + 1) && workArray[v][h + 1] < workArray[v][h]) {
+                    index[i] = 3;
+                    i++;
+                }
+                if (inMap(v, h - 1) && workArray[v][h - 1] < workArray[v][h]) {
+                    index[i] = 4;
+                    i++;
+                }
+
                 indexVibora = randomPath(index);
 
-                    //Закинуть в массив и рандомно выбрать среди тех путей что найдены точку и добавить дейчтвие
+                String str = "";
 
-                   // System.out.println("*********************************************************************");
-
-                    String str = "";
-
-                    if (indexVibora == 1) {
-                        v = v - 1;
-                        str = "UP";
-                        if(at.getDirection() != Direction.UP){
-                            part.add(Direction.UP);
-                        }
-                        part.add(Action.MOVE);
-                    } else if (indexVibora == 2) {
-                        v = v + 1;
-                        str = "DOWN";
-                        if(at.getDirection() != Direction.DOWN){
-                            part.add(Direction.DOWN);
-                        }
-                        part.add(Action.MOVE);
-                    } else if (indexVibora == 3) {
-                        h = h + 1;
-                        str = "RIGHT";
-                        if(at.getDirection() != Direction.RIGHT){
-                            part.add(Direction.RIGHT);
-                        }
-                        part.add(Action.MOVE);
-                    } else if (indexVibora == 4) {
-                        h = h - 1;
-                        str = "LEFT";
-                        if(at.getDirection() != Direction.LEFT){
-                            part.add(Direction.LEFT);
-                        }
-                        part.add(Action.MOVE);
+                if (indexVibora == 1) {
+                    if (at.getDirection() != Direction.UP) {
+                        part.add(Direction.UP);
                     }
+                    if (inMap(v - 1, h)) {
+                        v = v - 1;
+                        if (bf.scanQuadrant(v, h) instanceof Brick || bf.scanQuadrant(v, h) instanceof Eagle) {
+                            part.add(Action.FIRE);
+                        }
+                    }
+                    str = "UP";
+                    part.add(Action.MOVE);
+                } else if (indexVibora == 2) {
+                    str = "DOWN";
+                    if (at.getDirection() != Direction.DOWN) {
+                        part.add(Direction.DOWN);
+                    }
+                    if (inMap(v + 1, h)) {
+                        v = v + 1;
+                        if (bf.scanQuadrant(v, h) instanceof Brick || bf.scanQuadrant(v, h) instanceof Eagle) {
+                            part.add(Action.FIRE);
+                        }
+                    }
+                    part.add(Action.MOVE);
+                } else if (indexVibora == 3) {
+                    str = "RIGHT";
+                    if (at.getDirection() != Direction.RIGHT) {
+                        part.add(Direction.RIGHT);
+                    }
+                    if (inMap(v, h + 1)) {
+                        h = h + 1;
+                        if (bf.scanQuadrant(v, h) instanceof Brick || bf.scanQuadrant(v, h) instanceof Eagle) {
+                            part.add(Action.FIRE);
+                        }
+                    }
+                    part.add(Action.MOVE);
+                } else if (indexVibora == 4) {
+                    str = "LEFT";
+                    if (at.getDirection() != Direction.LEFT) {
+                        part.add(Direction.LEFT);
+                    }
+                    if (inMap(v, h - 1)) {
+                        h = h - 1;
+                        if (bf.scanQuadrant(v, h) instanceof Brick || bf.scanQuadrant(v, h) instanceof Eagle) {
+                            part.add(Action.FIRE);
+                        }
+                    }
+                    part.add(Action.MOVE);
+                }
 
-                   // System.out.println("Index = " + indexVibora + " Dvigenie: " + str);
- //               }
-
-            } while (workArray[v][h] != 0 && inMap(v, h));
-
-           // System.out.println("*********************************************************************");
-
-
+                System.out.println("V= " + v + " H= " + h + " Dvigenie: " + str);
+            } //while (workArray[v][h] != 0 && inMap(v, h));
+            // System.out.println("*********************************************************************");
         } else {
             System.out.println("*******************************************************");
             System.out.println("STOP GAME, THERE IS NO WAY!!!!!!!!!");
@@ -215,7 +225,8 @@ public class AggressorLogic {
         }
         int rez = r.nextInt(index);
 
-        return array[index];
+
+        return array[rez];
     }
 
     private boolean checkFreeCell(int number) {
@@ -280,11 +291,11 @@ public class AggressorLogic {
         this.at = at;
     }
 
-    public LinkedList<Object> getPart() {
+    public ArrayList<Object> getPart() {
         return part;
     }
 
-    public void setPart(LinkedList<Object> part) {
+    public void setPart(ArrayList<Object> part) {
         this.part = part;
     }
 }

@@ -7,6 +7,7 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class BT7 extends AbstractTank {
@@ -19,7 +20,7 @@ public class BT7 extends AbstractTank {
 //            Action.MOVE,
 //    };
 
-    private LinkedList<Object> act;
+    private ArrayList<Object> act;
 
 
     public BT7(BattleField bf) {
@@ -28,11 +29,11 @@ public class BT7 extends AbstractTank {
         tankColor = new Color(255, 0, 0);
         towerColor = new Color(0, 255, 0);
 
-        movePath = 2;
+        movePath = 1;
 
         setImages();
 
-        act = new LinkedList<>();
+        act = new ArrayList<>();
 
     }
 
@@ -42,11 +43,11 @@ public class BT7 extends AbstractTank {
         tankColor = new Color(255, 0, 0);
         towerColor = new Color(0, 255, 0);
 
-        movePath = 2;
+        movePath = 1;
 
         setImages();
 
-        act = new LinkedList<>();
+        act = new ArrayList<>();
         aiDestroyEagle = new AggressorLogic();
     }
 
@@ -102,7 +103,6 @@ public class BT7 extends AbstractTank {
         initStartParameterInWorkArraAgressorBT7();
         aiDestroyEagle.startDestroyEagle();
         act = aiDestroyEagle.getPart();
-
     }
 
     private void initStartParameterInWorkArraAgressorBT7(){
