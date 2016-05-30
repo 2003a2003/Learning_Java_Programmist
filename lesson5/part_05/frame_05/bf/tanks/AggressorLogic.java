@@ -53,12 +53,12 @@ public class AggressorLogic {
     private void initWorkArray() {
 
         initNumberArray();
-        printArray(workArray);
+//        printArray(workArray);
         boolean printArray = initWave();
 
-        if (printArray) {
-            printArray(workArray);
-        }
+//        if (printArray) {
+//            printArray(workArray);
+//        }
     }
 
     private void initNumberArray() {

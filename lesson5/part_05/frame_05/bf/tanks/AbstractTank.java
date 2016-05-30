@@ -10,7 +10,6 @@ public abstract class AbstractTank implements Tank {
 
     private int speed = 10;
     protected int movePath = 1;
-
     // 1 - up, 2 - down, 3 - left, 4 - right
     private Direction direction;
 

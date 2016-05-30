@@ -13,27 +13,15 @@ public class BT7 extends AbstractTank {
 
     private int step;
     private AggressorLogic aiDestroyEagle;
-
-//    private Object[] actoins = new Object[]{
-//            Action.FIRE,
-//            Action.MOVE,
-//    };
-
     private ArrayList<Object> act;
-
 
     public BT7(BattleField bf) {
         super(bf);
-
         tankColor = new Color(255, 0, 0);
         towerColor = new Color(0, 255, 0);
-
         movePath = 1;
-
         setImages();
-
         act = new ArrayList<>();
-
     }
 
     public BT7(BattleField bf, int x, int y, Direction direction) {

@@ -1,5 +1,6 @@
 package lesson5.part_05.frame_05.bf.tanks;
 
+import lesson5.part_05.frame_05.Direction;
 import lesson5.part_05.frame_05.bf.BattleField;
 
 import java.awt.*;
@@ -14,14 +15,14 @@ public class Tiger extends AbstractTank {
 		towerColor = new Color(0, 255, 0);
 		armor = 1;
 	}
-//
-//	public Tiger(BattleField bf, int x, int y, Direction direction) {
-//		super(bf, x, y, direction);
-//		tankColor = new Color(255, 0, 0);
-//		towerColor = new Color(0, 255, 0);
-//		armor = 1;
-//	}
-//
+
+	public Tiger(BattleField bf, int x, int y, Direction direction) {
+		super(bf, x, y, direction);
+		tankColor = new Color(255, 0, 0);
+		towerColor = new Color(0, 255, 0);
+		armor = 1;
+	}
+
 	@Override
 	public void destroy() {
 		if (armor > 0) {
