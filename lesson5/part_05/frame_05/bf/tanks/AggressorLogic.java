@@ -5,7 +5,6 @@ import lesson5.part_05.frame_05.bf.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.Random;
 
 public class AggressorLogic {
@@ -53,6 +52,16 @@ public class AggressorLogic {
 
     private void initWorkArray() {
 
+        initNumberArray();
+        printArray(workArray);
+        boolean printArray = initWave();
+
+        if (printArray) {
+            printArray(workArray);
+        }
+    }
+
+    private void initNumberArray() {
         int rez = 0;
 
         for (int v = 0; v < mapHeight; v++) {
@@ -76,14 +85,20 @@ public class AggressorLogic {
                 workArray[v][h] = rez;
             }
         }
-        for (int[] array : workArray) {
-            System.out.println(Arrays.toString(array));
-        }
+    }
 
+    private void printArray(int[][] array) {
+        System.out.println("*******************************************************");
+        for (int[] a : array) {
+            System.out.println(Arrays.toString(a));
+        }
+        System.out.println("*******************************************************");
+    }
+
+    private boolean initWave() {
         countIter = 0;
         maxCountIter = 50;
         boolean printArray = true;
-
         do {
             for (int v = 8; v >= 0; v--) {
                 for (int h = 0; h < 9; h++) {
@@ -109,53 +124,49 @@ public class AggressorLogic {
             }
         } while (workArray[getsY()][getsX()] != countIter && countIter < maxCountIter);
 
-        if (printArray) {
-            System.out.println("*******************************************************");
-            for (int[] array : workArray) {
-                System.out.println(Arrays.toString(array));
-            }
-            System.out.println("*******************************************************");
-        }
+        return printArray;
     }
 
     private void initPath() {
+        int h = getsX();
+        int v = getsY();
+        Direction dir = at.getDirection();
 
-        if (workArray[getsY()][getsX()] == countIter) {
+        if (workArray[v][h] == countIter) {
 
-            int h = getsX();
-            int v = getsY();
-
-            int[] index = new int[4];
+            int[] index;
+            int choice = 0;
 
             while (workArray[v][h] != 0 && inMap(v, h)) {
-
-                int indexVibora = 0;
+                index = new int[4];
                 int i = 0;
 
                 if (inMap(v + 1, h) && workArray[v + 1][h] < workArray[v][h]) {
                     index[i] = 2;
                     i++;
                 }
+
                 if (inMap(v - 1, h) && workArray[v - 1][h] < workArray[v][h]) {
                     index[i] = 1;
                     i++;
                 }
+
                 if (inMap(v, h + 1) && workArray[v][h + 1] < workArray[v][h]) {
                     index[i] = 3;
                     i++;
                 }
+
                 if (inMap(v, h - 1) && workArray[v][h - 1] < workArray[v][h]) {
                     index[i] = 4;
                     i++;
                 }
 
-                indexVibora = randomPath(index);
+                choice = randomPath(index);
 
-                String str = "";
-
-                if (indexVibora == 1) {
-                    if (at.getDirection() != Direction.UP) {
+                if (choice == 1) {
+                    if (dir != Direction.UP) {
                         part.add(Direction.UP);
+                        dir = Direction.UP;
                     }
                     if (inMap(v - 1, h)) {
                         v = v - 1;
@@ -163,12 +174,11 @@ public class AggressorLogic {
                             part.add(Action.FIRE);
                         }
                     }
-                    str = "UP";
                     part.add(Action.MOVE);
-                } else if (indexVibora == 2) {
-                    str = "DOWN";
-                    if (at.getDirection() != Direction.DOWN) {
+                } else if (choice == 2) {
+                    if (dir != Direction.DOWN) {
                         part.add(Direction.DOWN);
+                        dir = Direction.DOWN;
                     }
                     if (inMap(v + 1, h)) {
                         v = v + 1;
@@ -177,22 +187,23 @@ public class AggressorLogic {
                         }
                     }
                     part.add(Action.MOVE);
-                } else if (indexVibora == 3) {
-                    str = "RIGHT";
-                    if (at.getDirection() != Direction.RIGHT) {
+                } else if (choice == 3) {
+                    if (dir != Direction.RIGHT) {
                         part.add(Direction.RIGHT);
+                        dir = Direction.RIGHT;
                     }
                     if (inMap(v, h + 1)) {
                         h = h + 1;
                         if (bf.scanQuadrant(v, h) instanceof Brick || bf.scanQuadrant(v, h) instanceof Eagle) {
                             part.add(Action.FIRE);
+                            dir = Direction.LEFT;
                         }
                     }
                     part.add(Action.MOVE);
-                } else if (indexVibora == 4) {
-                    str = "LEFT";
-                    if (at.getDirection() != Direction.LEFT) {
+                } else if (choice == 4) {
+                    if (dir != Direction.LEFT) {
                         part.add(Direction.LEFT);
+                        dir = Direction.LEFT;
                     }
                     if (inMap(v, h - 1)) {
                         h = h - 1;
@@ -201,15 +212,18 @@ public class AggressorLogic {
                         }
                     }
                     part.add(Action.MOVE);
+                } else {
+                    System.out.println("*******************************************************");
+                    System.out.println("STOP GAME, THERE IS NO WAY!!!!!!!!!");
+                    System.out.println("*******************************************************");
                 }
-
-                System.out.println("V= " + v + " H= " + h + " Dvigenie: " + str);
-            } //while (workArray[v][h] != 0 && inMap(v, h));
-            // System.out.println("*********************************************************************");
+            }
+            System.out.println("Part is good");
         } else {
             System.out.println("*******************************************************");
             System.out.println("STOP GAME, THERE IS NO WAY!!!!!!!!!");
             System.out.println("*******************************************************");
+            return;
         }
     }
 

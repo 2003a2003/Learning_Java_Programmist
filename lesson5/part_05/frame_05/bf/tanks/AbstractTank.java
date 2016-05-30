@@ -52,15 +52,15 @@ public abstract class AbstractTank implements Tank {
         int bulletY = -100;
 		if (direction == Direction.UP) {
 			bulletX = x + 30;
-			bulletY = y - 64;
+			bulletY = y - 54;
 		} else if (direction == Direction.DOWN) {
 			bulletX = x + 30;
-			bulletY = y + 64;
+			bulletY = y + 54;
 		} else if (direction == Direction.LEFT) {
-			bulletX = x - 64;
+			bulletX = x - 54;
 			bulletY = y + 30;
 		} else if (direction == Direction.RIGHT) {
-			bulletX = x + 64;
+			bulletX = x + 54;
 			bulletY = y + 30;
 		}
         return new Bullet(bulletX,bulletY, direction, this);

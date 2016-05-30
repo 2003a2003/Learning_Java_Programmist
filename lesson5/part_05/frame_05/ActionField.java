@@ -96,14 +96,15 @@ public class ActionField extends JPanel {
 			if (!(bfobject instanceof Blank) && !bfobject.isDestroyed()) {
 				System.out.println("[illegal move] direction: " + direction
 						+ " tankX: " + tank.getX() + ", tankY: " + tank.getY());
+                //tank.fire();
 				return;
 			}
 
-            if (!(bfobject instanceof Blank) && !bfobject.isDestroyed() && !(bfobject instanceof Water)) {
-                System.out.println("[illegal move] direction: " + direction
-                        + " tankX: " + tank.getX() + ", tankY: " + tank.getY());
-                return;
-            }
+//            if (!(bfobject instanceof Blank) && !bfobject.isDestroyed() && !(bfobject instanceof Water)) {
+//                System.out.println("[illegal move] direction: " + direction
+//                        + " tankX: " + tank.getX() + ", tankY: " + tank.getY());
+//                return;
+//            }
 
             // process move
             while (covered < 64) {

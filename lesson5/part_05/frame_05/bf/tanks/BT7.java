@@ -8,7 +8,6 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 public class BT7 extends AbstractTank {
 
@@ -103,6 +102,14 @@ public class BT7 extends AbstractTank {
         initStartParameterInWorkArraAgressorBT7();
         aiDestroyEagle.startDestroyEagle();
         act = aiDestroyEagle.getPart();
+
+        int index = 1;
+        for (int i =0 ; i < act.size(); i++) {
+            System.out.println(index + " " + act.get(i));
+            index++;
+        }
+
+
     }
 
     private void initStartParameterInWorkArraAgressorBT7(){
