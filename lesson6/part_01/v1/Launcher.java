@@ -1,13 +1,13 @@
 package lesson6.part_01.v1;
 
-import lesson6.part_01.v1.calc.Adarter;
+import lesson6.part_01.v1.calc.Adapter;
 
 import java.util.Random;
 
 public class Launcher {
 
     public static void main(String[] args) {
-        Adarter calc = new Adarter();
+        Adapter calc = new Adapter();
 
         Operations o = new Operations();
         o.setCalc(calc);
