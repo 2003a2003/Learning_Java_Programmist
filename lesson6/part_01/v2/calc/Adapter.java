@@ -1,14 +1,16 @@
 package lesson6.part_01.v2.calc;
 
-public class Adapter implements Calculator {
+import lesson6.part_01.Arifmetika;
+
+public class Adapter extends Arifmetika implements Calculator{
 
     @Override
     public int summa(int a, int b) {
-        return 0;
+        return super.summa(new int[] {a, b});
     }
 
     @Override
     public int multiply(int a, int b) {
-        return 0;
+        return super.multiply(a,b);
     }
 }
