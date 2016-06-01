@@ -2,7 +2,7 @@ package lesson6.part_01;
 
 public class Arifmetika {
 
-	public int summa(int[] numbers) {
+	public static int summa(int[] numbers) {
 		int summa = 0;
 		for (int i : numbers) {
 			summa += i;
@@ -10,8 +10,8 @@ public class Arifmetika {
 		return summa;
 	}
 	
-	public int multiply(int number, int multiplier) {
-		int result = 0;
+	public static int multiply(int number, int multiplier) {
+		int result = number;
 		for (int i = 0; i < multiplier; i++) {
 			result *= multiplier;
 		}
