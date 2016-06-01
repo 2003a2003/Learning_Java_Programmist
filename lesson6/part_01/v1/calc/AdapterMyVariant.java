@@ -2,7 +2,7 @@ package lesson6.part_01.v1.calc;
 
 import lesson6.part_01.Arifmetika;
 
-public class AdapterMyVariant extends Calculator{
+public class AdapterMyVariant extends Calculator {
 
     private Arifmetika arf;
 

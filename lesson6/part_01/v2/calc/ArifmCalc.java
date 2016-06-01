@@ -2,7 +2,7 @@ package lesson6.part_01.v2.calc;
 
 import lesson6.part_01.Arifmetika;
 
-public class ArifmCalc implements Calculator{
+public class ArifmCalc implements Calculator {
 
     @Override
     public int summa(int a, int b) {
