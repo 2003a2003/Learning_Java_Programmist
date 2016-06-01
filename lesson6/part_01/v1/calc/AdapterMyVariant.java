@@ -2,11 +2,11 @@ package lesson6.part_01.v1.calc;
 
 import lesson6.part_01.Arifmetika;
 
-public class Adapter extends Calculator{
+public class AdapterMyVariant extends Calculator{
 
     private Arifmetika arf;
 
-    public Adapter() {
+    public AdapterMyVariant() {
         arf = new Arifmetika();
     }
 
