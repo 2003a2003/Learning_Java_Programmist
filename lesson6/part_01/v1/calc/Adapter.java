@@ -2,17 +2,17 @@ package lesson6.part_01.v1.calc;
 
 import lesson6.part_01.Arifmetika;
 
-public class Adarter extends Calculator{
+public class Adapter extends Calculator{
 
     private Arifmetika arf;
 
-    public Adarter() {
+    public Adapter() {
         arf = new Arifmetika();
     }
 
     @Override
     public int summa(int a, int b) {
-        return arf.summa(new int[]{a,78});
+        return arf.summa(new int[]{a,b});
     }
 
     @Override
