@@ -14,6 +14,7 @@ public class Bullet {
     private int y;
 
     private int direction;
+    private int butlleStep = 5;
 
     private void setDefoultXY() {
         x = -100;
@@ -59,4 +60,20 @@ public class Bullet {
         x = -100;
         y = -100;
    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public int getButlleStep() {
+        return butlleStep;
+    }
+
+    public void setButlleStep(int butlleStep) {
+        this.butlleStep = butlleStep;
+    }
 }
