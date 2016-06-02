@@ -1,9 +1,8 @@
 package lesson6.part_02.frame_08;
 
-public class NewReleaseNumbersObserver implements Observer {
+import java.util.Observable;
 
-    @Override
-    public void update() {
-        System.out.println("observer: " + this.toString());
-    }
+public class NewReleaseNumbersObserver extends Observable {
+
+
 }

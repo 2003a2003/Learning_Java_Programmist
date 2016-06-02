@@ -1,8 +1,9 @@
 package lesson6.part_02.frame_08;
 
-public class NewSubscruberRegistrationObserver implements Observer {
+public class NewSubscruberRegistrationObserver extends java.util.Observable {
+
     @Override
-    public void update() {
-        System.out.println("observer: " + this.toString());
+    public void notifyObservers(Object arg) {
+        super.notifyObservers(arg);
     }
 }

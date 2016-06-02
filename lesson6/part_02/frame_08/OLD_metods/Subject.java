@@ -1,4 +1,6 @@
-package lesson6.part_02.frame_08;
+package lesson6.part_02.frame_08.OLD_metods;
+
+import lesson6.part_02.frame_08.OLD_metods.Observer;
 
 public interface Subject {
 

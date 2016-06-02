@@ -1,8 +1,11 @@
 package lesson6.part_02.frame_08;
 
-import java.util.ArrayList;
+import lesson6.part_02.frame_08.OLD_metods.Observer;
 
-public class Newspaper implements Subject {
+import java.util.ArrayList;
+import java.util.Observable;
+
+public class Newspaper extends Observable {
 
     private String newspaperTitle;
 
@@ -57,30 +60,5 @@ public class Newspaper implements Subject {
                 " - subscribers, ");
         newRelize = true;
         notifyObservers();
-    }
-
-
-    @Override
-    public void addObserver(Observer o) {
-        observers.add(o);
-    }
-
-    @Override
-    public void removeObserver(Observer o) {
-        observers.remove(o);
-    }
-
-    @Override
-    public void notifyObservers() {
-
-        for (Observer o : observers) {
-            if (o instanceof NewSubscruberRegistrationObserver && newSubscruber) {
-                o.update();
-                newSubscruber = false;
-            } else if (o instanceof NewReleaseNumbersObserver && newRelize) {
-                o.update();
-                newRelize = false;
-            }
-        }
     }
 }
