@@ -1,4 +1,4 @@
-package lesson6.part_02;
+package lesson6.part_02.frame_06;
 
 import java.util.ArrayList;
 
@@ -61,12 +61,12 @@ public class Newspaper implements Subject {
 
 
     @Override
-    public void addObserver(lesson6.part_02.Observer o) {
+    public void addObserver(Observer o) {
         observers.add(o);
     }
 
     @Override
-    public void removeObserver(lesson6.part_02.Observer o) {
+    public void removeObserver(Observer o) {
         observers.remove(o);
     }
 
