@@ -1,6 +1,6 @@
 package lesson6.part_02.frame_08;
 
-import com.midgardabc.day9.second_observer.jdkone.ActionEvent;
+import demo_materials.second_observer.jdkone.ActionEvent;
 
 import java.util.*;
 
