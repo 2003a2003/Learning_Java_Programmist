@@ -30,7 +30,7 @@ public class DemoLauncher {
         NewSubscruberRegistrationObserver subsRegistrObserverNp02 = new NewSubscruberRegistrationObserver();
         NewSubscruberRegistrationObserver subsRegistrObserverMg01 = new NewSubscruberRegistrationObserver();
 
-//        np01.addObserver(newReleaseObserveNpr01);
+        np01.addObserver(newReleaseObserveNpr01);
 //        np02.addObserver(newReleaseObserveNpr02);
 //        mg01.addObserver(newReleaseObserveMg01);
 //
@@ -39,12 +39,12 @@ public class DemoLauncher {
 //        mg01.addObserver(subsRegistrObserverMg01);
 //
 //
-//        np01.addNewSubscruber(name01);
-//        np01.addNewSubscruber(name02);
+        np01.addNewSubscruber(name01);
+        np01.addNewSubscruber(name02);
 //        np02.addNewSubscruber(name01);
 //        printSeparator();
 //
-//        np01.releaseNewNumbers();
+        np01.releaseNewNumbers();
 //        np02.releaseNewNumbers();
 //        printSeparator();
 //

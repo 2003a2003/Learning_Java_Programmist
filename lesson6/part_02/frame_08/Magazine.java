@@ -36,12 +36,12 @@ public class Magazine extends Observable {
             subscribers.add(subscriber);
             System.out.print("Magazine: " + journalTitle + " - new Subscriber: " + subscriber.getName() + " ");
             newSubscruber = true;
-            notifyObservers();
+            notifyObservers(Event.REG_SUBSKRUBER);
         } else if (!subscribers.contains(subscriber)) {
             subscribers.add(subscriber);
             System.out.print("Magazine: " + journalTitle + " - new Subscriber: " + subscriber.getName() + " ");
             newSubscruber = true;
-            notifyObservers();
+            notifyObservers(Event.REG_SUBSKRUBER);
         }
     }
 
@@ -60,6 +60,6 @@ public class Magazine extends Observable {
         System.out.println("Magazine: " + journalTitle + " new number: " + relize + ", have been notified: " + subscribers.size() +
                 " - subscribers, ");
         newRelize = true;
-        notifyObservers();
+        notifyObservers(Event.NEW_RELIZE);
     }
 }

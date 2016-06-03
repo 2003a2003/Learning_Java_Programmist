@@ -1,17 +1,15 @@
 package lesson6.part_02.frame_08;
 
 public class ActionEvent {
-	
-	private String name;
 
-	public ActionEvent(String name) {
-		if (name == null) {
-			name = this.toString();
-		}
-		this.name = name;
+	private Event event;
+
+	public ActionEvent(Event event) {
+
+
 	}
-	
-	public String getName() {
-		return name;
+
+	public Event getEvent() {
+		return event;
 	}
 }
