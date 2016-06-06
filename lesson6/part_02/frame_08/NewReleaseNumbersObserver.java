@@ -8,11 +8,7 @@ public class NewReleaseNumbersObserver implements Observer {
     @Override
     public void update(Observable o, Object arg) {
         if(arg instanceof Event && arg == Event.NEW_RELIZE){
-            System.out.println(this.toString() + " notified. Event " );
-        }else {
-            System.out.println("*****");
+            System.out.println(this.toString() + " notified. Event new Relize." );
         }
-
-
     }
 }

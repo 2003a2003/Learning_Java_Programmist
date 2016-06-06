@@ -31,11 +31,13 @@ public class Newspaper extends Observable {
             subscribers.add(subscriber);
             System.out.print("NewPaper: " + newspaperTitle + " - new Subscriber: " + subscriber.getName() + " ");
             newSubscruber = true;
+            setChanged();
             notifyObservers(Event.REG_SUBSKRUBER);
         } else if (!subscribers.contains(subscriber)) {
             subscribers.add(subscriber);
             System.out.print("NewPaper: " + newspaperTitle + " - new Subscriber: " + subscriber.getName() + " ");
             newSubscruber = true;
+            setChanged();
             notifyObservers(Event.REG_SUBSKRUBER);
         }
     }
@@ -55,6 +57,7 @@ public class Newspaper extends Observable {
         System.out.print("NewPaper: " + newspaperTitle + "  - new number: " + relize + ", have been notified: " + subscribers.size() +
                 " - subscribers, ");
         newRelize = true;
+        setChanged();
         notifyObservers(Event.NEW_RELIZE);
     }
 }
