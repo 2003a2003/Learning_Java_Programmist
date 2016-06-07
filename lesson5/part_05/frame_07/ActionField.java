@@ -85,7 +85,7 @@ public class ActionField extends JPanel {
     private void processMove(Tank tank) throws Exception {
         processTurn(tank);
         Direction direction = tank.getDirection();
-        int step = 1;
+        int step = 2;
 
         for (int i = 0; i < tank.getMovePath(); i++) {
             int covered = 0;
@@ -118,7 +118,7 @@ public class ActionField extends JPanel {
 			if (!(bfobject instanceof Blank) && !bfobject.isDestroyed()) {
 				System.out.println("[illegal move] direction: " + direction
 						+ " tankX: " + tank.getX() + ", tankY: " + tank.getY());
-                //tank.fire();
+                tank.fire();
 				return;
 			}
 
