@@ -2,34 +2,24 @@ package lesson6.part_03.newRealization;
 
 public class Customer {
 
-    private String firstName;
-    private String secondName;
+    private String name;
     private String phoneNumber;
 
     public Customer() {
-        this(null, null, null);
+        this(null, null);
     }
 
-    public Customer(String firstName, String secondName, String phoneNumber) {
-        this.firstName = firstName;
-        this.secondName = secondName;
+    public Customer(String name, String phoneNumber) {
+        this.name = name;
         this.phoneNumber = phoneNumber;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getName() {
+        return name;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getSecondName() {
-        return secondName;
-    }
-
-    public void setSecondName(String secondName) {
-        this.secondName = secondName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getPhoneNumber() {
@@ -41,7 +31,6 @@ public class Customer {
     }
 
     public void printCustomer(int index) {
-        System.out.println(index + ". Customer: " + getFirstName() +
-                " " + getSecondName() + ", Phone number : " + getPhoneNumber());
+        System.out.println(index + ". Customer: " + getName() + ", Phone number : " + getPhoneNumber());
     }
 }

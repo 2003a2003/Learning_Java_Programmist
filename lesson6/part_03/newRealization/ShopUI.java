@@ -2,52 +2,78 @@ package lesson6.part_03.newRealization;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.NumberFormat;
+import java.util.AbstractList;
+import java.util.List;
 
 public class ShopUI {
 
-    public ShopUI() {
+    private Font font = new Font("Verdana", Font.PLAIN, 12);
+    private Shop shop;
+    private int productIndex = 0;
+    private JFrame f;
+    private JPanel jpSale;
+    private String[] headers  = {"№", "Date", "Product", "Count", "Price", "Customer"};
+    private Object[][] data = {};
 
-        JFrame f = new JFrame("ShopUI");
+    public ShopUI(Shop shop) {
+
+        this.shop = shop;
+
+        f = new JFrame("ShopUI");
+
         f.setMinimumSize(new Dimension(800, 600));
         f.setLocation(100, 100);
 
-        f.getContentPane().add(createJPanel());
+        f.setJMenuBar(createJMenuBar());
+
+        jpSale = createJPanelSale();
+        //f.getContentPane().add(jpSale);
 
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.pack();
         f.setVisible(true);
     }
 
-    private JPanel createJPanel() {
-        JPanel p = new JPanel();
-        p.setBackground(Color.BLUE);
+    private JMenuBar createJMenuBar() {
 
+        //Create the menu bar.
         JMenuBar jb = new JMenuBar();
-        jb.setLayout(new BoxLayout(jb, BoxLayout.PAGE_AXIS));
-        JMenu jmCustomer = addMenuCustomers();
-        JMenu jmSeparator = addSeparator();
-        JMenu jmProduct = addMenuProduct();
 
-        jb.add(jmCustomer);
-        jb.add(jmSeparator);
-        jb.add(jmProduct);
+        jb.setBackground(Color.DARK_GRAY);
 
         jb.setBorder(BorderFactory.createMatteBorder(0,0,0,1, Color.black));
 
-        p.add(jb);
+        JMenu jmCustomers = addMenuCustomers();
+        JMenu jmProducts = addMenuProducts();
+        JMenu jmSales = addMenuSale();
+        JMenu jmReports = addMenuReports();
 
-        return p;
+
+        jb.add(jmCustomers);
+        jb.add(addSeparator());
+        jb.add(jmProducts);
+        jb.add(addSeparator());
+        jb.add(jmSales);
+        jb.add(addSeparator());
+        jb.add(jmReports);
+
+        return jb;
     }
 
     private JMenu addMenuCustomers(){
+
         JMenu customres = new JMenu("Customres");
+
+        customres.setForeground(Color.LIGHT_GRAY);
+        customres.setFont(font);
 
         JMenuItem addCustomer = new JMenuItem("Add Customres ");
         JMenuItem chengeCustomer = new JMenuItem("Chenge Customer ");
         JMenuItem viewCustomer = new JMenuItem("View Customer ");
         JMenuItem remCustomer = new JMenuItem("Remove Customer ");
-
-
 
         customres.add(addCustomer);
         customres.add(chengeCustomer);
@@ -57,15 +83,16 @@ public class ShopUI {
         return customres;
     }
 
-    private JMenu addMenuProduct(){
+    private JMenu addMenuProducts(){
         JMenu product = new JMenu("Product ");
+
+        product.setForeground(Color.LIGHT_GRAY);
+        product.setFont(font);
 
         JMenuItem addProduct = new JMenuItem("Add Product ");
         JMenuItem chengeProduct = new JMenuItem("Chenge Product ");
         JMenuItem viewProduct = new JMenuItem("View Product ");
         JMenuItem remProduct = new JMenuItem("Remove Product ");
-
-
 
         product.add(addProduct);
         product.add(chengeProduct);
@@ -78,8 +105,180 @@ public class ShopUI {
     private JMenu addSeparator(){
         JMenu separator = new JMenu(" | ");
 
+        separator.setForeground(Color.LIGHT_GRAY);
+        separator.setFont(font);
 
         return separator;
     }
 
+    private JMenu addMenuReports(){
+        JMenu reports = new JMenu("Reports");
+
+        reports.setForeground(Color.LIGHT_GRAY);
+        reports.setFont(font);
+
+        JMenuItem viewReportsSales = new JMenuItem("Report Sale ");
+        reports.add(viewReportsSales);
+
+        return reports;
+    }
+
+    private JMenu addMenuSale(){
+        JMenu sales = new JMenu("Sale");
+
+        sales.setForeground(Color.LIGHT_GRAY);
+        sales.setFont(font);
+
+        JMenuItem jmSales = new JMenuItem("Sale ");
+        sales.add(jmSales);
+        jmSales.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                f.getContentPane().add(jpSale);
+                f.pack();
+                f.repaint();
+            }
+        });
+
+        return sales;
+    }
+
+    private JPanel createJPanelSale(){
+
+        JPanel sale = new JPanel();
+        JTable jTableTranzaction = createJTable(data);
+
+        sale.setBorder(BorderFactory.createLineBorder(Color.black));
+
+        sale.setLayout(new GridBagLayout());
+
+        JLabel lName = new JLabel("Name Customer: ");
+        JTextField tfName = new JTextField(25);
+
+        sale.add(lName, new GridBagConstraints(0, 0, 1, 1, 0, 0, GridBagConstraints.LINE_START, GridBagConstraints.NONE,
+                new Insets(5, 0, 0, 0), 0, 0));
+        sale.add(tfName, new GridBagConstraints(1, 0, 1, 1, 0, 0, GridBagConstraints.LINE_START, GridBagConstraints.NONE,
+                new Insets(5, 0, 0, 0), 0, 0));
+
+        JLabel lProducts = new JLabel("Product: ");
+        List<Product> products = shop.getProducts();
+        ButtonGroup productsGroup = new ButtonGroup();
+
+        JPanel pProducts = new JPanel();
+
+        pProducts.setLayout(new GridLayout(products.size(), 0));
+        pProducts.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
+
+        ActionListener rbListener = new RBListener();
+
+        for (int i = 0; i < products.size(); i++) {
+            Product product = products.get(i);
+
+            JRadioButton rb = new JRadioButton(product.toString());
+            rb.setActionCommand(String.valueOf(i));
+            rb.addActionListener(rbListener);
+            if (i == 0) {
+                rb.setSelected(true);
+            }
+            productsGroup.add(rb);
+            pProducts.add(rb);
+        }
+
+        sale.add(lProducts, new GridBagConstraints(0, 1, 1, 1, 0, 0, GridBagConstraints.LINE_START, GridBagConstraints.NONE,
+                new Insets(5, 0, 0, 0), 0, 0));
+        sale.add(pProducts, new GridBagConstraints(1, 1, 1, 1, 0, 0, GridBagConstraints.LINE_START, GridBagConstraints.NONE,
+                new Insets(5, 0, 0, 0), 0, 0));
+
+        JLabel lCount = new JLabel("Count:");
+        NumberFormat nf = NumberFormat.getNumberInstance();
+        JFormattedTextField tfCount = new JFormattedTextField(nf);
+        tfCount.setColumns(2);
+        tfCount.setValue(1);
+
+        sale.add(lCount, new GridBagConstraints(0, 2, 1, 1, 0, 0, GridBagConstraints.LINE_START, GridBagConstraints.NONE,
+                new Insets(5, 0, 0, 0), 0, 0));
+        sale.add(tfCount, new GridBagConstraints(1, 2, 1, 1, 0, 0, GridBagConstraints.LINE_START, GridBagConstraints.ABOVE_BASELINE,
+                new Insets(5, 0, 0, 0), 0, 0));
+
+
+        JButton jbBuy = new JButton("BUY");
+        sale.add(jbBuy, new GridBagConstraints(1, 4, 1, 1, 0, 0, GridBagConstraints.LINE_START, GridBagConstraints.NONE,
+                new Insets(5, 0, 0, 0), 0, 0));
+
+        jbBuy.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Transaction t = new Transaction();
+                Customer cust = new Customer();
+                cust.setName(tfName.getText());
+                Product product = shop.getProducts().get(productIndex);
+                int count = Integer.parseInt(tfCount.getText());
+                shop.sell(product, cust, count);
+
+
+
+
+
+            }
+        });
+
+        JButton jbExit = new JButton("Exit");
+        sale.add(jbExit, new GridBagConstraints(2, 4, 1, 1, 0, 0, GridBagConstraints.LINE_START, GridBagConstraints.NONE,
+                new Insets(5, 0, 0, 0), 0, 0));
+
+        jbExit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
+
+        //**************************************************************
+//        JPanel jPanelTablitsa = new JPanel();
+//        jPanelTablitsa.add(jTableTranzaction);
+
+        JScrollPane scrollPane = new JScrollPane(jTableTranzaction);
+
+
+        sale.add(scrollPane, new GridBagConstraints(0, 6,  3, 1, 0, 0, GridBagConstraints.LINE_START, GridBagConstraints.BOTH,
+                new Insets(10, 0, 10, 0), 0, 0));
+        //**************************************************************
+
+        return sale;
+    }
+
+    private JTable createJTable(Object[][] data) {
+
+        JTable table = new JTable(data, headers);
+        table.setPreferredScrollableViewportSize(new Dimension(600, 200));
+        table.setFillsViewportHeight(true);
+        table.setOpaque(true);
+
+        return table;
+    }
+
+    private Object[][] fillTransaction(){
+        AbstractList<Transaction> t = shop.getTransactions();
+        Object[][] data = new Object[t.size()][6];
+        for (int i = 0 ; i < t.size(); i++){
+            for (int j = 0; j < 6; j++){
+                Transaction tranz = t.get(i);
+                data[i][0] = tranz.getId();
+                data[i][1] = tranz.getDate();
+                data[i][2] = tranz.getProduct();
+                data[i][3] = tranz.getCount();
+                data[i][4] = tranz.getPrice();
+                data[i][5] = tranz.getCustomer();
+            }
+        }
+
+        return data;
+    }
+
+    private class RBListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            productIndex = Integer.parseInt(e.getActionCommand());
+        }
+    }
 }
