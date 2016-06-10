@@ -1,6 +1,7 @@
 package lesson6.part_03.newRealization;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,12 +16,14 @@ public class ShopUI {
     private int productIndex = 0;
     private JFrame f;
     private JPanel jpSale;
-    private String[] headers  = {"№", "Date", "Product", "Count", "Price", "Customer"};
+    private String[] headers = {"№", "Date", "Product", "Count", "Price", "Customer"};
     private Object[][] data = {};
+
 
     public ShopUI(Shop shop) {
 
         this.shop = shop;
+        fillTransaction();
 
         f = new JFrame("ShopUI");
 
@@ -44,7 +47,7 @@ public class ShopUI {
 
         jb.setBackground(Color.DARK_GRAY);
 
-        jb.setBorder(BorderFactory.createMatteBorder(0,0,0,1, Color.black));
+        jb.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 1, Color.black));
 
         JMenu jmCustomers = addMenuCustomers();
         JMenu jmProducts = addMenuProducts();
@@ -63,7 +66,7 @@ public class ShopUI {
         return jb;
     }
 
-    private JMenu addMenuCustomers(){
+    private JMenu addMenuCustomers() {
 
         JMenu customres = new JMenu("Customres");
 
@@ -83,7 +86,7 @@ public class ShopUI {
         return customres;
     }
 
-    private JMenu addMenuProducts(){
+    private JMenu addMenuProducts() {
         JMenu product = new JMenu("Product ");
 
         product.setForeground(Color.LIGHT_GRAY);
@@ -102,7 +105,7 @@ public class ShopUI {
         return product;
     }
 
-    private JMenu addSeparator(){
+    private JMenu addSeparator() {
         JMenu separator = new JMenu(" | ");
 
         separator.setForeground(Color.LIGHT_GRAY);
@@ -111,7 +114,7 @@ public class ShopUI {
         return separator;
     }
 
-    private JMenu addMenuReports(){
+    private JMenu addMenuReports() {
         JMenu reports = new JMenu("Reports");
 
         reports.setForeground(Color.LIGHT_GRAY);
@@ -123,7 +126,7 @@ public class ShopUI {
         return reports;
     }
 
-    private JMenu addMenuSale(){
+    private JMenu addMenuSale() {
         JMenu sales = new JMenu("Sale");
 
         sales.setForeground(Color.LIGHT_GRAY);
@@ -143,10 +146,9 @@ public class ShopUI {
         return sales;
     }
 
-    private JPanel createJPanelSale(){
+    private JPanel createJPanelSale() {
 
         JPanel sale = new JPanel();
-        JTable jTableTranzaction = createJTable(data);
 
         sale.setBorder(BorderFactory.createLineBorder(Color.black));
 
@@ -200,7 +202,6 @@ public class ShopUI {
         sale.add(tfCount, new GridBagConstraints(1, 2, 1, 1, 0, 0, GridBagConstraints.LINE_START, GridBagConstraints.ABOVE_BASELINE,
                 new Insets(5, 0, 0, 0), 0, 0));
 
-
         JButton jbBuy = new JButton("BUY");
         sale.add(jbBuy, new GridBagConstraints(1, 4, 1, 1, 0, 0, GridBagConstraints.LINE_START, GridBagConstraints.NONE,
                 new Insets(5, 0, 0, 0), 0, 0));
@@ -208,13 +209,20 @@ public class ShopUI {
         jbBuy.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
                 Transaction t = new Transaction();
+
                 Customer cust = new Customer();
+
                 cust.setName(tfName.getText());
+
                 Product product = shop.getProducts().get(productIndex);
+
                 int count = Integer.parseInt(tfCount.getText());
+
                 shop.sell(product, cust, count);
 
+                fillTransaction();
 
 
 
@@ -233,46 +241,53 @@ public class ShopUI {
             }
         });
 
+
         //**************************************************************
-//        JPanel jPanelTablitsa = new JPanel();
-//        jPanelTablitsa.add(jTableTranzaction);
+        //JTable jTableTranzaction = createJTable();
+        //        JPanel jPanelTablitsa = new JPanel();
+        //        jPanelTablitsa.add(jTableTranzaction);
 
-        JScrollPane scrollPane = new JScrollPane(jTableTranzaction);
-
-
-        sale.add(scrollPane, new GridBagConstraints(0, 6,  3, 1, 0, 0, GridBagConstraints.LINE_START, GridBagConstraints.BOTH,
+        sale.add(createJTable(), new GridBagConstraints(0, 6, 3, 1, 0, 0, GridBagConstraints.LINE_START, GridBagConstraints.BOTH,
                 new Insets(10, 0, 10, 0), 0, 0));
         //**************************************************************
 
         return sale;
     }
 
-    private JTable createJTable(Object[][] data) {
+    private JScrollPane createJTable() {
 
         JTable table = new JTable(data, headers);
         table.setPreferredScrollableViewportSize(new Dimension(600, 200));
         table.setFillsViewportHeight(true);
         table.setOpaque(true);
+        table.getModel();
+        DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
+        JScrollPane scrollPane = new JScrollPane(table);
 
-        return table;
+        return scrollPane;
     }
 
-    private Object[][] fillTransaction(){
+    private void fillTransaction() {
+
         AbstractList<Transaction> t = shop.getTransactions();
-        Object[][] data = new Object[t.size()][6];
-        for (int i = 0 ; i < t.size(); i++){
-            for (int j = 0; j < 6; j++){
+
+        Object[][] temp = new Object[t.size()][6];
+
+        if (t.size() > 0) {
+            for (int i = 0; i < t.size(); i++) {
                 Transaction tranz = t.get(i);
-                data[i][0] = tranz.getId();
-                data[i][1] = tranz.getDate();
-                data[i][2] = tranz.getProduct();
-                data[i][3] = tranz.getCount();
-                data[i][4] = tranz.getPrice();
-                data[i][5] = tranz.getCustomer();
+                temp[i][0] = tranz.getId();
+                temp[i][1] = tranz.getDate();
+                temp[i][2] = tranz.getProduct();
+                temp[i][3] = tranz.getCount();
+                temp[i][4] = tranz.getPrice();
+                temp[i][5] = tranz.getCustomer();
             }
+        } else {
+            temp = new Object[][]{};
         }
 
-        return data;
+        data = temp;
     }
 
     private class RBListener implements ActionListener {

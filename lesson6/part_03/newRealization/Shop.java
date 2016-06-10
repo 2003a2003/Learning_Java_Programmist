@@ -56,6 +56,7 @@ public class Shop {
             t.setCount(count);
             t.setPrice(p.getPrice());
 
+            transactions.add(t);
             p.setQuantityInStock(p.getQuantityInStock() - count);
             System.out.println(t.toString());
         }else {
