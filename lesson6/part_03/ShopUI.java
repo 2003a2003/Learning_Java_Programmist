@@ -252,31 +252,33 @@ public class ShopUI {
     }
 
     private JScrollPane createJScrollPane() {
-        JScrollPane scrollPane = new JScrollPane(createJTable());
-        return scrollPane;
+        return new JScrollPane(createJTable());
     }
 
     private JTable createJTable() {
         jtSale = new JTable(createDefaultTableModel());
 
+        jtSale.getColumnModel().getColumn(0).setPreferredWidth(5);
+        jtSale.getColumnModel().getColumn(1).setPreferredWidth(120);
+
         jtSale.setPreferredScrollableViewportSize(new Dimension(600, 200));
-        jtSale.setFillsViewportHeight(true);
-        jtSale.setOpaque(true);
 
         return jtSale;
     }
 
     private DefaultTableModel createDefaultTableModel() {
-        DefaultTableModel dtm = new DefaultTableModel(data,headers);
-        return dtm;
+        return new DefaultTableModel(data, headers);
     }
 
-    private void updateJTableDate(){
-            jtSale.setModel(createDefaultTableModel());
+    private void updateJTableDate() {
+        jtSale.setModel(createDefaultTableModel());
+        jtSale.getColumnModel().getColumn(0).setPreferredWidth(5);
+        jtSale.getColumnModel().getColumn(1).setPreferredWidth(120);
     }
 
     private void fillJTableTransaction() {
         AbstractList<Transaction> t = shop.getTransactions();
+
         Object[][] temp = new Object[t.size()][6];
 
         if (t.size() > 0) {
