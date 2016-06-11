@@ -1,6 +1,7 @@
 package lesson6.part_03;
 
 public class Customer {
+
     private String name;
     private String phoneNumber;
 

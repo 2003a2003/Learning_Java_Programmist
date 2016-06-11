@@ -6,51 +6,39 @@ import java.util.Date;
 
 public class Shop {
 
+    private ArrayList<Customer> customer;
     private ArrayList<Product> products;
     private ArrayList<Transaction> transactions;
-    private ArrayList<Customer> customers;
-    private int id = 0;
+    private int id;
 
-    public Shop() {
+    public Shop(){
+        customer = new ArrayList<>();
         products = new ArrayList<>();
         transactions = new ArrayList<>();
+        id = 0;
     }
 
-    public void addProduct(Product product) {
-        products.add(product);
+    public ArrayList<Customer> getCustomer() {
+        return customer;
     }
 
-    public void addCustomer(Customer customer) {
-        customers.add(customer);
-    }
-
-    public void addTransaction(Transaction transaction) {
-        transactions.add(transaction);
+    public void setCustomer(ArrayList<Customer> customer) {
+        this.customer = customer;
     }
 
     public ArrayList<Product> getProducts() {
         return products;
     }
 
-    public ArrayList<Transaction> getTransactions() {
-        return transactions;
+    public void setProducts(ArrayList<Product> products) {
+        this.products = products;
     }
 
-    public ArrayList<Customer> getCustomers() {
-        return customers;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+    public void addProduct(Product product) {
+        products.add(product);
     }
 
     public void sell(Product p, Customer c, int count) {
-
-        //String[] columnNames = {"№", "Date", "Product", "Count", "Price", "Customer"};
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
         String date = dateFormat.format(new Date());
@@ -66,12 +54,15 @@ public class Shop {
             t.setCount(count);
             t.setPrice(p.getPrice());
 
-            //Object[][] data = {new Object[id], date, p.getName(), count, p.getPrice(), c.getName()};
-
+            transactions.add(t);
             p.setQuantityInStock(p.getQuantityInStock() - count);
             System.out.println(t.toString());
         }else {
             System.out.println("We don't have this product  ");
         }
+    }
+
+    public ArrayList<Transaction> getTransactions() {
+        return transactions;
     }
 }

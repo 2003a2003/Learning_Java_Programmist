@@ -2,6 +2,7 @@ package lesson6.part_03;
 
 public class Transaction {
 
+
     private String date;
     private Product product;
     private int count;
@@ -10,20 +11,35 @@ public class Transaction {
     private Customer customer;
 
     public Transaction() {
+
     }
 
-    public String[] columnNames = {"№", "Date", "Product", "Count", "Price", "Customer"};
+    public String getDate() {
+        return date;
+    }
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public Product getProduct() {
+        return product;
     }
 
     public void setProduct(Product product) {
         this.product = product;
     }
 
+    public int getCount() {
+        return count;
+    }
+
     public void setCount(int count) {
         this.count = count;
+    }
+
+    public double getPrice() {
+        return price;
     }
 
     public void setPrice(double price) {
@@ -36,22 +52,6 @@ public class Transaction {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public int getCount() {
-        return count;
-    }
-
-    public double getPrice() {
-        return price;
     }
 
     public Customer getCustomer() {

@@ -1,4 +1,4 @@
-package lesson6.part_03.newRealization;
+package lesson6.part_03;
 
 public class DemoLauncher {
 
