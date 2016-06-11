@@ -11,14 +11,12 @@ public class Shop {
     private ArrayList<Transaction> transactions;
     private int id;
 
-
     public Shop(){
         customer = new ArrayList<>();
         products = new ArrayList<>();
         transactions = new ArrayList<>();
         id = 0;
     }
-
 
     public ArrayList<Customer> getCustomer() {
         return customer;

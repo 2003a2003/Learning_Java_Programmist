@@ -12,10 +12,15 @@ import java.util.List;
 public class ShopUI {
 
     private Font font = new Font("Verdana", Font.PLAIN, 12);
+
     private Shop shop;
     private int productIndex = 0;
+
     private JFrame f;
     private JPanel jpSale;
+
+    private JTable jtSale;
+
     private String[] headers = {"№", "Date", "Product", "Count", "Price", "Customer"};
     private Object[][] data = {};
 
@@ -23,7 +28,7 @@ public class ShopUI {
     public ShopUI(Shop shop) {
 
         this.shop = shop;
-        fillTransaction();
+        fillJTableTransaction();
 
         f = new JFrame("ShopUI");
 
@@ -203,8 +208,6 @@ public class ShopUI {
                 new Insets(5, 0, 0, 0), 0, 0));
 
         JButton jbBuy = new JButton("BUY");
-        sale.add(jbBuy, new GridBagConstraints(1, 4, 1, 1, 0, 0, GridBagConstraints.LINE_START, GridBagConstraints.NONE,
-                new Insets(5, 0, 0, 0), 0, 0));
 
         jbBuy.addActionListener(new ActionListener() {
             @Override
@@ -222,13 +225,14 @@ public class ShopUI {
 
                 shop.sell(product, cust, count);
 
-                fillTransaction();
+                fillJTableTransaction();
 
-
-
-
+                updateJTableDate();
             }
         });
+
+        sale.add(jbBuy, new GridBagConstraints(1, 4, 1, 1, 0, 0, GridBagConstraints.LINE_START, GridBagConstraints.NONE,
+                new Insets(5, 0, 0, 0), 0, 0));
 
         JButton jbExit = new JButton("Exit");
         sale.add(jbExit, new GridBagConstraints(2, 4, 1, 1, 0, 0, GridBagConstraints.LINE_START, GridBagConstraints.NONE,
@@ -241,36 +245,38 @@ public class ShopUI {
             }
         });
 
-
-        //**************************************************************
-        //JTable jTableTranzaction = createJTable();
-        //        JPanel jPanelTablitsa = new JPanel();
-        //        jPanelTablitsa.add(jTableTranzaction);
-
-        sale.add(createJTable(), new GridBagConstraints(0, 6, 3, 1, 0, 0, GridBagConstraints.LINE_START, GridBagConstraints.BOTH,
+        sale.add(createJScrollPane(), new GridBagConstraints(0, 6, 3, 1, 0, 0, GridBagConstraints.LINE_START, GridBagConstraints.BOTH,
                 new Insets(10, 0, 10, 0), 0, 0));
-        //**************************************************************
 
         return sale;
     }
 
-    private JScrollPane createJTable() {
-
-        JTable table = new JTable(data, headers);
-        table.setPreferredScrollableViewportSize(new Dimension(600, 200));
-        table.setFillsViewportHeight(true);
-        table.setOpaque(true);
-        table.getModel();
-        DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
-        JScrollPane scrollPane = new JScrollPane(table);
-
+    private JScrollPane createJScrollPane() {
+        JScrollPane scrollPane = new JScrollPane(createJTable());
         return scrollPane;
     }
 
-    private void fillTransaction() {
+    private JTable createJTable() {
+        jtSale = new JTable(createDefaultTableModel());
 
+        jtSale.setPreferredScrollableViewportSize(new Dimension(600, 200));
+        jtSale.setFillsViewportHeight(true);
+        jtSale.setOpaque(true);
+
+        return jtSale;
+    }
+
+    private DefaultTableModel createDefaultTableModel() {
+        DefaultTableModel dtm = new DefaultTableModel(data,headers);
+        return dtm;
+    }
+
+    private void updateJTableDate(){
+            jtSale.setModel(createDefaultTableModel());
+    }
+
+    private void fillJTableTransaction() {
         AbstractList<Transaction> t = shop.getTransactions();
-
         Object[][] temp = new Object[t.size()][6];
 
         if (t.size() > 0) {
@@ -281,12 +287,11 @@ public class ShopUI {
                 temp[i][2] = tranz.getProduct();
                 temp[i][3] = tranz.getCount();
                 temp[i][4] = tranz.getPrice();
-                temp[i][5] = tranz.getCustomer();
+                temp[i][5] = tranz.getCustomer().getName();
             }
         } else {
             temp = new Object[][]{};
         }
-
         data = temp;
     }
 
