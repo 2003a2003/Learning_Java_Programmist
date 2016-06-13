@@ -60,7 +60,7 @@ public class Tiger extends AbstractTank {
 
     @Override
     public Action setUp() {
-        step = 0;
+        //step = 0;
         if (step >= act.size()) {
             return Action.NONE;
         }
@@ -85,13 +85,13 @@ public class Tiger extends AbstractTank {
         }
     }
 
-    private void initStartParameterInWorkArraAgressorTiger(AbstractTank defender) {
+    private void initStartParameterInWorkArraAgressorTiger(T34 t34) {
         aiDestroyDefender.setsX(getX() / 64);
         aiDestroyDefender.setsY(getY() / 64);
-        aiDestroyDefender.setdX(defender.getX() / getBf().getSIZE_ONE_QUADRANT());
-        aiDestroyDefender.setdY(defender.getY() / getBf().getSIZE_ONE_QUADRANT());
+        aiDestroyDefender.setdX(t34.getX() / getBf().getSIZE_ONE_QUADRANT());
+        aiDestroyDefender.setdY(t34.getY() / getBf().getSIZE_ONE_QUADRANT());
         aiDestroyDefender.setBf(getBf());
         aiDestroyDefender.setAt(this);
-        aiDestroyDefender.setT34(defender);
+        aiDestroyDefender.setT34(t34);
     }
 }

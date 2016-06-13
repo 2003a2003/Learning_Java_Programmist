@@ -75,7 +75,7 @@ public class BT7 extends AbstractTank {
     public void attackEagle() {
 
         if (getBf().scanQuadrant(8, 4).isDestroyed()) {
-            System.out.println("EAGLE IA DESTROY!!!!!!!");
+            System.out.println("EAGLE IS DESTROY!!!!!!!");
         }
 
         initStartParameterInWorkArraAgressorBT7();

@@ -7,13 +7,14 @@ import lesson6.part_04.frame_05.bf.tanks.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.lang.reflect.InvocationTargetException;
 
 public class ActionField extends JPanel {
 
     private boolean COLORDED_MODE = false;
 
     private BattleField battleField;
+    private JFrame frame;
 
     private T34 t34;
     private BT7 bt7;
@@ -22,13 +23,9 @@ public class ActionField extends JPanel {
 
     private AggressorLogic al;
 
-    private JFrame f;
-    private JPanel jpStart;
-    private JPanel jpGame;
-    private JPanel jpGameOver;
+
 
     private int startLogick = 0;
-
 
     /**
      * Write your code here.
@@ -48,6 +45,8 @@ public class ActionField extends JPanel {
                     if (battleField.scanQuadrant(8, 4) instanceof Blank) {
                         i = false;
                         System.out.println("Eagle Destroy!!!");
+                        //StartMenuGUI s = new StartMenuGUI();
+                        startLogick = 0;
 
                     }
 
@@ -55,13 +54,12 @@ public class ActionField extends JPanel {
                         processAction(bt7.setUp(), bt7);
                     }
 
-
                 }
             }
         } else if (startLogick == 2) {
-
+            tiger.attackDefender(t34);
             while (j) {
-                tiger.attackDefender(t34);
+//                tiger.attackDefender(t34);
                 if (!tiger.isDestroyed() && !t34.isDestroyed()) {
 
                     if (!tiger.isDestroyed()) {
@@ -75,12 +73,15 @@ public class ActionField extends JPanel {
                 } else {
                     j = false;
                     System.out.println("Defender was destroy!!!");
+                    startLogick = 0;
+                    //StartMenuGUI s = new StartMenuGUI();
+
                 }
             }
         }
     }
 
-    private void processAction(lesson6.part_04.frame_05.bf.tanks.Action a, Tank t) throws Exception {
+    private void processAction(Action a, Tank t) throws Exception {
         if (a == Action.MOVE) {
             processMove(t);
         } else if (a == Action.FIRE) {
@@ -282,21 +283,96 @@ public class ActionField extends JPanel {
 
         battleField = new BattleField();
 
+        t34 = new T34(battleField);
+        bullet = new Bullet(-100, -100, Direction.DOWN, bt7);
 
-        addPanelStartGame();
-//		String location = battleField.getAggressorLocation();
+        createBT7();
+        createTiger();
+
+
+        //JFrame frame = new JFrame("BATTLE FIELD");
+
+        frame = new JFrame("BATTLE FIELD");
+        frame.setLocation(350, 150);
+        frame.setMinimumSize(new Dimension(battleField.getBfWidth() + 16, battleField.getBfHeight() + 38));
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+//      String location = battleField.getAggressorLocation();
 //		aggressor = new BT7(battleField,
 //			Integer.parseInt(location.split("_")[1]), Integer.parseInt(location.split("_")[0]), Direction.RIGHT);
 
+        frame.getContentPane().add(addPanelStartGame());
+        frame.pack();
+        frame.setVisible(true);
 
-//        f = new JFrame("BATTLE FIELD");
-//        f.setLocation(350, 150);
-//        f.setMinimumSize(new Dimension(battleField.getBfWidth() + 16, battleField.getBfHeight() + 38));
-//        f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-//
-//        f.getContentPane().add(addPanelStartGame());
-//        f.pack();
-//        f.setVisible(true);
+    }
+
+    private void runJPanelGame() {
+
+//        frame = new JFrame("BATTLE FIELD");
+//        frame.setLocation(350, 150);
+//        frame.setMinimumSize(new Dimension(battleField.getBfWidth() + 16, battleField.getBfHeight() + 38));
+//        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+        frame.getContentPane().add(this);
+
+        frame.pack();
+//        frame.setVisible(true);
+
+    }
+
+
+    private JPanel addPanelStartGame() throws Exception {
+
+        JPanel jpStartMenu = new JPanel();
+        jpStartMenu.setLayout(new GridBagLayout());
+
+        JButton jbBT7 = new JButton("Agressor: BT7");
+        jbBT7.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                jpStartMenu.setVisible(false);
+
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        runJPanelGame();
+                        startLogick = 1;
+
+                        try {
+                            runTheGame();
+                        } catch (Exception e1) {
+                            e1.printStackTrace();
+                        }
+                    }
+                });
+
+            }
+        });
+
+        jpStartMenu.add(jbBT7, new GridBagConstraints(0, 0, 1, 1, 0, 0, GridBagConstraints.LINE_START,
+                GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+
+        JButton jbTiger = new JButton("Agressor: TIGER");
+        jbTiger.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+        jpStartMenu.add(jbTiger, new GridBagConstraints(0, 1, 1, 1, 0, 0, GridBagConstraints.LINE_START,
+                GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+
+        JButton jbT34 = new JButton("Defender: T34");
+        jpStartMenu.add(jbTiger, new GridBagConstraints(0, 2, 1, 1, 0, 0, GridBagConstraints.LINE_START,
+                GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+
+        jpStartMenu.add(jbBT7);
+        jpStartMenu.add(jbTiger);
+        jpStartMenu.add(jbT34);
+        jpStartMenu.setVisible(true);
+
+        return jpStartMenu;
     }
 
     @Override
@@ -309,94 +385,7 @@ public class ActionField extends JPanel {
         tiger.draw(g);
         bullet.draw(g);
     }
-
-    private void setPanelDate(JPanel panel) {
-
-        f = new JFrame("BATTLE FIELD");
-        f.setLocation(350, 150);
-        f.setMinimumSize(new Dimension(battleField.getBfWidth() + 16, battleField.getBfHeight() + 38));
-        f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-
-        f.getContentPane().add(panel);
-        f.pack();
-        f.setVisible(true);
-
-    }
-
-    private void addPanelStartGame(){
-        jpStart = new JPanel();
-
-        jpStart.setLayout(new GridBagLayout());
-
-        ButtonGroup bgSelectTank = new ButtonGroup();
-
-        JButton jbBT7 = new JButton("Agressor: BT7");
-        jbBT7.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                startLogick = 1;
-                f.getContentPane().removeAll();
-                try {
-                    addPanelGame();
-                } catch (Exception e1) {
-                    e1.printStackTrace();
-                }
-
-                try {
-                    runTheGame();
-                } catch (Exception e1) {
-                    e1.printStackTrace();
-                }
-
-            }
-        });
-        jpStart.add(jbBT7, new GridBagConstraints(0, 0, 1, 1, 0, 0, GridBagConstraints.LINE_START,
-                GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-
-        JButton jbTiger = new JButton("Agressor: TIGER");
-        jpStart.add(jbTiger, new GridBagConstraints(0, 1, 1, 1, 0, 0, GridBagConstraints.LINE_START,
-                GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-
-        JButton jbT34 = new JButton("Defender: T34");
-        jpStart.add(jbTiger, new GridBagConstraints(0, 2, 1, 1, 0, 0, GridBagConstraints.LINE_START,
-                GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-
-        bgSelectTank.add(jbBT7);
-        bgSelectTank.add(jbTiger);
-        bgSelectTank.add(jbT34);
-
-//        jrbTank.add(jbBT7);
-//        jrbTank.add(jbTiger);
-//        jrbTank.add(jbT34);
-
-        jpStart.add(jbBT7);
-        jpStart.add(jbTiger);
-        jpStart.add(jbT34);
-
-        setPanelDate(jpStart);
-    }
-
-    private void addPanelGame() throws Exception {
-        t34 = new T34(battleField);
-        bullet = new Bullet(-100, -100, Direction.DOWN, bt7);
-
-        createBT7();
-        createTiger();
-
-        System.out.println("Start logic: " + startLogick);
-        ;
-
-        f.getContentPane().removeAll();
-
-        f.getContentPane().add(this);
-        f.pack();
-
-        f.setVisible(true);
-
-    }
-
-    private JPanel addPanelGameOver() {
-        jpGameOver = new JPanel();
-        return jpGameOver;
+    public int getStartLogick() {
+        return startLogick;
     }
 }

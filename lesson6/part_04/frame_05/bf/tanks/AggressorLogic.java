@@ -38,7 +38,7 @@ public class AggressorLogic {
     private int markerT34 = 911;
     private int stopPoint = 0;
     private ArrayList<Object> part;
-    private AbstractTank t34;
+    private T34 t34;
 
     public AggressorLogic() {
     }
@@ -376,11 +376,11 @@ public class AggressorLogic {
         this.dY = dY;
     }
 
-    public AbstractTank getT34() {
+    public T34 getT34() {
         return t34;
     }
 
-    public void setT34(AbstractTank t34) {
+    public void setT34(T34 t34) {
         this.t34 = t34;
     }
 }
