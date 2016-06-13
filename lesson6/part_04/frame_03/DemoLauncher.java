@@ -9,6 +9,12 @@ public class DemoLauncher {
         SplashScreen splash = SplashScreen.getSplashScreen();
         Thread.sleep(5000);
 
+        Graphics2D g = splash.createGraphics();
+        g.setColor(Color.red);
+        g.drawString("Loading....", 20, 300);
+        splash.update();
+        Thread.sleep(5000);
+
         splash.close();
         
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
