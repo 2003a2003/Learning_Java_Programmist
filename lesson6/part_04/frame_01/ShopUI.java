@@ -147,9 +147,14 @@ public class ShopUI {
         jmSales.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                f.remove(jpTranzaction);
-                f.setContentPane(jpSale);
-                f.revalidate();
+//                f.getAccessibleContext().removeAll();
+//                f.remove(jpTranzaction);
+//                f.setContentPane(jpSale);
+//                f.revalidate();
+                f.getContentPane().removeAll();
+                f.getContentPane().add(jpSale);
+                f.pack();
+                f.repaint();
             }
         });
 
@@ -234,9 +239,13 @@ public class ShopUI {
 
                 updateJTableDate();
 
-                f.remove(jpSale);
-                f.setContentPane(jpTransactions());
-                f.revalidate();
+//                f.remove(jpSale);
+//                f.setContentPane(jpTransactions());
+//                f.revalidate();
+                f.getContentPane().removeAll();
+                f.getContentPane().add(jpTransactions());
+                f.pack();
+                f.repaint();
 
             }
         });
