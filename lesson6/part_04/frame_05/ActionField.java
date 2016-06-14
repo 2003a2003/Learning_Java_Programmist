@@ -7,6 +7,7 @@ import lesson6.part_04.frame_05.bf.tanks.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.lang.reflect.InvocationTargetException;
 
 public class ActionField extends JPanel {
@@ -27,7 +28,7 @@ public class ActionField extends JPanel {
 
     private int startLogick = 0;
 
-    /**
+     /**
      * Write your code here.
      */
     void runTheGame() throws Exception {
@@ -307,6 +308,34 @@ public class ActionField extends JPanel {
 
     }
 
+    public ActionField(JPanel panel) throws Exception {
+
+        battleField = new BattleField();
+
+        t34 = new T34(battleField);
+        bullet = new Bullet(-100, -100, Direction.DOWN, bt7);
+
+        createBT7();
+        createTiger();
+
+
+        //JFrame frame = new JFrame("BATTLE FIELD");
+
+        frame = new JFrame("BATTLE FIELD");
+        frame.setLocation(350, 150);
+        frame.setMinimumSize(new Dimension(battleField.getBfWidth() + 16, battleField.getBfHeight() + 38));
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+//      String location = battleField.getAggressorLocation();
+//		aggressor = new BT7(battleField,
+//			Integer.parseInt(location.split("_")[1]), Integer.parseInt(location.split("_")[0]), Direction.RIGHT);
+
+        frame.getContentPane().add(panel);
+        frame.pack();
+        frame.setVisible(true);
+
+    }
+
     private void runJPanelGame() {
 
 //        frame = new JFrame("BATTLE FIELD");
@@ -314,10 +343,11 @@ public class ActionField extends JPanel {
 //        frame.setMinimumSize(new Dimension(battleField.getBfWidth() + 16, battleField.getBfHeight() + 38));
 //        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        frame.getContentPane().add(this);
 
+        frame.getContentPane().add(this);
         frame.pack();
-//        frame.setVisible(true);
+        frame.validate();
+        //frame.setVisible(true);
 
     }
 
@@ -328,24 +358,35 @@ public class ActionField extends JPanel {
         jpStartMenu.setLayout(new GridBagLayout());
 
         JButton jbBT7 = new JButton("Agressor: BT7");
-        jbBT7.addActionListener(new AbstractAction() {
+        jbBT7.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                jpStartMenu.setVisible(false);
-
+                frame.getContentPane().removeAll();
+                startLogick = 1;
                 SwingUtilities.invokeLater(new Runnable() {
                     @Override
                     public void run() {
                         runJPanelGame();
-                        startLogick = 1;
+                    }
+                });
+                revalidate();
+
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
 
                         try {
+                            Thread.sleep(2000);
                             runTheGame();
                         } catch (Exception e1) {
                             e1.printStackTrace();
                         }
+
+
+
                     }
                 });
+
 
             }
         });
@@ -387,5 +428,9 @@ public class ActionField extends JPanel {
     }
     public int getStartLogick() {
         return startLogick;
+    }
+
+    private void runTes() throws Exception {
+        runTheGame();
     }
 }
