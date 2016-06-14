@@ -386,28 +386,27 @@ public class ActionField extends JPanel {
 
                 startLogick = 1;
                 runJPanelGame();
- //               revalidate();
 
-//                SwingUtilities.invokeLater(new Runnable() {
-//                    @Override
-//                    public void run() {
-//
-////                        runJPanelGame();
-//                        try {
-//                            runTheGame();
-//                        } catch (Exception e1) {
-//                            e1.printStackTrace();
-//                        }
-//                        startLogick = 0;
-//
-//                   }
-//                });
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
 
-                try {
-                    runTheGame();
-                } catch (Exception e1) {
-                    e1.printStackTrace();
-                }
+//                        runJPanelGame();
+                        try {
+                            runTheGame();
+                        } catch (Exception e1) {
+                            e1.printStackTrace();
+                        }
+                        startLogick = 0;
+
+                   }
+                });
+
+//                try {
+//                    runTheGame();
+//                } catch (Exception e1) {
+//                    e1.printStackTrace();
+//                }
                 startLogick = 0;
            }
         });
