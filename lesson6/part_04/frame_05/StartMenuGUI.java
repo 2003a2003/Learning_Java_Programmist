@@ -3,15 +3,14 @@ package lesson6.part_04.frame_05;
 import lesson6.part_04.frame_05.bf.BattleField;
 
 import javax.swing.*;
-import javax.swing.text.Utilities;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class StartMenuGUI extends JPanel{
+public class StartMenuGUI {
 
     private JFrame frame;
-    private int startLogic = 0;
+    private StateOtherMenu stateOtherMenu = StateOtherMenu.NOTE;
     private ActionField af;
 
     public StartMenuGUI() throws Exception {
@@ -36,43 +35,41 @@ public class StartMenuGUI extends JPanel{
     private void addPanelStartGame() throws Exception {
 
         JPanel jpStartMenu = new JPanel();
-        jpStartMenu.setLayout(new GridBagLayout());
+        jpStartMenu.setLayout(new GridLayout(4, 1));
 
         JButton jbBT7 = new JButton("Agressor: BT7");
         jbBT7.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                frame.getContentPane().removeAll();
-                frame.pack();
+                stateOtherMenu = StateOtherMenu.BT7;
+                frame.setVisible(false);
+                frame.dispose();
             }
         });
-
-        jpStartMenu.add(jbBT7, new GridBagConstraints(0, 0, 1, 1, 0, 0, GridBagConstraints.LINE_START,
-                GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 
         JButton jbTiger = new JButton("Agressor: TIGER");
         jbTiger.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                stateOtherMenu = StateOtherMenu.TIGET;
                 frame.setVisible(false);
-                startLogic = 2;
+//              frame.dispose();
             }
         });
-        jpStartMenu.add(jbTiger, new GridBagConstraints(0, 1, 1, 1, 0, 0, GridBagConstraints.LINE_START,
-                GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 
         JButton jbT34 = new JButton("Defender: T34");
-        jpStartMenu.add(jbTiger, new GridBagConstraints(0, 2, 1, 1, 0, 0, GridBagConstraints.LINE_START,
-                GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+
+        JButton jbExit = new JButton("-EXIT-");
 
         jpStartMenu.add(jbBT7);
         jpStartMenu.add(jbTiger);
         jpStartMenu.add(jbT34);
-        jpStartMenu.setVisible(true);
+        jpStartMenu.add(jbExit);
+
         setPanelDateMenu(jpStartMenu);
     }
 
-    public int getStartLogic() {
-        return startLogic;
+    public StateOtherMenu getStateOtherMenu() {
+        return stateOtherMenu;
     }
 }
