@@ -8,7 +8,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.lang.reflect.InvocationTargetException;
 
 public class ActionField extends JPanel {
 
@@ -35,6 +34,8 @@ public class ActionField extends JPanel {
 
         boolean i = true;
         boolean j = true;
+
+
 
         if (startLogick == 1) {
             bt7.attackEagle();
@@ -284,59 +285,66 @@ public class ActionField extends JPanel {
 
         battleField = new BattleField();
 
-        t34 = new T34(battleField);
-        bullet = new Bullet(-100, -100, Direction.DOWN, bt7);
-
-        createBT7();
-        createTiger();
-
-
-        //JFrame frame = new JFrame("BATTLE FIELD");
-
-        frame = new JFrame("BATTLE FIELD");
-        frame.setLocation(350, 150);
-        frame.setMinimumSize(new Dimension(battleField.getBfWidth() + 16, battleField.getBfHeight() + 38));
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-
-//      String location = battleField.getAggressorLocation();
-//		aggressor = new BT7(battleField,
-//			Integer.parseInt(location.split("_")[1]), Integer.parseInt(location.split("_")[0]), Direction.RIGHT);
-
-        frame.getContentPane().add(addPanelStartGame());
-        frame.pack();
-        frame.setVisible(true);
-
-    }
-
-    public ActionField(JPanel panel) throws Exception {
-
-        battleField = new BattleField();
 
         t34 = new T34(battleField);
         bullet = new Bullet(-100, -100, Direction.DOWN, bt7);
 
         createBT7();
         createTiger();
-
-
-        //JFrame frame = new JFrame("BATTLE FIELD");
-
-        frame = new JFrame("BATTLE FIELD");
-        frame.setLocation(350, 150);
-        frame.setMinimumSize(new Dimension(battleField.getBfWidth() + 16, battleField.getBfHeight() + 38));
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        createJFramePanel(addPanelStartGame());
+//
+//        //JFrame frame = new JFrame("BATTLE FIELD");
+//
+//        frame = new JFrame("BATTLE FIELD");
+//        frame.setLocation(350, 150);
+//        frame.setMinimumSize(new Dimension(battleField.getBfWidth() + 16, battleField.getBfHeight() + 38));
+//        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
 //      String location = battleField.getAggressorLocation();
 //		aggressor = new BT7(battleField,
 //			Integer.parseInt(location.split("_")[1]), Integer.parseInt(location.split("_")[0]), Direction.RIGHT);
 
-        frame.getContentPane().add(panel);
-        frame.pack();
-        frame.setVisible(true);
+//        frame.getContentPane().add(addPanelStartGame());
+//        frame.pack();
+//        frame.setVisible(true);
 
     }
+
+//    public ActionField(JPanel panel) throws Exception {
+//
+//        battleField = new BattleField();
+//
+////        t34 = new T34(battleField);
+////        bullet = new Bullet(-100, -100, Direction.DOWN, bt7);
+////
+////        createBT7();
+////        createTiger();
+//
+//
+//        //JFrame frame = new JFrame("BATTLE FIELD");
+//
+////        frame = new JFrame("BATTLE FIELD");
+////        frame.setLocation(350, 150);
+////        frame.setMinimumSize(new Dimension(battleField.getBfWidth() + 16, battleField.getBfHeight() + 38));
+////        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+//
+////      String location = battleField.getAggressorLocation();
+////		aggressor = new BT7(battleField,
+////			Integer.parseInt(location.split("_")[1]), Integer.parseInt(location.split("_")[0]), Direction.RIGHT);
+//
+////        frame.getContentPane().add(panel);
+////        frame.pack();
+////        frame.setVisible(true);
+//
+//    }
 
     private void runJPanelGame() {
+
+//        t34 = new T34(battleField);
+//        bullet = new Bullet(-100, -100, Direction.DOWN, bt7);
+//
+//        createBT7();
+//        createTiger();
 
 //        frame = new JFrame("BATTLE FIELD");
 //        frame.setLocation(350, 150);
@@ -347,8 +355,21 @@ public class ActionField extends JPanel {
         frame.getContentPane().add(this);
         frame.pack();
         frame.validate();
-        //frame.setVisible(true);
+        frame.setVisible(true);
 
+    }
+
+    private void createJFramePanel(JPanel panel){
+
+        frame = new JFrame("BATTLE FIELD - MENU");
+        frame.setLocation(350, 150);
+        frame.setMinimumSize(new Dimension(battleField.getBfWidth() + 16, battleField.getBfHeight() + 38));
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+        frame.getContentPane().add(panel);
+        frame.pack();
+        frame.validate();
+        frame.setVisible(true);
     }
 
 
@@ -362,33 +383,33 @@ public class ActionField extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frame.getContentPane().removeAll();
+
                 startLogick = 1;
-                SwingUtilities.invokeLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        runJPanelGame();
-                    }
-                });
-                revalidate();
+                runJPanelGame();
+ //               revalidate();
 
-                SwingUtilities.invokeLater(new Runnable() {
-                    @Override
-                    public void run() {
+//                SwingUtilities.invokeLater(new Runnable() {
+//                    @Override
+//                    public void run() {
+//
+////                        runJPanelGame();
+//                        try {
+//                            runTheGame();
+//                        } catch (Exception e1) {
+//                            e1.printStackTrace();
+//                        }
+//                        startLogick = 0;
+//
+//                   }
+//                });
 
-                        try {
-                            Thread.sleep(2000);
-                            runTheGame();
-                        } catch (Exception e1) {
-                            e1.printStackTrace();
-                        }
-
-
-
-                    }
-                });
-
-
-            }
+                try {
+                    runTheGame();
+                } catch (Exception e1) {
+                    e1.printStackTrace();
+                }
+                startLogick = 0;
+           }
         });
 
         jpStartMenu.add(jbBT7, new GridBagConstraints(0, 0, 1, 1, 0, 0, GridBagConstraints.LINE_START,
@@ -401,6 +422,7 @@ public class ActionField extends JPanel {
 
             }
         });
+
         jpStartMenu.add(jbTiger, new GridBagConstraints(0, 1, 1, 1, 0, 0, GridBagConstraints.LINE_START,
                 GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 
@@ -428,9 +450,5 @@ public class ActionField extends JPanel {
     }
     public int getStartLogick() {
         return startLogick;
-    }
-
-    private void runTes() throws Exception {
-        runTheGame();
     }
 }
