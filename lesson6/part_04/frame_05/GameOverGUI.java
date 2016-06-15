@@ -11,7 +11,6 @@ public class GameOverGUI implements ActionListener {
 
     private ActionEvent event;
     private JFrame frame;
-    private StateOtherMenu stateOtherMenu = StateOtherMenu.NOTE;
     private BattleField battleField;
 
     public GameOverGUI(BattleField battleField) throws Exception {
@@ -82,10 +81,6 @@ public class GameOverGUI implements ActionListener {
         jpGameOver.add(jpButton);
 
         setPanelDateMenu(jpGameOver);
-    }
-
-    public StateOtherMenu getStateOtherMenu() {
-        return stateOtherMenu;
     }
 
     @Override

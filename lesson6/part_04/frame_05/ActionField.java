@@ -19,7 +19,6 @@ public class ActionField extends JPanel {
     private BT7 bt7;
     private Tiger tiger;
     private Bullet bullet;
-    private StateOtherMenu som;
 
     private AggressorLogic al;
 
