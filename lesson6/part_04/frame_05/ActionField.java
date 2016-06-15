@@ -6,6 +6,7 @@ import lesson6.part_04.frame_05.bf.tanks.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 
 public class ActionField extends JPanel {
 
@@ -18,46 +19,36 @@ public class ActionField extends JPanel {
     private BT7 bt7;
     private Tiger tiger;
     private Bullet bullet;
+    private StateOtherMenu som;
 
     private AggressorLogic al;
-
-
 
     private int startLogick = 0;
 
      /**
      * Write your code here.
      */
-    void runTheGame(StateOtherMenu som ) throws Exception {
+    void runTheGame() throws Exception {
 
         boolean i = true;
         boolean j = true;
 
-        if (som == StateOtherMenu.BT7) {
+        if (startLogick == 1) {
             bt7.attackEagle();
-
             while (i) {
-
                 if (!bt7.isDestroyed() && !t34.isDestroyed()) {
-
                     if (battleField.scanQuadrant(8, 4) instanceof Blank) {
                         i = false;
-                        startLogick = 0;
                         System.out.println("Eagle Destroy!!!");
-                        frame.setVisible(false);
-                        frame.pack();
-                        frame.dispose();
-                        GameOverGUI goGUI = new GameOverGUI(battleField);
-
+                        createGameOverPanel();
                     }
 
                     if (!bt7.isDestroyed()) {
                         processAction(bt7.setUp(), bt7);
                     }
-
                 }
             }
-        } else if (som == StateOtherMenu.TIGET) {
+        } else if (startLogick == 2) {
             tiger.attackDefender(t34);
             while (j) {
 //                tiger.attackDefender(t34);
@@ -74,14 +65,11 @@ public class ActionField extends JPanel {
                 } else {
                     j = false;
                     System.out.println("Defender was destroy!!!");
-                    startLogick = 0;
-                    frame.setVisible(false);
-                    frame.pack();
-                    frame.dispose();
-                    GameOverGUI goGUI = new GameOverGUI(battleField);
+                    createGameOverPanel();
                 }
             }
         }
+        startLogick =0;
     }
 
     private void processAction(Action a, Tank t) throws Exception {
@@ -285,28 +273,91 @@ public class ActionField extends JPanel {
     public ActionField() throws Exception {
 
         battleField = new BattleField();
+//        t34 = new T34(battleField);
+//
+//        createBT7();
+//        createTiger();
+//
+////		String location = battleField.getAggressorLocation();
+////		aggressor = new BT7(battleField,
+////			Integer.parseInt(location.split("_")[1]), Integer.parseInt(location.split("_")[0]), Direction.RIGHT);
+//
+//        bullet = new Bullet(-100, -100, Direction.DOWN, bt7);
+        createStartPanel();
+//        JFrame frame = new JFrame("BATTLE FIELD");
+//        frame = new JFrame("BATTLE FIELD");
+//        frame.setLocation(350, 150);
+//        frame.setMinimumSize(new Dimension(battleField.getBfWidth() + 16, battleField.getBfHeight() + 38));
+//        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+//
+//        frame.getContentPane().add(this);
+//        frame.pack();
+//        frame.setVisible(true);
+
+    }
+
+    private void createStartPanel() throws Exception {
+        StartMenuGUI startPanelGUI = new StartMenuGUI(battleField);
+        ActionEvent event = startPanelGUI.getEvent();
+
+        while (event == null){
+            Thread.sleep(500);
+            event = startPanelGUI.getEvent();
+        }
+
+        if(event.getActionCommand().equals("Agressor: BT7")){
+            startLogick = 1;
+        }else if (event.getActionCommand().equals("Agressor: TIGER")){
+            startLogick = 2;
+        }else if(event.getActionCommand().equals("Defender: T34")) {
+            System.out.println("Netu realizatsii poka.............");
+            createStartPanel();
+        }
+
+        createGamePanel();
+    }
+
+    private void createGamePanel() throws Exception {
+
+        if(battleField.scanQuadrant(8,4) instanceof Blank){
+            battleField = new BattleField();
+        }
+
         t34 = new T34(battleField);
 
         createBT7();
         createTiger();
 
-//		String location = battleField.getAggressorLocation();
-//		aggressor = new BT7(battleField,
-//			Integer.parseInt(location.split("_")[1]), Integer.parseInt(location.split("_")[0]), Direction.RIGHT);
-
         bullet = new Bullet(-100, -100, Direction.DOWN, bt7);
 
-//        JFrame frame = new JFrame("BATTLE FIELD");
         frame = new JFrame("BATTLE FIELD");
         frame.setLocation(350, 150);
         frame.setMinimumSize(new Dimension(battleField.getBfWidth() + 16, battleField.getBfHeight() + 38));
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+
         frame.getContentPane().add(this);
         frame.pack();
         frame.setVisible(true);
 
+        runTheGame();
+
     }
 
+    private void createGameOverPanel() throws Exception {
+
+        frame.setVisible(false);
+        frame.dispose();
+
+        GameOverGUI gameOverGUI = new GameOverGUI(battleField);
+        ActionEvent event = gameOverGUI.getEvent();
+
+        while(event == null){
+            Thread.sleep(500);
+            event = gameOverGUI.getEvent();
+        }
+
+        createStartPanel();
+    }
 //    public ActionField(JPanel panel) throws Exception {
 //
 //        battleField = new BattleField();

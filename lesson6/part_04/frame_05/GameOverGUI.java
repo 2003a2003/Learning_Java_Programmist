@@ -16,7 +16,7 @@ public class GameOverGUI implements ActionListener {
 
     public GameOverGUI(BattleField battleField) throws Exception {
         this.battleField = battleField;
-        addPanelStartGame();
+        addPanelGameOver();
     }
 
     private void setPanelDateMenu(JPanel panel) {
@@ -32,7 +32,7 @@ public class GameOverGUI implements ActionListener {
 
     }
 
-    private void addPanelStartGame() throws Exception {
+    private void addPanelGameOver() throws Exception {
         JPanel jpGameOver = new JPanel();
         jpGameOver.setLayout(new GridLayout(2, 1));
 
@@ -91,17 +91,15 @@ public class GameOverGUI implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("EXIT")) {
-            System.out.println("getActionCommand: " + e.getActionCommand());
             frame.setVisible(false);
+            frame.dispose();
             System.exit(0);
         }
         if (e.getActionCommand().equals("RESTART GAME")) {
-            System.out.println("getActionCommand: " + e.getActionCommand());
+            event = e;
             frame.setVisible(false);
-
+            frame.dispose();
         }
-
-        event = e;
     }
 
     public ActionEvent getEvent() {

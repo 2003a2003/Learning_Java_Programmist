@@ -31,12 +31,12 @@ public class AggressorLogic {
 
     private int maxIteration = 30;
 
-    private int freeCell = 100;
-    private int destroyCell = 111;
-    private int markerBT7 = 909;
-    private int markerTiger = 910;
-    private int markerT34 = 911;
-    private int stopPoint = 0;
+    private final int freeCell = 100;
+    private final int destroyCell = 111;
+    private final int markerBT7 = 909;
+    private final int markerTiger = 910;
+    private final int markerT34 = 911;
+    private final int stopPoint = 0;
     private ArrayList<Object> part;
     private T34 t34;
 
