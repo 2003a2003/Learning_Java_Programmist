@@ -318,9 +318,9 @@ public class ActionField extends JPanel {
 
     private void createGamePanel() throws Exception {
 
-        if(battleField.scanQuadrant(8,4) instanceof Blank){
+        //if(battleField.scanQuadrant(8,4) instanceof Blank){
             battleField = new BattleField();
-        }
+        //}
 
         t34 = new T34(battleField);
 
