@@ -14,4 +14,9 @@ public class ReckCobra extends Pistols {
     public void setCaliber(String caliber) {
         this.caliber = caliber;
     }
+
+    @Override
+    public String toString() {
+        return getModel();
+    }
 }

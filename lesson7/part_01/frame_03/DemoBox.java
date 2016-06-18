@@ -7,7 +7,7 @@ public class DemoBox {
 
         Box<Pistols> allGun = new Box<>();
 
-        Box<Makarov> gumMakarov = new Box<>();
+        Box<Makarov> gunMakarov = new Box<>();
         Box<ReckCobra> gunReckCobra = new Box<>();
 
         Makarov mak01 = new Makarov();
@@ -16,11 +16,25 @@ public class DemoBox {
         ReckCobra rk01 = new ReckCobra();
         setReckCobra(rk01);
 
-        allGun.setObj(mak01);
-        allGun.setObj(rk01);
-        allGun.setObj(mak01);
+        allGun.addObject(mak01);
+        allGun.addObject(rk01);
+        allGun.addObject(mak01);
+        allGun.addObject(mak01);
+        allGun.addObject(mak01);
 
-        allGun.printAllBox();
+        gunMakarov.addObject(mak01);
+        //error
+//        gunMakarov.addObject(rk01);
+
+        gunReckCobra.addObject(rk01);
+        //error
+        //gunReckCobra.addObject(mak01);
+
+        allGun.getAllBox();
+        allGun.removeObjByIndex(1);
+        allGun.removeObjFirst(mak01);
+        System.out.println("**************************");
+        allGun.getAllBox();
 
     }
 

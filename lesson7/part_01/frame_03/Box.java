@@ -5,29 +5,35 @@ import java.util.List;
 
 public class Box<T> {
 
-    private T obj;
-    private ArrayList<T> listObj;
+    private ArrayList<T> obj;
 
     public Box() {
-        listObj = new ArrayList<>();
+        obj = new ArrayList<>();
     }
 
-    public T getObj() {
-        return obj;
+    public void addObject(T t) {
+        obj.add(t);
     }
 
-    public void setObj(T obj) {
-        this.obj = obj;
-        listObj.add(obj);
+    public T getObj(int index){
+        return obj.get(index);
     }
 
-    public List<T> getListObj() {
-        return listObj;
+    public void removeObjByIndex(int index){
+        obj.remove(index);
     }
 
-    public void printAllBox(){
-        for (T o : listObj){
-            System.out.println(o);
+    public void removeObjFirst(T t){
+        obj.remove(t);
+    }
+
+    public void getAllBox(){
+        int index = 0;
+        for (T t : obj){
+            System.out.println(index + ". " + t.toString());
+            index++;
         }
     }
+
+
 }

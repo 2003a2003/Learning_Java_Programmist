@@ -14,4 +14,9 @@ public class Makarov extends Pistols {
     public void setMagazine(int magazine) {
         this.magazine = magazine;
     }
+
+    @Override
+    public String toString() {
+        return getModel();
+    }
 }
