@@ -19,4 +19,6 @@ public class Makarov extends Pistols {
     public String toString() {
         return getModel();
     }
+
+
 }

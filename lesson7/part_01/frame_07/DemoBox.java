@@ -1,5 +1,7 @@
 package lesson7.part_01.frame_07;
 
+import java.util.Collections;
+
 public class DemoBox {
     static int id = 0;
 
@@ -17,14 +19,13 @@ public class DemoBox {
         setReckCobra(rk01);
 
         Makarov mak02 = new Makarov();
-        setMakarov(mak02);
+        setMakarovNew(mak02);
 
         allGun.addObject(mak01);
         allGun.addObject(rk01);
         allGun.addObject(mak01);
         allGun.addObject(mak01);
-        allGun.addObject(mak01);
-
+        allGun.addObject(mak02);
 
         Integer i = new Integer(1);
 
@@ -36,14 +37,18 @@ public class DemoBox {
         //error
         //gunReckCobra.addObject(mak01);
 
-        allGun.getAllBox();
-        allGun.removeObjByIndex(1);
-        allGun.removeObjFirst(mak01);
-
-        allGun.removeObjFirst(mak02);
-
+        allGun.printAllBox();
+        Collections.sort(allGun.getAllBox());
         System.out.println("**************************");
-        allGun.getAllBox();
+
+        allGun.printAllBox();
+//        allGun.removeObjByIndex(1);
+//        allGun.removeObjFirst(mak01);
+//
+//        allGun.removeObjFirst(mak02);
+//
+//        System.out.println("**************************");
+//        allGun.getAllBox();
 
     }
 
@@ -59,6 +64,14 @@ public class DemoBox {
         makarov.setModel("Makarov");
         makarov.setPrice(500);
         makarov.setMagazine(6);
+        id++;
+    }
+
+    public static void setMakarovNew(Makarov makarov){
+        makarov.setId(id);
+        makarov.setModel("Makarov new");
+        makarov.setPrice(550);
+        makarov.setMagazine(12);
         id++;
     }
 }

@@ -1,6 +1,6 @@
 package lesson7.part_01.frame_07;
 
-public class Pistols {
+public class Pistols implements Comparable<Pistols>{
 
     public int id;
     public String model;
@@ -36,5 +36,10 @@ public class Pistols {
     @Override
     public String toString() {
         return getId() + " " + getModel() + " " + getPrice();
+    }
+
+    @Override
+    public int compareTo(Pistols o) {
+        return this.getModel().compareTo(o.getModel());
     }
 }

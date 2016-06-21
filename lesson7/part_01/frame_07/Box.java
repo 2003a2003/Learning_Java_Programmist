@@ -39,7 +39,11 @@ public class Box<T extends Pistols> {
         }
     }
 
-    public void getAllBox(){
+    public ArrayList<T> getAllBox(){
+        return obj;
+    }
+
+    public void printAllBox(){
         int index = 0;
         for (T t : obj){
             System.out.println(index + ". " + t.toString());
@@ -47,11 +51,4 @@ public class Box<T extends Pistols> {
         }
     }
 
-    private class Comparator implements Comparable<T>{
-
-        @Override
-        public int compareTo(Object o) {
-            return 0;
-        }
-    }
 }
