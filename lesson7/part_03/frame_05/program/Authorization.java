@@ -17,9 +17,7 @@ public class Authorization {
         String passwdMD5 = new Passwd().md5Custom(passwd);
         this.login = verifyUser(login);
         this.passwd = verifyPassword(passwdMD5);
-
         checkStateLogin();
-
     }
 
     private void checkStateLogin() {

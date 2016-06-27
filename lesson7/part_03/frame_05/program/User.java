@@ -26,7 +26,6 @@ public class User {
 
     private Image imgUser;
 
-
     public User() {
     }
 
@@ -82,16 +81,25 @@ public class User {
         return balance;
     }
 
-    public void setBalance(double balance) {
+    private void setBalance(double balance) {
         this.balance = balance;
+    }
+
+    public void updateBalance(double balance){
+        this.balance += balance;
     }
 
     public double getSpent() {
         return spent;
     }
 
-    public void setSpent(double spent) {
+    private void setSpent(double spent) {
         this.spent = spent;
+    }
+
+    public void updateSpent(double spent){
+        this.spent += spent;
+
     }
 
     public UsersGroup getGroups() {
