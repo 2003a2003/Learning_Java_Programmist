@@ -70,7 +70,18 @@ public class TestDiscont {
         double price = transaction.getPrice();
         double total = count * price;
 
-        Assert.assertTrue("Diskont 10% not true: ", total*0.9 == transaction.getTotal());
+        Assert.assertTrue("Diskont 10% not true: ", total*0.90 == transaction.getTotal());
 //        Assert.assertTrue("Diskont 10% not true: " + transaction.getDiscont(), transaction.getDiscont() == 0.90);
     }
+
+//    @Test
+//    public void checkDefaltDiscont(){
+//        Assert.assertTrue("Discont shouls be 0", transaction.getDiscont() == 0);
+//    }
+//
+//    @Test
+//    public void checkSetDiscont(){
+//        double discount = 0.90;
+//        Assert.assertTrue("Diskont add", transaction.getDiscont() == discount);
+//    }
 }
