@@ -7,7 +7,7 @@ public class ApplicationManager<T> {
     private boolean checkServices = false;
 
     public void initStart(Class<T> tClass){
-        if(tClass.isAnnotationPresent((Class<? extends Annotation>) Service.class)){
+        if(tClass.isAnnotationPresent(Service.class)){
             checkServices = true;
             System.out.println("Class has Annotation Service");
         }else {
