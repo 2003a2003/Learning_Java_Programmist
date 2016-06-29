@@ -1,6 +1,7 @@
 package lesson7.part_04.frame_05;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
@@ -60,5 +61,15 @@ public class PrintClassInfo {
         T rezult = (T) constr.newInstance(list.toArray());
 
         return rezult;
+    }
+
+    public static void setPrivates(Object o, Map<String, Object> map) throws NoSuchFieldException,
+            IllegalAccessException {
+
+        for (String str : map.keySet()) {
+            Field field = o.getClass().getDeclaredField(str);
+            field.setAccessible(true);
+            field.set(o, map.get(str));
+        }
     }
 }
