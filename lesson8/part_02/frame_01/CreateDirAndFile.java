@@ -18,6 +18,7 @@ public class CreateDirAndFile {
 
         createFile(filePart, fileName);
 
+        System.out.println();
         printDirectoryTree("src/lesson8");
     }
 
