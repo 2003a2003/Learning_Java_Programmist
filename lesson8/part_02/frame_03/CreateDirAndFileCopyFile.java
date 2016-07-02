@@ -124,13 +124,16 @@ public class CreateDirAndFileCopyFile {
     }
 
     public static void copyFile(File file) throws IOException {
-        String path = file.getPath().substring(0, file.getPath().lastIndexOf("\\") + 1);;
+        String path = file.getPath().substring(0, file.getPath().lastIndexOf("\\") + 1);
 
         String oldname = file.getName();
         String newName = oldname.substring(0, oldname.indexOf(".")) + "_copy" + oldname.substring(oldname.lastIndexOf("."));
 
         File newFile = new File(getRelativeFileDir(path + newName));
+        newFile.createNewFile();
+        String data = readFile(file.getName(), path);
+        writeFile(newFile.getName(), path, data);
 
-        Files.copy(file.toPath(), newFile.toPath());
+        //Files.copy(file.toPath(), newFile.toPath());
     }
 }
