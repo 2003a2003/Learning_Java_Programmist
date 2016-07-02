@@ -1,0 +1,9 @@
+first metod copy:
+Time copy file first metod: 11.672
+standart buffer:
+Time copy file second metod: 0.366
+**********************************************
+first metod copy:
+Time copy file first metod: 11.357
+new buffer 256:
+Time copy file second metod: 0.199
