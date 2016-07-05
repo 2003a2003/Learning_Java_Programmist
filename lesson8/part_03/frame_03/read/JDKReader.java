@@ -1,4 +1,4 @@
-package lesson8.part_03.frame_03.readers;
+package lesson8.part_03.frame_03.read;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;

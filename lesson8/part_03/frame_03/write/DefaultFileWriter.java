@@ -1,4 +1,4 @@
-package lesson8.part_03.frame_03.writes;
+package lesson8.part_03.frame_03.write;
 
 import java.io.FileOutputStream;
 import java.io.IOException;

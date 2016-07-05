@@ -1,9 +1,9 @@
-package lesson8.part_03.frame_03.readers;
+package lesson8.part_03.frame_03.read;
 
 import java.io.*;
 import java.io.IOException;
 
-public class LegacyFileReader implements lesson8.part_03.frame_03.readers.FileReader {
+public class LegacyFileReader implements lesson8.part_03.frame_03.read.FileReader {
 
     @Override
     public String read(String fileName) {
