@@ -40,8 +40,10 @@ public class DemoLauncher {
                 bw.write(str);
             }
         } catch (UnsupportedEncodingException e) {
+            System.err.println("Wrong Encoding!!!!");
             e.printStackTrace();
         } catch (FileNotFoundException e) {
+            System.err.println("File search wrong!!!");
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
