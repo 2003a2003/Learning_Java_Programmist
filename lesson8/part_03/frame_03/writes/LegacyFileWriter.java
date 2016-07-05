@@ -1,10 +1,10 @@
-package lesson8.part_03.frame_03;
+package lesson8.part_03.frame_03.writes;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-public class LegacyFileWriter implements FileReader {
-
+public class LegacyFileWriter implements FileWriter {
+    @Override
     public void write(String data, String fileName) {
         FileOutputStream fos = null;
         try {

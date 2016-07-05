@@ -1,4 +1,4 @@
-package lesson8.part_03.frame_03;
+package lesson8.part_03.frame_03.readers;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -8,6 +8,7 @@ import java.nio.charset.StandardCharsets;
 
 public class JDKReader implements FileReader{
 
+    @Override
     public String read(String fileName) {
         StringBuilder builder = new StringBuilder();
         try (

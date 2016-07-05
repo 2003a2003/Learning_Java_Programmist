@@ -1,12 +1,12 @@
-package lesson8.part_03.frame_03;
+package lesson8.part_03.frame_03.writes;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 
-public class JDKWrite implements FileReader{
-
+public class JDKWrite implements FileWriter{
+    @Override
     public void write(String data, String fileName) {
         try (
                 FileOutputStream fos = new FileOutputStream(fileName);

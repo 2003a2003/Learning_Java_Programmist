@@ -1,12 +1,12 @@
-package lesson8.part_03.frame_03;
+package lesson8.part_03.frame_03.readers;
 
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 
 public class BufferedReader implements FileReader{
-    //@Override
-    public String reade(String fileName) {
+    @Override
+    public String read(String fileName) {
         StringBuilder builder = new StringBuilder();
         try (
                 FileInputStream fis = new FileInputStream(fileName);
@@ -21,5 +21,4 @@ public class BufferedReader implements FileReader{
         }
         return builder.toString();
     }
-
 }

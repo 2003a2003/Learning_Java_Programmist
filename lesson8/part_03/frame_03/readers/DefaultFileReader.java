@@ -1,11 +1,11 @@
-package lesson8.part_03.frame_03;
+package lesson8.part_03.frame_03.readers;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 
 public class DefaultFileReader implements FileReader{
-
-    public String reader(String fileName) {
+    @Override
+    public String read(String fileName) {
         StringBuilder builder = new StringBuilder();
         try (
                 FileInputStream fis = new FileInputStream(fileName)

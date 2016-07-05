@@ -1,11 +1,12 @@
-package lesson8.part_03.frame_03;
+package lesson8.part_03.frame_03.readers;
 
 import java.io.*;
 import java.io.IOException;
 
-public class LegacyFileReader implements FileReader{
+public class LegacyFileReader implements lesson8.part_03.frame_03.readers.FileReader {
 
-    public String reade(String fileName) {
+    @Override
+    public String read(String fileName) {
         StringBuilder builder = new StringBuilder();
         FileInputStream fis = null;
         try {
