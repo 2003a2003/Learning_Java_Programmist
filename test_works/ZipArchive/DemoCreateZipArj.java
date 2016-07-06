@@ -1,4 +1,4 @@
-package lesson8.part_03.frame_05;
+package test_works.ZipArchive;
 
 import java.io.*;
 import java.util.zip.Deflater;
@@ -9,8 +9,11 @@ public class DemoCreateZipArj {
 
     public static void main(String[] args) throws IOException {
 
-        String path = System.getProperty("user.dir") + "/src/lesson8/part_03/frame_03/read".replace("/", File.separator);
+        String path = System.getProperty("user.dir") + "/src/lesson8/part_03/frame_04/".replace("/", File.separator);
         String nameDirOrFileAddToZip = path + "";
+
+        String partDest = System.getProperty("user.dir") +
+                "/src/lesson8/part_03/frame_05/zipUnZip/".replace("/", File.separator);
 
         File file = new File(nameDirOrFileAddToZip);
 
@@ -26,7 +29,7 @@ public class DemoCreateZipArj {
             sDirList = new String[]{file.getName()};
         }
 
-        ZipOutputStream zos = createZipOutputStream("!temp.zip");
+        ZipOutputStream zos = createZipOutputStream(partDest + "myZipFile.zip");
 
         int i;
         try {
@@ -84,6 +87,10 @@ public class DemoCreateZipArj {
         long nCompressedSize = ze.getCompressedSize();
         long nPercent = 100 - ((nCompressedSize * 100) / nSize);
          System.out.println(" " + nSize + " (" + nCompressedSize + ") " + nPercent + "%");
+
+    }
+
+    static  void  extractZip(){
 
     }
 }
