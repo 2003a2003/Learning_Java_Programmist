@@ -15,11 +15,11 @@ public class DemoUrlAndUrlConnection {
         String fileName = "kademika.html";
         File file = new File(System.getProperty("user.dir") + (path + fileName).replace("/", File.separator));
 
-        URL tekt = null;
+        URL kademika = null;
         URLConnection urlConnection = null;
         try {
-            tekt = new URL("http://work.kademika.com/");
-            urlConnection = tekt.openConnection();
+            kademika = new URL("http://work.kademika.com/");
+            urlConnection = kademika.openConnection();
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
