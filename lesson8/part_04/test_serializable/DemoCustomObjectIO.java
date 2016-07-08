@@ -14,13 +14,7 @@ public class DemoCustomObjectIO {
                 ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(new FileInputStream(file)))
         ) {
             Person person = (Person) ois.readObject();
-            System.out.println(person.name + " " + person.surname);
-
-            person = (Person) ois.readObject();
-            System.out.println(person.name + " " + person.surname);
-
-            person = (Person) ois.readObject();
-            System.out.println(person.name + " " + person.surname);
+            System.out.println(person.getName() + ", " + person.getAge() + " years old.");
         }
     }
 
@@ -28,9 +22,7 @@ public class DemoCustomObjectIO {
         try (
                 ObjectOutputStream out = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file)))
         ) {
-            out.writeObject(new Person("Ivan", "First"));
-            out.writeObject(new Person("Petr", "Secont"));
-            out.writeObject(new Person("Alex", "The Best"));
+            out.writeObject(new Person("Alex", 36));
         }
     }
 
@@ -39,10 +31,31 @@ public class DemoCustomObjectIO {
         private String name;
         private int age;
 
+        public Person() {
+        }
 
         public Person(String name, int age) {
             this.name = name;
             this.age = age;
+        }
+
+        @Override
+        public void writeExternal(ObjectOutput out) throws IOException {
+            out.writeInt(age);
+            out.writeInt(name.getBytes().length);
+            out.write(name.getBytes());
+        }
+
+        @Override
+        public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
+            this.age = in.readInt();
+
+            int length = in.readInt();
+            byte[] buf = new byte[length];
+
+            in.read(buf);
+
+            this.name = new String(buf);
         }
 
         public String getName() {
@@ -60,18 +73,5 @@ public class DemoCustomObjectIO {
         public void setAge(int age) {
             this.age = age;
         }
-
-        @Override
-        public void writeExternal(ObjectOutput out) throws IOException {
-            out.writeInt(age);
-            out.writeInt(name.getBytes().length);
-            out.write(name.getBytes());
-        }
-
-        @Override
-        public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
-
-        }
     }
-
 }
