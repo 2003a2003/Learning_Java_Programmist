@@ -172,7 +172,7 @@ public class AggressorLogic {
 
         } while (workArray[y][x] != countIter && countIter < maxCountIter);
         System.out.println("Counter :" + countIter);
-        workWithLogFile.updateLogFile(at.getLogFile(), ("Counter :" + countIter + "\n"));
+        //workWithLogFile.updateLogFile(at.getLogFile(), ("Counter :" + countIter + "\n"));
     }
 
     private void initPath( int y, int x, Direction direction) throws IOException {
@@ -269,17 +269,17 @@ public class AggressorLogic {
                 } else {
                     System.out.println("*******************************************************");
                     System.out.println("STOP GAME, THERE IS NO WAY!!!!!!!!!");
-                    workWithLogFile.updateLogFile(at.getLogFile(), "STOP GAME, THERE IS NO WAY!!!!!!!!!\n");
+                    //workWithLogFile.updateLogFile(at.getLogFile(), "STOP GAME, THERE IS NO WAY!!!!!!!!!\n");
                     System.out.println("*******************************************************");
                 }
 
             }
             System.out.println("Part is good");
-            workWithLogFile.updateLogFile(at.getLogFile(),"Part is good");
+            //workWithLogFile.updateLogFile(at.getLogFile(),"Part is good");
         } else {
             System.out.println("*******************************************************");
             System.out.println("STOP GAME, THERE IS NO WAY!!!!!!!!!");
-            workWithLogFile.updateLogFile(at.getLogFile(),"STOP GAME, THERE IS NO WAY!!!!!!!!!\n");
+            //workWithLogFile.updateLogFile(at.getLogFile(),"STOP GAME, THERE IS NO WAY!!!!!!!!!\n");
             System.out.println("*******************************************************");
             return;
         }

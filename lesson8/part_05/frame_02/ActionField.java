@@ -1,8 +1,8 @@
 package lesson8.part_05.frame_02;
 
 import lesson8.part_05.frame_02.bf.*;
-import lesson8.part_05.frame_02.bf.tanks.Action;
 import lesson8.part_05.frame_02.bf.tanks.*;
+import lesson8.part_05.frame_02.bf.tanks.Action;
 import lesson8.part_05.frame_02.utils.WorkWithLogFile;
 
 import javax.swing.*;
@@ -46,8 +46,9 @@ public class ActionField extends JPanel {
                     if (battleField.scanQuadrant(8, 4) instanceof Blank) {
                         i = false;
                         System.out.println("Eagle Destroy!!!");
-                        workWithLogFile.updateLogFile(logFile, "Eagle Destroy!!!\n");
+ //                       workWithLogFile.updateLogFile(logFile, "Eagle Destroy!!!\n");
                         readLogFileToConsole();
+                        repeatGame(bt7);
                         createGameOverPanel();
                     }
 
@@ -73,8 +74,9 @@ public class ActionField extends JPanel {
                 } else {
                     j = false;
                     System.out.println("Defender was destroy!!!");
-                    workWithLogFile.updateLogFile(logFile, "Defender was destroy!!!\n");
+//                    workWithLogFile.updateLogFile(logFile, "Defender was destroy!!!\n");
                     readLogFileToConsole();
+                    repeatGame(tiger);
                     createGameOverPanel();
                 }
             }
@@ -113,8 +115,8 @@ public class ActionField extends JPanel {
                 System.out.println("[illegal move] direction: " + direction
                         + " tankX: " + tank.getX() + ", tankY: " + tank.getY());
 
-                workWithLogFile.updateLogFile(logFile, "[illegal move] direction: " + direction
-                        + " tankX: " + tank.getX() + ", tankY: " + tank.getY());
+//                workWithLogFile.updateLogFile(logFile, "[illegal move] direction: " + direction
+//                        + " tankX: " + tank.getX() + ", tankY: " + tank.getY());
                 return;
             }
 
@@ -136,8 +138,8 @@ public class ActionField extends JPanel {
                 System.out.println("[illegal move] direction: " + direction
                         + " tankX: " + tank.getX() + ", tankY: " + tank.getY());
 
-                workWithLogFile.updateLogFile(logFile, "[illegal move] direction: " + direction
-                        + " tankX: " + tank.getX() + ", tankY: " + tank.getY());
+//                workWithLogFile.updateLogFile(logFile, "[illegal move] direction: " + direction
+//                        + " tankX: " + tank.getX() + ", tankY: " + tank.getY());
 
                 tank.fire();
                 return;
@@ -154,23 +156,23 @@ public class ActionField extends JPanel {
                 if (direction == Direction.UP) {
                     tank.updateY(-step);
 //                    System.out.println("[move up] direction: " + direction + " tankX: " + tank.getX() + ", tankY: " + tank.getY());
-                    workWithLogFile.updateLogFile(logFile, ("[move up] direction: " + direction +
-                            " tankX: " + tank.getX() + ", tankY: " + tank.getY()));
+//                    workWithLogFile.updateLogFile(logFile, ("[move up] direction: " + direction +
+//                            " tankX: " + tank.getX() + ", tankY: " + tank.getY()));
                 } else if (direction == Direction.DOWN) {
                     tank.updateY(step);
 //                    System.out.println("[move down] direction: " + direction + " tankX: " + tank.getX() + ", tankY: " + tank.getY());
-                    workWithLogFile.updateLogFile(logFile, ("[move down] direction: " + direction +
-                            " tankX: " + tank.getX() + ", tankY: " + tank.getY()));
+//                    workWithLogFile.updateLogFile(logFile, ("[move down] direction: " + direction +
+//                            " tankX: " + tank.getX() + ", tankY: " + tank.getY()));
                 } else if (direction == Direction.LEFT) {
                     tank.updateX(-step);
 //                    System.out.println("[move left] direction: " + direction + " tankX: " + tank.getX() + ", tankY: " + tank.getY());
-                    workWithLogFile.updateLogFile(logFile, ("[move left] direction: " + direction +
-                            " tankX: " + tank.getX() + ", tankY: " + tank.getY()));
+//                    workWithLogFile.updateLogFile(logFile, ("[move left] direction: " + direction +
+//                            " tankX: " + tank.getX() + ", tankY: " + tank.getY()));
                 } else {
                     tank.updateX(step);
 //                    System.out.println("[move right] direction: " + direction + " tankX: " + tank.getX() + ", tankY: " + tank.getY());
-                    workWithLogFile.updateLogFile(logFile, ("[move right] direction: " + direction +
-                            " tankX: " + tank.getX() + ", tankY: " + tank.getY()));
+//                    workWithLogFile.updateLogFile(logFile, ("[move right] direction: " + direction +
+//                            " tankX: " + tank.getX() + ", tankY: " + tank.getY()));
                 }
                 covered += step;
 
@@ -297,9 +299,6 @@ public class ActionField extends JPanel {
     }
 
     public ActionField() throws Exception {
-        workWithLogFile = new WorkWithLogFile();
-        workWithLogFile.createLogFile();
-        logFile = workWithLogFile.getLogFile();
 
         battleField = new BattleField();
 //        t34 = new T34(battleField);
@@ -324,6 +323,10 @@ public class ActionField extends JPanel {
     private void createStartPanel() throws Exception {
         StartMenuGUI startPanelGUI = new StartMenuGUI(battleField);
         ActionEvent event = startPanelGUI.getEvent();
+
+        workWithLogFile = new WorkWithLogFile();
+        workWithLogFile.createLogFile();
+        logFile = workWithLogFile.getLogFile();
 
         while (event == null) {
             Thread.sleep(500);
@@ -466,5 +469,14 @@ public class ActionField extends JPanel {
 
     private void readLogFileToConsole() {
         System.out.println(workWithLogFile.readLogFile(logFile));
+    }
+
+    private void repeatGame(AbstractTank tank) throws IOException {
+        if(tank instanceof BT7){
+            System.out.println("Run view repeat last Game: ");
+
+
+
+        }
     }
 }

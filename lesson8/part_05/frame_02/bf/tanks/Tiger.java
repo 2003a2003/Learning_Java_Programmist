@@ -34,6 +34,7 @@ public class Tiger extends AbstractTank {
         setImages();
         act = new ArrayList<>();
         aiDestroyDefender = new AggressorLogic();
+        aiDestroyDefender.getWorkWithLogFile().updateLogFile(getLogFile(), "tigre:" + x + "_" + y);
     }
 
     @Override

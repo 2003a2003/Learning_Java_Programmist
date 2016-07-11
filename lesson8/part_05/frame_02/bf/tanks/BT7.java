@@ -36,6 +36,7 @@ public class BT7 extends AbstractTank {
 
         act = new ArrayList<>();
         aiDestroyEagle = new AggressorLogic();
+        aiDestroyEagle.getWorkWithLogFile().updateLogFile(getLogFile(), "bt7:" + x + "_" + y);
     }
 
     private void setImages() {
@@ -67,22 +68,22 @@ public class BT7 extends AbstractTank {
         return (Action) act.get(step++);
     }
 
-
     public void attackEagle() throws IOException {
         if (getBf().scanQuadrant(8, 4).isDestroyed()) {
             System.out.println("EAGLE IS DESTROY!!!!!!!");
         }
 
         initStartParameterInWorkArraAgressorBT7();
+
         aiDestroyEagle.startDestroyEagle();
         act = aiDestroyEagle.getPart();
 
-        aiDestroyEagle.getWorkWithLogFile().updateLogFile(getLogFile(), "The road to the goal:\n");
+        //aiDestroyEagle.getWorkWithLogFile().updateLogFile(getLogFile(), "The road to the goal:\n");
 
         int index = 1;
         for (int i =0 ; i < act.size(); i++) {
             System.out.println(index + " " + act.get(i));
-            aiDestroyEagle.getWorkWithLogFile().updateLogFile(getLogFile(), (index + " " + act.get(i)));
+            aiDestroyEagle.getWorkWithLogFile().updateLogFile(getLogFile(), act.get(i).toString());
             index++;
         }
     }
@@ -94,5 +95,13 @@ public class BT7 extends AbstractTank {
         aiDestroyEagle.seteY(8);
         aiDestroyEagle.setBf(getBf());
         aiDestroyEagle.setAt(this);
+    }
+
+    public ArrayList<Object> getAct() {
+        return act;
+    }
+
+    public void setAct(ArrayList<Object> act) {
+        this.act = act;
     }
 }
