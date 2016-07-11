@@ -3,10 +3,14 @@ package lesson8.part_05.frame_02;
 import lesson8.part_05.frame_02.bf.*;
 import lesson8.part_05.frame_02.bf.tanks.Action;
 import lesson8.part_05.frame_02.bf.tanks.*;
+import lesson8.part_05.frame_02.utils.WorkWithLogFile;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintStream;
 
 public class ActionField extends JPanel {
 
@@ -23,8 +27,11 @@ public class ActionField extends JPanel {
     private AggressorLogic al;
 
     private int startLogick = 0;
+    private PrintStream console;
+    private File logFile;
+    private WorkWithLogFile workWithLogFile;
 
-     /**
+    /**
      * Write your code here.
      */
     void runTheGame() throws Exception {
@@ -39,6 +46,8 @@ public class ActionField extends JPanel {
                     if (battleField.scanQuadrant(8, 4) instanceof Blank) {
                         i = false;
                         System.out.println("Eagle Destroy!!!");
+                        workWithLogFile.updateLogFile(logFile, "Eagle Destroy!!!\n");
+                        readLogFileToConsole();
                         createGameOverPanel();
                     }
 
@@ -64,11 +73,13 @@ public class ActionField extends JPanel {
                 } else {
                     j = false;
                     System.out.println("Defender was destroy!!!");
+                    workWithLogFile.updateLogFile(logFile, "Defender was destroy!!!\n");
+                    readLogFileToConsole();
                     createGameOverPanel();
                 }
             }
         }
-        startLogick =0;
+        startLogick = 0;
     }
 
     private void processAction(Action a, Tank t) throws Exception {
@@ -101,6 +112,9 @@ public class ActionField extends JPanel {
                     || (direction == Direction.LEFT && tank.getX() == 0) || (direction == Direction.RIGHT && tank.getX() >= 512)) {
                 System.out.println("[illegal move] direction: " + direction
                         + " tankX: " + tank.getX() + ", tankY: " + tank.getY());
+
+                workWithLogFile.updateLogFile(logFile, "[illegal move] direction: " + direction
+                        + " tankX: " + tank.getX() + ", tankY: " + tank.getY());
                 return;
             }
 
@@ -118,8 +132,13 @@ public class ActionField extends JPanel {
             BFObject bfobject = battleField.scanQuadrant(v, h);
 
             if (!(bfobject instanceof Blank) && !bfobject.isDestroyed()) {
+
                 System.out.println("[illegal move] direction: " + direction
                         + " tankX: " + tank.getX() + ", tankY: " + tank.getY());
+
+                workWithLogFile.updateLogFile(logFile, "[illegal move] direction: " + direction
+                        + " tankX: " + tank.getX() + ", tankY: " + tank.getY());
+
                 tank.fire();
                 return;
             }
@@ -134,16 +153,24 @@ public class ActionField extends JPanel {
             while (covered < 64) {
                 if (direction == Direction.UP) {
                     tank.updateY(-step);
-                    //				System.out.println("[move up] direction: " + direction + " tankX: " + tank.getX() + ", tankY: " + tank.getY());
+//                    System.out.println("[move up] direction: " + direction + " tankX: " + tank.getX() + ", tankY: " + tank.getY());
+                    workWithLogFile.updateLogFile(logFile, ("[move up] direction: " + direction +
+                            " tankX: " + tank.getX() + ", tankY: " + tank.getY()));
                 } else if (direction == Direction.DOWN) {
                     tank.updateY(step);
-                    //				System.out.println("[move down] direction: " + direction + " tankX: " + tank.getX() + ", tankY: " + tank.getY());
+//                    System.out.println("[move down] direction: " + direction + " tankX: " + tank.getX() + ", tankY: " + tank.getY());
+                    workWithLogFile.updateLogFile(logFile, ("[move down] direction: " + direction +
+                            " tankX: " + tank.getX() + ", tankY: " + tank.getY()));
                 } else if (direction == Direction.LEFT) {
                     tank.updateX(-step);
-                    //				System.out.println("[move left] direction: " + direction + " tankX: " + tank.getX() + ", tankY: " + tank.getY());
+//                    System.out.println("[move left] direction: " + direction + " tankX: " + tank.getX() + ", tankY: " + tank.getY());
+                    workWithLogFile.updateLogFile(logFile, ("[move left] direction: " + direction +
+                            " tankX: " + tank.getX() + ", tankY: " + tank.getY()));
                 } else {
                     tank.updateX(step);
-                    //				System.out.println("[move right] direction: " + direction + " tankX: " + tank.getX() + ", tankY: " + tank.getY());
+//                    System.out.println("[move right] direction: " + direction + " tankX: " + tank.getX() + ", tankY: " + tank.getY());
+                    workWithLogFile.updateLogFile(logFile, ("[move right] direction: " + direction +
+                            " tankX: " + tank.getX() + ", tankY: " + tank.getY()));
                 }
                 covered += step;
 
@@ -237,7 +264,7 @@ public class ActionField extends JPanel {
         return y / 64 + "_" + x / 64;
     }
 
-    private void createBT7() {
+    private void createBT7() throws IOException {
         int x = 0;
         int y = 0;
 
@@ -250,10 +277,10 @@ public class ActionField extends JPanel {
             }
         }
 
-        bt7 = new BT7(battleField, x, y, Direction.DOWN);
+        bt7 = new BT7(battleField, x, y, Direction.DOWN, logFile);
     }
 
-    private void createTiger() {
+    private void createTiger() throws IOException {
         int x = 0;
         int y = 0;
 
@@ -266,21 +293,21 @@ public class ActionField extends JPanel {
             }
         }
 
-        tiger = new Tiger(battleField, x, y, Direction.DOWN);
+        tiger = new Tiger(battleField, x, y, Direction.DOWN, logFile);
     }
 
     public ActionField() throws Exception {
+        workWithLogFile = new WorkWithLogFile();
+        workWithLogFile.createLogFile();
+        logFile = workWithLogFile.getLogFile();
 
         battleField = new BattleField();
 //        t34 = new T34(battleField);
-//
 //        createBT7();
 //        createTiger();
-//
-////		String location = battleField.getAggressorLocation();
-////		aggressor = new BT7(battleField,
-////			Integer.parseInt(location.split("_")[1]), Integer.parseInt(location.split("_")[0]), Direction.RIGHT);
-//
+//		  String location = battleField.getAggressorLocation();
+//		  aggressor = new BT7(battleField,
+//			Integer.parseInt(location.split("_")[1]), Integer.parseInt(location.split("_")[0]), Direction.RIGHT);
 //        bullet = new Bullet(-100, -100, Direction.DOWN, bt7);
         createStartPanel();
 //        JFrame frame = new JFrame("BATTLE FIELD");
@@ -292,23 +319,22 @@ public class ActionField extends JPanel {
 //        frame.getContentPane().add(this);
 //        frame.pack();
 //        frame.setVisible(true);
-
     }
 
     private void createStartPanel() throws Exception {
         StartMenuGUI startPanelGUI = new StartMenuGUI(battleField);
         ActionEvent event = startPanelGUI.getEvent();
 
-        while (event == null){
+        while (event == null) {
             Thread.sleep(500);
             event = startPanelGUI.getEvent();
         }
 
-        if(event.getActionCommand().equals("Agressor: BT7")){
+        if (event.getActionCommand().equals("Agressor: BT7")) {
             startLogick = 1;
-        }else if (event.getActionCommand().equals("Agressor: TIGER")){
+        } else if (event.getActionCommand().equals("Agressor: TIGER")) {
             startLogick = 2;
-        }else if(event.getActionCommand().equals("Defender: T34")) {
+        } else if (event.getActionCommand().equals("Defender: T34")) {
             System.out.println("Netu realizatsii poka.............");
             createStartPanel();
         }
@@ -319,10 +345,10 @@ public class ActionField extends JPanel {
     private void createGamePanel() throws Exception {
 
         //if(battleField.scanQuadrant(8,4) instanceof Blank){
-            battleField = new BattleField();
+        battleField = new BattleField();
         //}
 
-        t34 = new T34(battleField);
+        t34 = new T34(battleField, logFile);
 
         createBT7();
         createTiger();
@@ -350,131 +376,78 @@ public class ActionField extends JPanel {
         GameOverGUI gameOverGUI = new GameOverGUI(battleField);
         ActionEvent event = gameOverGUI.getEvent();
 
-        while(event == null){
+        while (event == null) {
             Thread.sleep(500);
             event = gameOverGUI.getEvent();
         }
 
         createStartPanel();
     }
-//    public ActionField(JPanel panel) throws Exception {
-//
-//        battleField = new BattleField();
-//
-////        t34 = new T34(battleField);
-////        bullet = new Bullet(-100, -100, Direction.DOWN, bt7);
-////
-////        createBT7();
-////        createTiger();
-//
-//
-//        //JFrame frame = new JFrame("BATTLE FIELD");
-//
-////        frame = new JFrame("BATTLE FIELD");
-////        frame.setLocation(350, 150);
-////        frame.setMinimumSize(new Dimension(battleField.getBfWidth() + 16, battleField.getBfHeight() + 38));
-////        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-//
-////      String location = battleField.getAggressorLocation();
-////		aggressor = new BT7(battleField,
-////			Integer.parseInt(location.split("_")[1]), Integer.parseInt(location.split("_")[0]), Direction.RIGHT);
-//
-////        frame.getContentPane().add(panel);
-////        frame.pack();
-////        frame.setVisible(true);
-//
-//    }
 
-//    public void runJPanelGame() {
-//
+//    public ActionField(JPanel panel) throws Exception {
+//        battleField = new BattleField();
+//        t34 = new T34(battleField);
+//        bullet = new Bullet(-100, -100, Direction.DOWN, bt7);
+//        createBT7();
+//        createTiger();
+//        JFrame frame = new JFrame("BATTLE FIELD");
 //        frame = new JFrame("BATTLE FIELD");
 //        frame.setLocation(350, 150);
 //        frame.setMinimumSize(new Dimension(battleField.getBfWidth() + 16, battleField.getBfHeight() + 38));
 //        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-//
-//        frame.getContentPane().add(this);
-//        frame.pack();
-//        frame.setVisible(true);
-//
-//    }
-
-//    private void createJFramePanel(JPanel panel){
-//
-//        frame = new JFrame("BATTLE FIELD - MENU");
-//        frame.setLocation(350, 150);
-//        frame.setMinimumSize(new Dimension(battleField.getBfWidth() + 16, battleField.getBfHeight() + 38));
-//        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-//
+//        String location = battleField.getAggressorLocation();
+//		  aggressor = new BT7(battleField,
+//			Integer.parseInt(location.split("_")[1]), Integer.parseInt(location.split("_")[0]), Direction.RIGHT);
 //        frame.getContentPane().add(panel);
 //        frame.pack();
-//        frame.validate();
 //        frame.setVisible(true);
 //    }
 
-
-//    private JPanel addPanelStartGame() throws Exception {
+//    private void createLogFile() throws IOException {
+//        String fileName = "action_log.txt";
+//        String path = "/src/lesson8/part_05/frame_02/log/";
 //
-//        JPanel jpStartMenu = new JPanel();
-//        jpStartMenu.setLayout(new GridBagLayout());
-//
-//        JButton jbBT7 = new JButton("Agressor: BT7");
-//        jbBT7.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                frame.getContentPane().removeAll();
-//
-//                startLogick = 1;
-//                runJPanelGame();
-//
-////                SwingUtilities.invokeLater(new Runnable() {
-////                    @Override
-////                    public void run() {
-////
-//////                        runJPanelGame();
-////                        try {
-////                            runTheGame();
-////                        } catch (Exception e1) {
-////                            e1.printStackTrace();
-////                        }
-////                        startLogick = 0;
-////
-////                   }
-////                });
-//
-////                try {
-////                    runTheGame();
-////                } catch (Exception e1) {
-////                    e1.printStackTrace();
-////                }
-//                startLogick = 0;
-//           }
-//        });
-//
-//        jpStartMenu.add(jbBT7, new GridBagConstraints(0, 0, 1, 1, 0, 0, GridBagConstraints.LINE_START,
-//                GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-//
-//        JButton jbTiger = new JButton("Agressor: TIGER");
-//        jbTiger.addActionListener(new AbstractAction() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//
-//            }
-//        });
-//
-//        jpStartMenu.add(jbTiger, new GridBagConstraints(0, 1, 1, 1, 0, 0, GridBagConstraints.LINE_START,
-//                GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-//
-//        JButton jbT34 = new JButton("Defender: T34");
-//        jpStartMenu.add(jbTiger, new GridBagConstraints(0, 2, 1, 1, 0, 0, GridBagConstraints.LINE_START,
-//                GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-//
-//        jpStartMenu.add(jbBT7);
-//        jpStartMenu.add(jbTiger);
-//        jpStartMenu.add(jbT34);
-//        jpStartMenu.setVisible(true);
-//
-//        return jpStartMenu;
+//        logFile = new File(System.getProperty("user.dir") + (path + fileName).replace("/", File.separator));
+//        if(!logFile.exists()){
+//            logFile.createNewFile();
+//        }
 //    }
+//
+//    private void updateLogFile(File file, String data) throws IOException {
+//        StringBuilder sb = new StringBuilder();
+//        String oldFile = readLogFile(file);
+//        sb.append(oldFile);
+//        sb.append(data);
+//        writeLogFile(file, sb.toString());
+//    }
+//
+//    private void writeLogFile(File file, String data) {
+//        try (
+//                FileOutputStream fos = new FileOutputStream(file.getAbsolutePath());
+//                BufferedOutputStream bos = new BufferedOutputStream(fos, 256)
+//        ) {
+//            bos.write(data.getBytes());
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
+//
+//    private String readLogFile(File file) {
+//        StringBuilder builder = new StringBuilder();
+//        try (
+//                FileInputStream fis = new FileInputStream(file.getAbsolutePath());
+//                BufferedInputStream bis = new BufferedInputStream(fis, 256);
+//        ) {
+//            int i;
+//            while ((i = bis.read()) != -1) {
+//                builder.append((char) i);
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        return builder.toString();
+//    }
+
 
     @Override
     protected void paintComponent(Graphics g) {
@@ -486,7 +459,12 @@ public class ActionField extends JPanel {
         tiger.draw(g);
         bullet.draw(g);
     }
+
     public int getStartLogick() {
         return startLogick;
+    }
+
+    private void readLogFileToConsole() {
+        System.out.println(workWithLogFile.readLogFile(logFile));
     }
 }

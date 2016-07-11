@@ -15,8 +15,8 @@ public class BT7 extends AbstractTank {
     private AggressorLogic aiDestroyEagle;
     private ArrayList<Object> act;
 
-    public BT7(BattleField bf) {
-        super(bf);
+    public BT7(BattleField bf, File logFile) {
+        super(bf,logFile);
         tankColor = new Color(255, 0, 0);
         towerColor = new Color(0, 255, 0);
         movePath = 1;
@@ -24,8 +24,8 @@ public class BT7 extends AbstractTank {
         act = new ArrayList<>();
     }
 
-    public BT7(BattleField bf, int x, int y, Direction direction) {
-        super(bf, x, y, direction);
+    public BT7(BattleField bf, int x, int y, Direction direction, File logFile) throws IOException {
+        super(bf, x, y, direction, logFile);
 
         tankColor = new Color(255, 0, 0);
         towerColor = new Color(0, 255, 0);
@@ -53,27 +53,22 @@ public class BT7 extends AbstractTank {
 
     @Override
     public Action setUp() {
-
         if (step >= act.size()) {
             //step = 0;
             return Action.NONE;
         }
-
         if (!(act.get(step) instanceof Action)) {
             turn((Direction) act.get(step++));
         }
-
         if (step >= act.size()) {
             //step = 0;
             return Action.NONE;
         }
-
         return (Action) act.get(step++);
     }
 
 
-    public void attackEagle() {
-
+    public void attackEagle() throws IOException {
         if (getBf().scanQuadrant(8, 4).isDestroyed()) {
             System.out.println("EAGLE IS DESTROY!!!!!!!");
         }
@@ -82,9 +77,12 @@ public class BT7 extends AbstractTank {
         aiDestroyEagle.startDestroyEagle();
         act = aiDestroyEagle.getPart();
 
+        aiDestroyEagle.getWorkWithLogFile().updateLogFile(getLogFile(), "The road to the goal:\n");
+
         int index = 1;
         for (int i =0 ; i < act.size(); i++) {
             System.out.println(index + " " + act.get(i));
+            aiDestroyEagle.getWorkWithLogFile().updateLogFile(getLogFile(), (index + " " + act.get(i)));
             index++;
         }
     }

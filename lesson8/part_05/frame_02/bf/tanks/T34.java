@@ -10,15 +10,15 @@ import java.io.IOException;
 
 public class T34 extends AbstractTank {
 
-    public T34(BattleField bf) {
-        super(bf, 128, 512, Direction.UP);
+    public T34(BattleField bf, File logFile) {
+        super(bf, 128, 512, Direction.UP, logFile);
         tankColor = new Color(0, 255, 0);
         towerColor = new Color(255, 0, 0);
         setImages();
     }
 
-    public T34(BattleField bf, int x, int y, Direction direction) {
-        super(bf, x, y, direction);
+    public T34(BattleField bf, int x, int y, Direction direction, File logFile) {
+        super(bf, x, y, direction, logFile);
         tankColor = new Color(0, 255, 0);
         towerColor = new Color(255, 0, 0);
         setImages();
