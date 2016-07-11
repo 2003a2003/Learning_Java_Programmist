@@ -20,7 +20,6 @@ public class WorkWithLogFile {
         if (logFile.exists()) {
             logFile.delete();
         }
-
         logFile.createNewFile();
     }
 
