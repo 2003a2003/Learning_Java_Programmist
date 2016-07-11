@@ -8,9 +8,8 @@ import lesson8.part_05.frame_02.utils.WorkWithLogFile;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintStream;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 public class ActionField extends JPanel {
 
@@ -46,7 +45,7 @@ public class ActionField extends JPanel {
                     if (battleField.scanQuadrant(8, 4) instanceof Blank) {
                         i = false;
                         System.out.println("Eagle Destroy!!!");
- //                       workWithLogFile.updateLogFile(logFile, "Eagle Destroy!!!\n");
+                        //                       workWithLogFile.updateLogFile(logFile, "Eagle Destroy!!!\n");
                         readLogFileToConsole();
                         repeatGame(bt7);
                         createGameOverPanel();
@@ -471,12 +470,26 @@ public class ActionField extends JPanel {
         System.out.println(workWithLogFile.readLogFile(logFile));
     }
 
-    private void repeatGame(AbstractTank tank) throws IOException {
-        if(tank instanceof BT7){
-            System.out.println("Run view repeat last Game: ");
-
-
-
+    private void repeatGame(AbstractTank tank){
+        StringBuilder builder = new StringBuilder();
+        try (
+                FileInputStream fis = new FileInputStream(logFile.getAbsolutePath());
+                InputStreamReader isr = new InputStreamReader(fis, StandardCharsets.UTF_8);
+                BufferedReader br = new BufferedReader(isr, 256)
+        ) {
+            String str;
+            while ((str = br.readLine()) != null) {
+                builder.append(str);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+
+        System.out.println(builder.toString());
+
     }
+
+
+
+
 }

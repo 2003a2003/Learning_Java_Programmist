@@ -3,6 +3,7 @@ package lesson8.part_05.frame_02.utils;
 import lesson8.part_05.frame_02.bf.tanks.AbstractTank;
 
 import java.io.*;
+import java.util.ArrayList;
 
 public class WorkWithLogFile {
 
@@ -66,6 +67,35 @@ public class WorkWithLogFile {
             e.printStackTrace();
         }
         return builder.toString();
+    }
+
+    public ArrayList<Object> readFromFileListObjaect(File file) throws Exception {
+        ArrayList<Object> act = null;
+        try (
+                ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(new FileInputStream(file.getAbsolutePath())))
+        ) {
+            act = (ArrayList<Object>)ois.readObject();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        return act;
+    }
+
+    public void writeToFileListObject(File file, ArrayList<Object> list) throws Exception {
+        try (
+                ObjectOutputStream out = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file.getAbsolutePath())))
+        ) {
+
+            out.writeObject(list);
+        }
+    }
+
+    public void writeToFileListObject(File file, Object o) throws Exception {
+        try (
+                ObjectOutputStream out = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file.getAbsolutePath())))
+        ) {
+            out.writeObject(o);
+        }
     }
 
     public File getLogFile() {
