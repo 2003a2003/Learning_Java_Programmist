@@ -168,4 +168,8 @@ public class BattleField implements Drawable {
 	public int getSIZE_ONE_QUADRANT() {
 		return SIZE_ONE_QUADRANT;
 	}
+
+	public String[][] getBattleFieldTemplate() {
+		return battleFieldTemplate;
+	}
 }

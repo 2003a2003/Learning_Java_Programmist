@@ -84,7 +84,7 @@ public class Tiger extends AbstractTank {
         int index = 1;
         for (int i =0 ; i < act.size(); i++) {
             System.out.println(index + " " + act.get(i));
-            aiDestroyDefender.getWorkWithLogFile().updateLogFile(getLogFile(), (index + " " + act.get(i)));
+            aiDestroyDefender.getWorkWithLogFile().updateLogFile(getLogFile(), ("tiger_" + act.get(i).toString()));
             index++;
         }
     }

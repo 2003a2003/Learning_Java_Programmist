@@ -3,6 +3,7 @@ package lesson8.part_05.frame_02.utils;
 import lesson8.part_05.frame_02.bf.tanks.AbstractTank;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 public class WorkWithLogFile {
@@ -119,5 +120,58 @@ public class WorkWithLogFile {
 
     public void setPath(String path) {
         this.path = path;
+    }
+
+    public void addBattleFieldToFileBF(File file, String[][] bf) throws IOException {
+        for (int v = 0; v < bf.length; v++){
+            for (int h = 0 ; h < bf.length; h++){
+                updateLogFile(file , ("bd_" + bf[v][h]));
+            }
+        }
+    }
+
+    public String[][] returnOldBattleField(File file, int bfv, int bfh){
+
+        String[][] temp = new String[bfv][bfh];
+
+        boolean stop = true;
+        int v = 0;
+        int h = 0;
+
+        StringBuilder builder = new StringBuilder();
+        try (
+                FileInputStream fis = new FileInputStream(file.getAbsolutePath());
+                InputStreamReader isr = new InputStreamReader(fis, StandardCharsets.UTF_8);
+                BufferedReader br = new BufferedReader(isr, 256)
+        ) {
+            String str;
+
+            while ((str = br.readLine()) != null && stop) {
+                if(str.split("_")[0].equals("bd")){
+                    if(h == bfh){
+                        h = 0;
+                        v++;
+                    }
+
+                    if(v == bfv){
+                        stop = false;
+                    }
+                    temp[v][h] = str.split("_")[1];
+                    h++;
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return temp;
+    }
+
+    public ArrayList<Object> returnActionList(File file, AbstractTank tank){
+
+
+
+
+        return null;
     }
 }

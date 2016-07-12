@@ -83,7 +83,7 @@ public class BT7 extends AbstractTank {
         int index = 1;
         for (int i =0 ; i < act.size(); i++) {
             System.out.println(index + " " + act.get(i));
-            aiDestroyEagle.getWorkWithLogFile().updateLogFile(getLogFile(), act.get(i).toString());
+            aiDestroyEagle.getWorkWithLogFile().updateLogFile(getLogFile(), ("bt7_" + act.get(i).toString()));
             index++;
         }
     }
