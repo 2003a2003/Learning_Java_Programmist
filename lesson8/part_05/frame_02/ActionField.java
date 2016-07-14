@@ -348,7 +348,8 @@ public class ActionField extends JPanel {
 
         //if(battleField.scanQuadrant(8,4) instanceof Blank){
         battleField = new BattleField();
-        workWithLogFile.addToFileBF(logFile, battleField.getBattleFieldTemplate());
+        //workWithLogFile.addBattleFieldToFileBF(logFile, battleField.getBattleFieldTemplate());
+
         //}
 
         t34 = new T34(battleField, logFile);
@@ -489,8 +490,5 @@ public class ActionField extends JPanel {
         System.out.println(builder.toString());
 
     }
-
-
-
 
 }

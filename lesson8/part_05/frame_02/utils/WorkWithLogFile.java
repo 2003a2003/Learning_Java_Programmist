@@ -1,10 +1,12 @@
 package lesson8.part_05.frame_02.utils;
 
-import lesson8.part_05.frame_02.bf.tanks.AbstractTank;
+import lesson8.part_05.frame_02.Direction;
+import lesson8.part_05.frame_02.bf.tanks.*;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class WorkWithLogFile {
 
@@ -138,7 +140,7 @@ public class WorkWithLogFile {
         int v = 0;
         int h = 0;
 
-        StringBuilder builder = new StringBuilder();
+        //StringBuilder builder = new StringBuilder();
         try (
                 FileInputStream fis = new FileInputStream(file.getAbsolutePath());
                 InputStreamReader isr = new InputStreamReader(fis, StandardCharsets.UTF_8);
@@ -168,10 +170,50 @@ public class WorkWithLogFile {
     }
 
     public ArrayList<Object> returnActionList(File file, AbstractTank tank){
+        String identifikator = "";
+        if(tank instanceof BT7){
+            identifikator = "bt7";
+        }else if(tank instanceof Tiger){
+            identifikator = "tiger";
+        }else if(tank instanceof T34){
+            identifikator = "t34";
+        }
 
+        ArrayList<Object> action = new ArrayList<>();
 
+        try (
+                FileInputStream fis = new FileInputStream(file.getAbsolutePath());
+                InputStreamReader isr = new InputStreamReader(fis, StandardCharsets.UTF_8);
+                BufferedReader br = new BufferedReader(isr, 256)
+        ) {
+            String str;
 
+            while ((str = br.readLine()) != null) {
+                if(str.split("_")[0].equals(identifikator)){
+                    if(str.split("_")[1].equals(Action.MOVE)){
+                        action.add(Action.MOVE);
+                    }else if(str.split("_")[1].equals(Direction.RIGHT)){
+                        action.add(Direction.RIGHT);
+                    }else if(str.split("_")[1].equals(Direction.LEFT)) {
+                        action.add(Direction.LEFT);
+                    }else if(str.split("_")[1].equals(Direction.DOWN)) {
+                        action.add(Direction.DOWN);
+                    }else if(str.split("_")[1].equals(Direction.UP)) {
+                        action.add(Direction.UP);
+                    }else if(str.split("_")[1].equals(Action.FIRE)) {
+                        action.add(Action.FIRE);
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        return null;
+        System.out.println(Arrays.toString(action.toArray()));
+
+        return action;
     }
+
+
+
 }
