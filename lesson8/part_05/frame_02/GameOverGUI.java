@@ -32,6 +32,9 @@ public class GameOverGUI implements ActionListener {
     }
 
     private void addPanelGameOver() throws Exception {
+        Font foneText = new Font("Verdana", Font.BOLD, 65);
+        Font foneButton = new Font("Verdana", Font.BOLD, 30);
+
         JPanel jpGameOver = new JPanel();
         jpGameOver.setBackground(Color.black);
         jpGameOver.setLayout(new GridBagLayout());
@@ -41,53 +44,38 @@ public class GameOverGUI implements ActionListener {
 
         JLabel jlText = new JLabel("Game OVER!!!");
         jlText.setForeground(Color.RED);
-        jlText.setFont(new Font("Verdana", Font.PLAIN, 65));
+        jlText.setFont(foneText);
         jlText.setVerticalTextPosition(JLabel.CENTER);
         jlText.setHorizontalTextPosition(JLabel.CENTER);
         jpText.add(jlText);
-
-        JPanel jpButton = new JPanel();
-        jpButton.setLayout(new GridLayout(2, 1));
-        JButton jbExit = new JButton("EXIT");
-        jbExit.setBackground(Color.ORANGE);
-        jbExit.setFont(new Font("Verdana", Font.BOLD, 30));
-        jbExit.addActionListener(this);
-//        jbExit.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                frame.setVisible(false);
-//                System.exit(0);
-//            }
-//        });
-
-        JButton jbRestart = new JButton("RESTART GAME");
-        jbRestart.setBackground(Color.green);
-        jbRestart.setFont(new Font("Verdana", Font.BOLD, 30));
-        jbRestart.addActionListener(this);
-//        jbRestart.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                frame.setVisible(false);
-//                try {
-//                    StartMenuGUI startMenuGUI = new StartMenuGUI();
-//                } catch (Exception e1) {
-//                    e1.printStackTrace();
-//                }
-//            }
-//        });
-
-
-        jpButton.add(jbRestart);
-        jpButton.add(jbExit);
-
         jpGameOver.add(jpText, new GridBagConstraints(0, 0, 1, 1, 0, 0,
                 GridBagConstraints.LINE_START, GridBagConstraints.NONE, new Insets(5, 0, 0, 0), 0, 0));
 
+        JPanel jpButton = new JPanel();
+        jpButton.setLayout(new GridLayout(3, 1));
+
+        JButton jbRestart = new JButton("RESTART GAME");
+        jbRestart.setBackground(Color.green);
+        jbRestart.setFont(foneButton);
+        jbRestart.addActionListener(this);
+
+        JButton jbViewLestGame = new JButton("View the last game.");
+        jbViewLestGame.setBackground(Color.BLUE);
+        jbViewLestGame.setForeground(Color.cyan);
+        jbViewLestGame.setFont(foneButton);
+        jbViewLestGame.addActionListener(this);
+
+        JButton jbExit = new JButton("EXIT");
+        jbExit.setBackground(Color.ORANGE);
+        jbExit.setFont(foneButton);
+        jbExit.addActionListener(this);
+
+        jpButton.add(jbRestart);
+        jpButton.add(jbViewLestGame);
+        jpButton.add(jbExit);
+
         jpGameOver.add(jpButton, new GridBagConstraints(0, 1, 1, 1, 0, 0,
                 GridBagConstraints.LINE_START, GridBagConstraints.NONE, new Insets(5, 80, 0, 0), 0, 0));
-
-        //jpGameOver.add(jpText);
-//        jpGameOver.add(jpButton);
 
         setPanelDateMenu(jpGameOver);
     }
@@ -100,6 +88,11 @@ public class GameOverGUI implements ActionListener {
             System.exit(0);
         }
         if (e.getActionCommand().equals("RESTART GAME")) {
+            event = e;
+            frame.setVisible(false);
+            frame.dispose();
+        }
+        if (e.getActionCommand().equals("View the last game.")) {
             event = e;
             frame.setVisible(false);
             frame.dispose();

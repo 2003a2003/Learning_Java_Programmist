@@ -140,7 +140,6 @@ public class WorkWithLogFile {
         int v = 0;
         int h = 0;
 
-        //StringBuilder builder = new StringBuilder();
         try (
                 FileInputStream fis = new FileInputStream(file.getAbsolutePath());
                 InputStreamReader isr = new InputStreamReader(fis, StandardCharsets.UTF_8);
