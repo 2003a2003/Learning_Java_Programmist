@@ -10,6 +10,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class ActionField extends JPanel {
 
@@ -29,6 +31,7 @@ public class ActionField extends JPanel {
     private PrintStream console;
     private File logFile;
     private WorkWithLogFile workWithLogFile;
+    private boolean viewRepeatLastyGame = false;
 
     /**
      * Write your code here.
@@ -44,10 +47,10 @@ public class ActionField extends JPanel {
                 if (!bt7.isDestroyed() && !t34.isDestroyed()) {
                     if (battleField.scanQuadrant(8, 4) instanceof Blank) {
                         i = false;
-                        System.out.println("Eagle Destroy!!!");
-                        //                       workWithLogFile.updateLogFile(logFile, "Eagle Destroy!!!\n");
+//                        System.out.println("Eagle Destroy!!!");
+                        workWithLogFile.updateLogFile(logFile, "Eagle Destroy!!!\n");
                         readLogFileToConsole();
-                        repeatGame(bt7);
+                        //repeatGame(bt7);
                         createGameOverPanel();
                     }
 
@@ -72,10 +75,10 @@ public class ActionField extends JPanel {
 
                 } else {
                     j = false;
-                    System.out.println("Defender was destroy!!!");
-//                    workWithLogFile.updateLogFile(logFile, "Defender was destroy!!!\n");
+//                    System.out.println("Defender was destroy!!!");
+                    workWithLogFile.updateLogFile(logFile, "Defender was destroy!!!\n");
                     readLogFileToConsole();
-                    repeatGame(tiger);
+                    //repeatGame(tiger);
                     createGameOverPanel();
                 }
             }
@@ -324,7 +327,11 @@ public class ActionField extends JPanel {
         ActionEvent event = startPanelGUI.getEvent();
 
         workWithLogFile = new WorkWithLogFile();
-        workWithLogFile.createLogFile();
+
+        if (!viewRepeatLastyGame) {
+            workWithLogFile.createLogFile();
+        }
+
         logFile = workWithLogFile.getLogFile();
 
         while (event == null) {
@@ -340,17 +347,21 @@ public class ActionField extends JPanel {
             System.out.println("Netu realizatsii poka.............");
             createStartPanel();
         }
-
         createGamePanel();
     }
 
     private void createGamePanel() throws Exception {
 
-        //if(battleField.scanQuadrant(8,4) instanceof Blank){
-        battleField = new BattleField();
+//        if (viewRepeatLastyGame) {
+        //get coordinate battleField
         //workWithLogFile.addBattleFieldToFileBF(logFile, battleField.getBattleFieldTemplate());
+        //get coordinate t34
+        //get coordinate tiger
+        //get coordinate bt7
+//        } else {
 
-        //}
+        battleField = new BattleField();
+        workWithLogFile.addBattleFieldToFileBF(logFile, battleField);
 
         t34 = new T34(battleField, logFile);
 
@@ -358,6 +369,15 @@ public class ActionField extends JPanel {
         createTiger();
 
         bullet = new Bullet(-100, -100, Direction.DOWN, bt7);
+        //get coordinate battleField
+//        workWithLogFile.printBattleField(workWithLogFile.returnOldBattleField(logFile,
+//                battleField.getBfHeight()/battleField.getSIZE_ONE_QUADRANT(),
+//                battleField.getBfHeight()/battleField.getSIZE_ONE_QUADRANT()));
+        //workWithLogFile.addBattleFieldToFileBF(logFile, battleField.getBattleFieldTemplate());
+        //get coordinate t34
+        //get coordinate tiger
+        //get coordinate bt7
+//        }
 
         frame = new JFrame("BATTLE FIELD");
         frame.setLocation(350, 150);
@@ -369,13 +389,17 @@ public class ActionField extends JPanel {
         frame.setVisible(true);
 
         runTheGame();
-
     }
 
     private void createGameOverPanel() throws Exception {
 
         frame.setVisible(false);
         frame.dispose();
+
+        System.out.println("****************************************************************************");
+        ArrayList<Object> obj = workWithLogFile.returnActionList(logFile, bt7);
+        System.out.println(Arrays.toString(obj.toArray()));
+        System.out.println("****************************************************************************");
 
         GameOverGUI gameOverGUI = new GameOverGUI(battleField);
         ActionEvent event = gameOverGUI.getEvent();
@@ -384,7 +408,6 @@ public class ActionField extends JPanel {
             Thread.sleep(500);
             event = gameOverGUI.getEvent();
         }
-
         createStartPanel();
     }
 
@@ -472,7 +495,7 @@ public class ActionField extends JPanel {
         System.out.println(workWithLogFile.readLogFile(logFile));
     }
 
-    private void repeatGame(AbstractTank tank){
+    private void repeatGame(AbstractTank tank) {
         StringBuilder builder = new StringBuilder();
         try (
                 FileInputStream fis = new FileInputStream(logFile.getAbsolutePath());
@@ -486,9 +509,7 @@ public class ActionField extends JPanel {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         System.out.println(builder.toString());
-
     }
 
 }

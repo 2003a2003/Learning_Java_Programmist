@@ -36,7 +36,7 @@ public class BT7 extends AbstractTank {
 
         act = new ArrayList<>();
         aiDestroyEagle = new AggressorLogic();
-        aiDestroyEagle.getWorkWithLogFile().updateLogFile(getLogFile(), "bt7:" + x + "_" + y);
+        aiDestroyEagle.getWorkWithLogFile().updateLogFile(getLogFile(), "BT7:" + x + "_" + y);
     }
 
     private void setImages() {

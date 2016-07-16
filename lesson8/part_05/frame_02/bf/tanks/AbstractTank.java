@@ -41,7 +41,6 @@ public abstract class AbstractTank implements Tank {
         this.logFile = logFile;
     }
 
-
     public void turn(Direction direction) {
         this.direction = direction;
     }

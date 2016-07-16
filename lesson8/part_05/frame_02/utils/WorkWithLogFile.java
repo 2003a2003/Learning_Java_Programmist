@@ -1,6 +1,7 @@
 package lesson8.part_05.frame_02.utils;
 
 import lesson8.part_05.frame_02.Direction;
+import lesson8.part_05.frame_02.bf.BattleField;
 import lesson8.part_05.frame_02.bf.tanks.*;
 
 import java.io.*;
@@ -29,7 +30,11 @@ public class WorkWithLogFile {
     public void updateLogFile(File file, String data) throws IOException {
         StringBuilder sb = new StringBuilder();
         String oldFile = readLogFile(file);
-        sb.append(oldFile + "\n");
+        if(oldFile.length() < 2){
+            sb.append(oldFile);
+        }else {
+            sb.append(oldFile + "\n");
+        }
         sb.append(data);
         writeLogFile(file, sb.toString());
     }
@@ -124,10 +129,10 @@ public class WorkWithLogFile {
         this.path = path;
     }
 
-    public void addBattleFieldToFileBF(File file, String[][] bf) throws IOException {
-        for (int v = 0; v < bf.length; v++){
-            for (int h = 0 ; h < bf.length; h++){
-                updateLogFile(file , ("bd_" + bf[v][h]));
+    public void addBattleFieldToFileBF(File file, BattleField bf) throws IOException {
+        for (int v = 0; v < bf.getBfHeight()/bf.getSIZE_ONE_QUADRANT(); v++){
+            for (int h = 0 ; h < bf.getBfWidth()/bf.getSIZE_ONE_QUADRANT(); h++){
+                updateLogFile(file , ("bf_" + bf.getBattleFieldTemplate()[v][h]));
             }
         }
     }
@@ -148,7 +153,7 @@ public class WorkWithLogFile {
             String str;
 
             while ((str = br.readLine()) != null && stop) {
-                if(str.split("_")[0].equals("bd")){
+                if(str.split("_")[0].equals("bf")){
                     if(h == bfh){
                         h = 0;
                         v++;
@@ -156,6 +161,7 @@ public class WorkWithLogFile {
 
                     if(v == bfv){
                         stop = false;
+                        continue;
                     }
                     temp[v][h] = str.split("_")[1];
                     h++;
@@ -164,7 +170,6 @@ public class WorkWithLogFile {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return temp;
     }
 
@@ -189,17 +194,17 @@ public class WorkWithLogFile {
 
             while ((str = br.readLine()) != null) {
                 if(str.split("_")[0].equals(identifikator)){
-                    if(str.split("_")[1].equals(Action.MOVE)){
+                    if(str.split("_")[1].equals(Action.MOVE.toString())){
                         action.add(Action.MOVE);
-                    }else if(str.split("_")[1].equals(Direction.RIGHT)){
+                    }else if(str.split("_")[1].equals(Direction.RIGHT.toString())){
                         action.add(Direction.RIGHT);
-                    }else if(str.split("_")[1].equals(Direction.LEFT)) {
+                    }else if(str.split("_")[1].equals(Direction.LEFT.toString())) {
                         action.add(Direction.LEFT);
-                    }else if(str.split("_")[1].equals(Direction.DOWN)) {
+                    }else if(str.split("_")[1].equals(Direction.DOWN.toString())) {
                         action.add(Direction.DOWN);
-                    }else if(str.split("_")[1].equals(Direction.UP)) {
+                    }else if(str.split("_")[1].equals(Direction.UP.toString())) {
                         action.add(Direction.UP);
-                    }else if(str.split("_")[1].equals(Action.FIRE)) {
+                    }else if(str.split("_")[1].equals(Action.FIRE.toString())) {
                         action.add(Action.FIRE);
                     }
                 }
@@ -207,12 +212,32 @@ public class WorkWithLogFile {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        System.out.println(Arrays.toString(action.toArray()));
-
         return action;
     }
 
+    public void printBattleField(String[][] data){
+        for (String[] s: data){
+            System.out.println(Arrays.toString(s));
+        }
+    }
 
+    public String getCoordTank(File file, String search){
+        String res = "";
+        try (
+                FileInputStream fis = new FileInputStream(file.getAbsolutePath());
+                InputStreamReader isr = new InputStreamReader(fis, StandardCharsets.UTF_8);
+                BufferedReader br = new BufferedReader(isr, 256)
+        ) {
+            String str;
 
+            while ((str = br.readLine()) != null) {
+                if(str.split(":")[0].equals(search)){
+                    res = str.split(":")[1];
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return res;
+    }
 }
