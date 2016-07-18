@@ -43,22 +43,18 @@ public class ActionField extends JPanel {
         if(!viewRepeatLastyGame) {
             //save to file
             workWithLogFile.addBattleFieldToFileBF(logFile, battleField);
-            workWithLogFile.updateLogFile(logFile, "T34:" + t34.getX() + "_" + t34.getY());
-            workWithLogFile.updateLogFile(logFile, "BT7:" + bt7.getX() + "_" + bt7.getY());
-            workWithLogFile.updateLogFile(logFile, "Tiger:" + tiger.getX() + "_" + tiger.getY());
+            workWithLogFile.addDataToEndFile(logFile, "T34:" + t34.getX() + "_" + t34.getY());
+            workWithLogFile.addDataToEndFile(logFile, "BT7:" + bt7.getX() + "_" + bt7.getY());
+            workWithLogFile.addDataToEndFile(logFile, "Tiger:" + tiger.getX() + "_" + tiger.getY());
             if(startLogick == 1) {
-                workWithLogFile.updateLogFile(logFile, "StartLogick_1");
+                workWithLogFile.addDataToEndFile(logFile, "StartLogick_1");
             }else if(startLogick ==2){
-                workWithLogFile.updateLogFile(logFile, "StartLogick_2");
+                workWithLogFile.addDataToEndFile(logFile, "StartLogick_2");
             }
         }
 
         if (startLogick == 1) {
             bt7.attackEagle();
-
-            for (Object o : bt7.getAct()){
-                workWithLogFile.updateLogFile(logFile, ("bt7_" + o.toString()));
-            }
 
             while (i) {
                 if (!bt7.isDestroyed() && !t34.isDestroyed()) {
@@ -70,31 +66,21 @@ public class ActionField extends JPanel {
                         //repeatGame(bt7);
                         createGameOverPanel();
                     }
-
                     if (!bt7.isDestroyed()) {
                         processAction(bt7.setUp(), bt7);
                     }
                 }
             }
         } else if (startLogick == 2) {
-
             tiger.attackDefender(t34);
-
-            for (Object o : tiger.getAct()){
-                workWithLogFile.updateLogFile(logFile, ("tiger_" + o.toString()));
-            }
-
             while (j) {
-//                tiger.attackDefender(t34);
                 if (!tiger.isDestroyed() && !t34.isDestroyed()) {
                     if (!tiger.isDestroyed()) {
                         processAction(tiger.setUp(), tiger);
                     }
-
-//                    if (!t34.isDestroyed()) {
-//                        processAction(t34.setUp(), t34);
-//                    }
-
+                    if (!t34.isDestroyed()) {
+                        processAction(t34.setUp(), t34);
+                    }
                 } else {
                     j = false;
                     System.out.println("Defender was destroy!!!");
@@ -110,9 +96,12 @@ public class ActionField extends JPanel {
 
     private void processAction(Action a, Tank t) throws Exception {
         if (a == Action.MOVE) {
+            workWithLogFile.addDataToEndFile(logFile, (t.getClass().getSimpleName() + "_" + Action.MOVE.toString()));
             processMove(t);
         } else if (a == Action.FIRE) {
+            workWithLogFile.addDataToEndFile(logFile, (t.getClass().getSimpleName() + "_" + t.getDirection().toString()));
             processTurn(t);
+            workWithLogFile.addDataToEndFile(logFile, (t.getClass().getSimpleName() + "_" + Action.FIRE.toString()));
             processFire(t.fire());
         }
     }
@@ -493,24 +482,7 @@ public class ActionField extends JPanel {
     }
 
     private void readLogFileToConsole() {
-        System.out.println(workWithLogFile.readLogFile2(logFile));
-    }
-
-    private void repeatGame(AbstractTank tank) {
-        StringBuilder builder = new StringBuilder();
-        try (
-                FileInputStream fis = new FileInputStream(logFile.getAbsolutePath());
-                InputStreamReader isr = new InputStreamReader(fis, StandardCharsets.UTF_8);
-                BufferedReader br = new BufferedReader(isr, 256)
-        ) {
-            String str;
-            while ((str = br.readLine()) != null) {
-                builder.append(str);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        System.out.println(builder.toString());
+        System.out.println(workWithLogFile.readLogFile(logFile));
     }
 
     private void printActionList(){
@@ -521,6 +493,9 @@ public class ActionField extends JPanel {
             System.out.println(Arrays.toString(workWithLogFile.returnActionList(logFile, tiger).toArray()));
         }
         System.out.println("****************************************************************************");
+    }
+
+    private void initGameParametr(){
 
     }
 }

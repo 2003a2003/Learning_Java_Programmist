@@ -26,27 +26,12 @@ public class WorkWithLogFile {
         logFile.createNewFile();
     }
 
-    public void updateLogFile(File file, String data) throws IOException {
-        StringBuilder sb = new StringBuilder();
-        String oldFile = readLogFile(file);
-        if (oldFile.length() == 0) {
-            sb.append(oldFile);
-        } else {
-            sb.append(oldFile + "\n");
-        }
-        sb.append(data);
-        writeLogFile2(file, sb.toString());
-    }
-
-    public void writeLogFile(File file, String data) {
+    public void addDataToEndFile(File file, String data) {
         try (
-                FileOutputStream fos = new FileOutputStream(file.getAbsolutePath());
-                BufferedOutputStream bos = new BufferedOutputStream(fos, 256);
-//                OutputStreamWriter os = new OutputStreamWriter(fos, StandardCharsets.UTF_8);
-//                BufferedWriter bw = new BufferedWriter(os, 256)
+                BufferedWriter bw = new BufferedWriter(new FileWriter(file.getAbsolutePath(), true))
         ) {
-            bos.write(data.getBytes());
-//            bw.write(data);
+            bw.newLine();
+            bw.append(data);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -54,22 +39,15 @@ public class WorkWithLogFile {
 
     public String readLogFile(File file) {
         StringBuilder builder = new StringBuilder();
+        String read = "";
         try (
-                FileInputStream fis = new FileInputStream(file.getAbsolutePath());
-                BufferedInputStream bis = new BufferedInputStream(fis, 256)
-//                InputStreamReader isr = new InputStreamReader(fis, StandardCharsets.UTF_8);
-//                BufferedReader br = new BufferedReader(isr, 256)
+                BufferedReader br = new BufferedReader(new FileReader(file.getAbsolutePath()))
         ) {
-//            String str;
-//            while ((str = br.readLine()) != null) {
-//                builder.append(str);
-//                builder.append("\n");
-//            }
-            int i;
-            while ((i = bis.read()) != -1) {
-                builder.append((char) i);
+            String line;
+            while((line = br.readLine()) != null){
+                builder.append(line);
+                builder.append("\n");
             }
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -79,7 +57,7 @@ public class WorkWithLogFile {
     public void addBattleFieldToFileBF(File file, BattleField bf) throws IOException {
         for (int v = 0; v < bf.getBfHeight() / bf.getSIZE_ONE_QUADRANT(); v++) {
             for (int h = 0; h < bf.getBfWidth() / bf.getSIZE_ONE_QUADRANT(); h++) {
-                updateLogFile(file, ("bf_" + bf.getBattleFieldTemplate()[v][h]));
+                addDataToEndFile(file, ("bf_" + bf.getBattleFieldTemplate()[v][h]));
             }
         }
     }
@@ -123,11 +101,11 @@ public class WorkWithLogFile {
     public ArrayList<Object> returnActionList(File file, AbstractTank tank) {
         String identifikator = "";
         if (tank instanceof BT7) {
-            identifikator = "bt7";
+            identifikator = "BT7";
         } else if (tank instanceof Tiger) {
-            identifikator = "tiger";
+            identifikator = "Tiger";
         } else if (tank instanceof T34) {
-            identifikator = "t34";
+            identifikator = "T34";
         }
 
         ArrayList<Object> action = new ArrayList<>();
@@ -187,41 +165,25 @@ public class WorkWithLogFile {
 
     public int getStartLogick(File file) {
         int rez = -1;
-        String temp = readLogFile2(file);
+        String temp = readLogFile(file);
         int nextIndex = temp.indexOf("\n");
-        while (nextIndex < temp.length()-1){
+        while (nextIndex < temp.length() - 1) {
             String data = temp.substring(0, nextIndex);
-            if(data.split("_")[0].equals("StartLogick")){
+            if (data.split("_")[0].equals("StartLogick")) {
                 return Integer.parseInt(data.split("_")[1]);
             }
-            temp = temp.substring(nextIndex + 1, temp.length()-1);
+            temp = temp.substring(nextIndex + 1, temp.length() - 1);
             nextIndex = temp.indexOf("\n");
         }
 
         return rez;
     }
 
-    public String readLogFile2(File file) {
-        StringBuilder builder = new StringBuilder();
-        try (
-                BufferedReader br = new BufferedReader(new FileReader(file.getAbsolutePath()))
-        ) {
-            String str;
-            while ((str = br.readLine()) != null) {
-                builder.append(str);
-                builder.append("\n");
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return builder.toString();
-    }
-
-    public void writeLogFile2(File file, String data) {
+    public void writeLogFile(File file, String data) {
         try (
                 BufferedWriter bw = new BufferedWriter(new FileWriter(file.getAbsolutePath()))
         ) {
+
             bw.append(data);
         } catch (IOException e) {
             e.printStackTrace();
