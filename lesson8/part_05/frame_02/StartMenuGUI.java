@@ -85,7 +85,6 @@ public class StartMenuGUI implements ActionListener {
 //            frame.dispose();
         } else if (e.getActionCommand().equals("Defender: T34")) {
             event = e;
-
             frame.setVisible(false);
         } else if (e.getActionCommand().equals("-EXIT-")) {
             frame.setVisible(false);

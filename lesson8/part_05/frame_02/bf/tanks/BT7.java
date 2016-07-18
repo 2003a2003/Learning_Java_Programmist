@@ -15,8 +15,8 @@ public class BT7 extends AbstractTank {
     private AggressorLogic aiDestroyEagle;
     private ArrayList<Object> act;
 
-    public BT7(BattleField bf, File logFile) {
-        super(bf,logFile);
+    public BT7(BattleField bf) {
+        super(bf);
         tankColor = new Color(255, 0, 0);
         towerColor = new Color(0, 255, 0);
         movePath = 1;
@@ -24,8 +24,8 @@ public class BT7 extends AbstractTank {
         act = new ArrayList<>();
     }
 
-    public BT7(BattleField bf, int x, int y, Direction direction, File logFile) throws IOException {
-        super(bf, x, y, direction, logFile);
+    public BT7(BattleField bf, int x, int y, Direction direction) {
+        super(bf, x, y, direction);
 
         tankColor = new Color(255, 0, 0);
         towerColor = new Color(0, 255, 0);
@@ -36,8 +36,7 @@ public class BT7 extends AbstractTank {
 
         act = new ArrayList<>();
         aiDestroyEagle = new AggressorLogic();
-        aiDestroyEagle.getWorkWithLogFile().updateLogFile(getLogFile(), "BT7:" + x + "_" + y);
-    }
+     }
 
     private void setImages() {
         images = new Image[4];
@@ -68,7 +67,7 @@ public class BT7 extends AbstractTank {
         return (Action) act.get(step++);
     }
 
-    public void attackEagle() throws IOException {
+    public void attackEagle(){
         if (getBf().scanQuadrant(8, 4).isDestroyed()) {
             System.out.println("EAGLE IS DESTROY!!!!!!!");
         }
@@ -78,12 +77,10 @@ public class BT7 extends AbstractTank {
         aiDestroyEagle.startDestroyEagle();
         act = aiDestroyEagle.getPart();
 
-        //aiDestroyEagle.getWorkWithLogFile().updateLogFile(getLogFile(), "The road to the goal:\n");
 
         int index = 1;
         for (int i =0 ; i < act.size(); i++) {
             System.out.println(index + " " + act.get(i));
-            aiDestroyEagle.getWorkWithLogFile().updateLogFile(getLogFile(), ("bt7_" + act.get(i).toString()));
             index++;
         }
     }

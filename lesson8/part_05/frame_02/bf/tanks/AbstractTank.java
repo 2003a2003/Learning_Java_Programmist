@@ -5,7 +5,6 @@ import lesson8.part_05.frame_02.bf.BattleField;
 
 import java.awt.*;
 import java.awt.image.ImageObserver;
-import java.io.File;
 
 public abstract class AbstractTank implements Tank {
 
@@ -26,19 +25,17 @@ public abstract class AbstractTank implements Tank {
     protected Color towerColor;
 
     protected Image[] images;
-    private File logFile;
 
-    public AbstractTank(BattleField bf, File logFile) {
-        this(bf, 128, 512, Direction.UP, logFile);
+    public AbstractTank(BattleField bf) {
+        this(bf, 128, 512, Direction.UP);
     }
 
-    public AbstractTank(BattleField bf, int x, int y, Direction direction, File logFile) {
+    public AbstractTank(BattleField bf, int x, int y, Direction direction) {
         this.bf = bf;
         this.x = x;
         this.y = y;
         this.direction = direction;
         this.destroyed = false;
-        this.logFile = logFile;
     }
 
     public void turn(Direction direction) {
@@ -146,13 +143,5 @@ public abstract class AbstractTank implements Tank {
 
     public void setDirection(Direction direction) {
         this.direction = direction;
-    }
-
-    public File getLogFile() {
-        return logFile;
-    }
-
-    public void setLogFile(File logFile) {
-        this.logFile = logFile;
     }
 }

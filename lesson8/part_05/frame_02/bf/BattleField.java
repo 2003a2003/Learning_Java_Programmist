@@ -172,4 +172,8 @@ public class BattleField implements Drawable {
 	public String[][] getBattleFieldTemplate() {
 		return battleFieldTemplate;
 	}
+
+	public void setBattleFieldTemplate(String[][] battleFieldTemplate) {
+		this.battleFieldTemplate = battleFieldTemplate;
+	}
 }

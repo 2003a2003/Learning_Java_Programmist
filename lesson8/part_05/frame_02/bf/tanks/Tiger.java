@@ -16,8 +16,8 @@ public class Tiger extends AbstractTank {
     private AggressorLogic aiDestroyDefender;
     private ArrayList<Object> act;
 
-    public Tiger(BattleField bf, File logFile) throws IOException {
-        super(bf,logFile);
+    public Tiger(BattleField bf){
+        super(bf);
         tankColor = new Color(255, 0, 0);
         towerColor = new Color(0, 255, 0);
         armor = 1;
@@ -26,15 +26,15 @@ public class Tiger extends AbstractTank {
         aiDestroyDefender = new AggressorLogic();
     }
 
-    public Tiger(BattleField bf, int x, int y, Direction direction, File logFile) throws IOException {
-        super(bf, x, y, direction, logFile);
+    public Tiger(BattleField bf, int x, int y, Direction direction) {
+        super(bf, x, y, direction);
         tankColor = new Color(255, 0, 0);
         towerColor = new Color(0, 255, 0);
         armor = 1;
         setImages();
         act = new ArrayList<>();
         aiDestroyDefender = new AggressorLogic();
-        aiDestroyDefender.getWorkWithLogFile().updateLogFile(getLogFile(), "Tiger:" + x + "_" + y);
+
     }
 
     @Override
@@ -74,17 +74,14 @@ public class Tiger extends AbstractTank {
         return (Action) act.get(step++);
     }
 
-    public void attackDefender(T34 t34) throws IOException {
+    public void attackDefender(T34 t34) {
         initStartParameterInWorkArraAgressorTiger(t34);
         aiDestroyDefender.startDestroyDefender();
         act = aiDestroyDefender.getPart();
 
-        aiDestroyDefender.getWorkWithLogFile().updateLogFile(getLogFile(), "The road to the defender:\n");
-
         int index = 1;
         for (int i =0 ; i < act.size(); i++) {
             System.out.println(index + " " + act.get(i));
-            aiDestroyDefender.getWorkWithLogFile().updateLogFile(getLogFile(), ("tiger_" + act.get(i).toString()));
             index++;
         }
     }
@@ -97,5 +94,13 @@ public class Tiger extends AbstractTank {
         aiDestroyDefender.setBf(getBf());
         aiDestroyDefender.setAt(this);
         aiDestroyDefender.setT34(t34);
+    }
+
+    public ArrayList<Object> getAct() {
+        return act;
+    }
+
+    public void setAct(ArrayList<Object> act) {
+        this.act = act;
     }
 }

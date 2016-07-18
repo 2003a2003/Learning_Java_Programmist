@@ -2,10 +2,7 @@ package lesson8.part_05.frame_02.bf.tanks;
 
 import lesson8.part_05.frame_02.Direction;
 import lesson8.part_05.frame_02.bf.*;
-import lesson8.part_05.frame_02.utils.WorkWithLogFile;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
@@ -42,16 +39,11 @@ public class AggressorLogic {
     private final int stopPoint = 0;
     private ArrayList<Object> part;
     private T34 t34;
-    private WorkWithLogFile workWithLogFile;
-    private File logFile;
 
-
-    public AggressorLogic() throws IOException {
-        workWithLogFile = new WorkWithLogFile();
-        logFile = workWithLogFile.getLogFile();
+    public AggressorLogic(){
     }
 
-    public void startDestroyEagle() throws IOException {
+    public void startDestroyEagle() {
         mapWidth = bf.getBfWidth() / bf.getSIZE_ONE_QUADRANT();
         mapHeight = bf.getBfHeight() / bf.getSIZE_ONE_QUADRANT();
         part = new ArrayList<>();
@@ -65,7 +57,7 @@ public class AggressorLogic {
         initPath(getsY(), getsX(), at.getDirection());
     }
 
-    public void startDestroyDefender() throws IOException {
+    public void startDestroyDefender() {
         mapWidth = bf.getBfWidth() / bf.getSIZE_ONE_QUADRANT();
         mapHeight = bf.getBfHeight() / bf.getSIZE_ONE_QUADRANT();
         part = new ArrayList<>();
@@ -140,7 +132,7 @@ public class AggressorLogic {
         System.out.println("*******************************************************");
     }
 
-    private void initWave(int y, int x) throws IOException {
+    private void initWave(int y, int x) {
 
         countIter = 0;
         maxCountIter = 100;
@@ -171,11 +163,10 @@ public class AggressorLogic {
             }
 
         } while (workArray[y][x] != countIter && countIter < maxCountIter);
-        System.out.println("Counter :" + countIter);
-        //workWithLogFile.updateLogFile(at.getLogFile(), ("Counter :" + countIter + "\n"));
+        //System.out.println("Counter :" + countIter);
     }
 
-    private void initPath( int y, int x, Direction direction) throws IOException {
+    private void initPath( int y, int x, Direction direction) {
         int h = x;
         int v = y;
 
@@ -274,7 +265,7 @@ public class AggressorLogic {
                 }
 
             }
-            System.out.println("Part is good");
+            //System.out.println("Part is good");
             //workWithLogFile.updateLogFile(at.getLogFile(),"Part is good");
         } else {
             System.out.println("*******************************************************");
@@ -392,12 +383,5 @@ public class AggressorLogic {
         this.t34 = t34;
     }
 
-    public WorkWithLogFile getWorkWithLogFile() {
-        return workWithLogFile;
-    }
-
-    public void setWorkWithLogFile(WorkWithLogFile workWithLogFile) {
-        this.workWithLogFile = workWithLogFile;
-    }
 }
 
