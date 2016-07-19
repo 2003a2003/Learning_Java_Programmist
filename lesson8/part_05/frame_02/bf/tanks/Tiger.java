@@ -74,10 +74,12 @@ public class Tiger extends AbstractTank {
         return (Action) act.get(step++);
     }
 
-    public void attackDefender(T34 t34) {
+    public void attackDefender(T34 t34, boolean viewReplay) {
         initStartParameterInWorkArraAgressorTiger(t34);
-        aiDestroyDefender.startDestroyDefender();
-        act = aiDestroyDefender.getPart();
+        if(!viewReplay) {
+            aiDestroyDefender.startDestroyDefender();
+            act = aiDestroyDefender.getPart();
+        }
 
         int index = 1;
         for (int i =0 ; i < act.size(); i++) {

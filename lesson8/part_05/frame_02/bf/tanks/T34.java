@@ -7,14 +7,19 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class T34 extends AbstractTank {
+
+    private ArrayList<Object> act;
+    private int step = 0;
 
     public T34(BattleField bf) {
         super(bf, 128, 512, Direction.UP);
         tankColor = new Color(0, 255, 0);
         towerColor = new Color(255, 0, 0);
         setImages();
+        act = new ArrayList<>();
     }
 
     public T34(BattleField bf, int x, int y, Direction direction) {
@@ -22,6 +27,7 @@ public class T34 extends AbstractTank {
         tankColor = new Color(0, 255, 0);
         towerColor = new Color(255, 0, 0);
         setImages();
+        act = new ArrayList<>();
     }
 
     private void setImages() {
@@ -36,30 +42,51 @@ public class T34 extends AbstractTank {
             System.err.println("Can't find image of t34.");
         }
     }
-    private Object[] actoins = new Object[]{
-            Action.MOVE,
-            Action.MOVE,
-            Action.MOVE,
-            Direction.DOWN,
-            Action.MOVE,
-            Action.MOVE,
-            Action.MOVE,
-            Direction.UP,
-    };
+//    private Object[] actoins = new Object[]{
+//            Action.MOVE,
+//            Action.MOVE,
+//            Action.MOVE,
+//            Direction.DOWN,
+//            Action.MOVE,
+//            Action.MOVE,
+//            Action.MOVE,
+//            Direction.UP,
+//    };
 
-    private int step = 0;
+
 
     @Override
     public Action setUp() {
-        if (step >= actoins.length) {
-            step = 0;
+        if (step >= act.size()) {
+            //step = 0;
+            return Action.NONE;
         }
-        if (!(actoins[step] instanceof Action)) {
-            turn((Direction) actoins[step++]);
+        if (!(act.get(step) instanceof Action)) {
+            turn((Direction) act.get(step++));
         }
-        if (step >= actoins.length) {
-            step = 0;
+        if (step >= act.size()) {
+            //step = 0;
+            return Action.NONE;
         }
-        return (Action) actoins[step++];
+        return (Action) act.get(step++);
+//        if (step >= actoins.length) {
+//            step = 0;
+//        }
+//        if (!(actoins[step] instanceof Action)) {
+//            turn((Direction) actoins[step++]);
+//        }
+//        if (step >= actoins.length) {
+//            step = 0;
+//        }
+//        return (Action) actoins[step++];
+
+    }
+
+    public ArrayList<Object> getAct() {
+        return act;
+    }
+
+    public void setAct(ArrayList<Object> act) {
+        this.act = act;
     }
 }

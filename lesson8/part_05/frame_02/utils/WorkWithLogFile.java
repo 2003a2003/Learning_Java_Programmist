@@ -10,7 +10,6 @@ import java.util.ArrayList;
 
 public class WorkWithLogFile {
 
-    private AbstractTank tank;
     private File logFile;
     private String fileName = "action_log.txt";
     private String path = "/src/lesson8/part_05/frame_02/log/";
@@ -64,39 +63,69 @@ public class WorkWithLogFile {
 
     public String[][] returnOldBattleField(File file, int bfv, int bfh) {
 
-        String[][] temp = new String[bfv][bfh];
-
-        boolean stop = true;
-        int v = 0;
         int h = 0;
+        int v = 0;
 
-        try (
-                FileInputStream fis = new FileInputStream(file.getAbsolutePath());
-                InputStreamReader isr = new InputStreamReader(fis, StandardCharsets.UTF_8);
-                BufferedReader br = new BufferedReader(isr, 256)
-        ) {
-            String str;
-
-            while ((str = br.readLine()) != null && stop) {
-                if (str.split("_")[0].equals("bf")) {
-                    if (h == bfh) {
-                        h = 0;
-                        v++;
-                    }
-
-                    if (v == bfv) {
-                        stop = false;
-                        continue;
-                    }
-                    temp[v][h] = str.split("_")[1];
-                    h++;
-                }
+        String[][] bf = new String[bfv][bfh];
+        String temp = readLogFile(file);
+        int nextIndex = temp.indexOf("\n");
+        while (nextIndex < temp.length()-1){
+            if (h >= bf[0].length) {
+                h = 0;
+                v++;
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+
+            if (v == bf.length || h == bf[0].length) {
+                break;
+            }
+
+            String data = temp.substring(0, nextIndex);
+            if(data.split("_")[0].equals("bf")){
+                bf[v][h] = data.split("_")[1];
+            }
+
+            temp = temp.substring(nextIndex + 1, temp.length()-1);
+            nextIndex = temp.indexOf("\n");
+            h++;
         }
-        return temp;
+        return bf;
     }
+
+//    public String[][] returnOldBattleField(File file, int bfv, int bfh) {
+//
+//        String[][] temp = new String[bfv][bfh];
+//
+//        boolean stop = true;
+//        int v = 0;
+//        int h = 0;
+//
+//        try (
+//                FileInputStream fis = new FileInputStream(file.getAbsolutePath());
+//                InputStreamReader isr = new InputStreamReader(fis, StandardCharsets.UTF_8);
+//                BufferedReader br = new BufferedReader(isr, 256)
+//        ) {
+//            String str;
+//
+//            while ((str = br.readLine()) != null && stop) {
+//                if (str.split("_")[0].equals("bf")) {
+//                    if (h == bfh) {
+//                        h = 0;
+//                        v++;
+//                    }
+//
+//                    if (v == bfv) {
+//                        stop = false;
+//                        continue;
+//                    }
+//                    temp[v][h] = str.split("_")[1];
+//                    h++;
+//                }
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        return temp;
+//    }
 
     public ArrayList<Object> returnActionList(File file, AbstractTank tank) {
         String identifikator = "";
@@ -146,20 +175,18 @@ public class WorkWithLogFile {
         boolean searches = true;
         int startIndex = 0;
 
-        while (searches) {
-
-            if (startIndex == temp.length()) {
+        while (true) {
+            int indexToStart  = temp.indexOf(search, startIndex);
+            int indexToStop = temp.indexOf("\n", indexToStart);
+            if(indexToStart == -1){
                 break;
             }
-
-            String coord = temp.substring(startIndex, temp.indexOf("\n"));
-
-            if (coord.split(":").equals(search)) {
-
+            String coord = temp.substring(indexToStart, indexToStop);
+            if (coord.split(":")[0].equals(search)) {
+                res = coord.split(":")[1];
             }
-            startIndex = temp.indexOf("\n") + 1;
+            startIndex = indexToStop + 1;
         }
-
         return res;
     }
 

@@ -17,11 +17,15 @@ public class BT7 extends AbstractTank {
 
     public BT7(BattleField bf) {
         super(bf);
+
         tankColor = new Color(255, 0, 0);
         towerColor = new Color(0, 255, 0);
+
         movePath = 1;
         setImages();
         act = new ArrayList<>();
+        aiDestroyEagle = new AggressorLogic();
+
     }
 
     public BT7(BattleField bf, int x, int y, Direction direction) {
@@ -31,11 +35,10 @@ public class BT7 extends AbstractTank {
         towerColor = new Color(0, 255, 0);
 
         movePath = 1;
-
         setImages();
-
         act = new ArrayList<>();
         aiDestroyEagle = new AggressorLogic();
+
      }
 
     private void setImages() {
@@ -53,6 +56,9 @@ public class BT7 extends AbstractTank {
 
     @Override
     public Action setUp() {
+
+        System.out.println(step);
+
         if (step >= act.size()) {
             //step = 0;
             return Action.NONE;
@@ -67,22 +73,23 @@ public class BT7 extends AbstractTank {
         return (Action) act.get(step++);
     }
 
-    public void attackEagle(){
+    public void attackEagle(boolean viewReplay){
         if (getBf().scanQuadrant(8, 4).isDestroyed()) {
             System.out.println("EAGLE IS DESTROY!!!!!!!");
         }
 
         initStartParameterInWorkArraAgressorBT7();
 
-        aiDestroyEagle.startDestroyEagle();
-        act = aiDestroyEagle.getPart();
-
-
-        int index = 1;
-        for (int i =0 ; i < act.size(); i++) {
-            System.out.println(index + " " + act.get(i));
-            index++;
+        if(!viewReplay) {
+            aiDestroyEagle.startDestroyEagle();
+            act = aiDestroyEagle.getPart();
         }
+
+//        int index = 1;
+//        for (int i =0 ; i < act.size(); i++) {
+//            System.out.println(index + " " + act.get(i));
+//            index++;
+//        }
     }
 
     private void initStartParameterInWorkArraAgressorBT7(){
@@ -100,5 +107,13 @@ public class BT7 extends AbstractTank {
 
     public void setAct(ArrayList<Object> act) {
         this.act = act;
+    }
+
+    public int getStep() {
+        return step;
+    }
+
+    public void setStep(int step) {
+        this.step = step;
     }
 }

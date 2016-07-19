@@ -1,15 +1,16 @@
 package lesson8.part_05.frame_02;
 
 import lesson8.part_05.frame_02.bf.*;
-import lesson8.part_05.frame_02.bf.tanks.*;
 import lesson8.part_05.frame_02.bf.tanks.Action;
+import lesson8.part_05.frame_02.bf.tanks.*;
 import lesson8.part_05.frame_02.utils.WorkWithLogFile;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.io.*;
-import java.nio.charset.StandardCharsets;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class ActionField extends JPanel {
@@ -27,7 +28,6 @@ public class ActionField extends JPanel {
     private AggressorLogic al;
 
     private int startLogick = 0;
-    private PrintStream console;
     private File logFile;
     private WorkWithLogFile workWithLogFile;
     private boolean viewRepeatLastyGame = false;
@@ -40,22 +40,28 @@ public class ActionField extends JPanel {
         boolean i = true;
         boolean j = true;
 
-        if(!viewRepeatLastyGame) {
+        if (!viewRepeatLastyGame) {
             //save to file
             workWithLogFile.addBattleFieldToFileBF(logFile, battleField);
             workWithLogFile.addDataToEndFile(logFile, "T34:" + t34.getX() + "_" + t34.getY());
             workWithLogFile.addDataToEndFile(logFile, "BT7:" + bt7.getX() + "_" + bt7.getY());
             workWithLogFile.addDataToEndFile(logFile, "Tiger:" + tiger.getX() + "_" + tiger.getY());
-            if(startLogick == 1) {
+            if (startLogick == 1) {
                 workWithLogFile.addDataToEndFile(logFile, "StartLogick_1");
-            }else if(startLogick ==2){
+            } else if (startLogick == 2) {
                 workWithLogFile.addDataToEndFile(logFile, "StartLogick_2");
             }
         }
 
         if (startLogick == 1) {
-            bt7.attackEagle();
+            bt7.attackEagle(viewRepeatLastyGame);
+            if (viewRepeatLastyGame) {
+                bt7.setStep(0);
+                bt7.setAct(workWithLogFile.returnActionList(logFile, bt7));
+                ArrayList<Object> test = bt7.getAct();
+                System.out.println(Arrays.toString(test.toArray()));
 
+            }
             while (i) {
                 if (!bt7.isDestroyed() && !t34.isDestroyed()) {
                     if (battleField.scanQuadrant(8, 4) instanceof Blank) {
@@ -72,7 +78,7 @@ public class ActionField extends JPanel {
                 }
             }
         } else if (startLogick == 2) {
-            tiger.attackDefender(t34);
+            tiger.attackDefender(t34, viewRepeatLastyGame);
             while (j) {
                 if (!tiger.isDestroyed() && !t34.isDestroyed()) {
                     if (!tiger.isDestroyed()) {
@@ -96,17 +102,17 @@ public class ActionField extends JPanel {
 
     private void processAction(Action a, Tank t) throws Exception {
         if (a == Action.MOVE) {
-            workWithLogFile.addDataToEndFile(logFile, (t.getClass().getSimpleName() + "_" + Action.MOVE.toString()));
             processMove(t);
         } else if (a == Action.FIRE) {
-            workWithLogFile.addDataToEndFile(logFile, (t.getClass().getSimpleName() + "_" + t.getDirection().toString()));
             processTurn(t);
-            workWithLogFile.addDataToEndFile(logFile, (t.getClass().getSimpleName() + "_" + Action.FIRE.toString()));
             processFire(t.fire());
         }
     }
 
     private void processTurn(Tank tank) throws Exception {
+        if (!viewRepeatLastyGame) {
+            workWithLogFile.addDataToEndFile(logFile, (tank.getClass().getSimpleName() + "_" + tank.getDirection().toString()));
+        }
         repaint();
     }
 
@@ -114,6 +120,10 @@ public class ActionField extends JPanel {
         processTurn(tank);
         Direction direction = tank.getDirection();
         int step = 2;
+
+        if (!viewRepeatLastyGame) {
+            workWithLogFile.addDataToEndFile(logFile, (tank.getClass().getSimpleName() + "_" + Action.MOVE.toString()));
+        }
 
         for (int i = 0; i < tank.getMovePath(); i++) {
             int covered = 0;
@@ -196,6 +206,11 @@ public class ActionField extends JPanel {
     }
 
     private void processFire(Bullet bullet) throws Exception {
+
+        if (!viewRepeatLastyGame) {
+            workWithLogFile.addDataToEndFile(logFile, (bullet.getTank().getClass().getSimpleName() + "_" + Action.FIRE.toString()));
+        }
+
         this.bullet = bullet;
         int step = 1;
         while ((bullet.getX() > -14 && bullet.getX() < 590)
@@ -312,26 +327,8 @@ public class ActionField extends JPanel {
     }
 
     public ActionField() throws Exception {
-
         battleField = new BattleField();
-
-//        t34 = new T34(battleField);
-//        createBT7();
-//        createTiger();
-//		  String location = battleField.getAggressorLocation();
-//		  aggressor = new BT7(battleField,
-//			Integer.parseInt(location.split("_")[1]), Integer.parseInt(location.split("_")[0]), Direction.RIGHT);
-//        bullet = new Bullet(-100, -100, Direction.DOWN, bt7);
         createStartPanel();
-//        JFrame frame = new JFrame("BATTLE FIELD");
-//        frame = new JFrame("BATTLE FIELD");
-//        frame.setLocation(350, 150);
-//        frame.setMinimumSize(new Dimension(battleField.getBfWidth() + 16, battleField.getBfHeight() + 38));
-//        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-//
-//        frame.getContentPane().add(this);
-//        frame.pack();
-//        frame.setVisible(true);
     }
 
     private void createStartPanel() throws Exception {
@@ -339,7 +336,6 @@ public class ActionField extends JPanel {
         if (!viewRepeatLastyGame) {
             workWithLogFile.createLogFile();
         }
-
         logFile = workWithLogFile.getLogFile();
 
         if (!viewRepeatLastyGame) {
@@ -367,47 +363,35 @@ public class ActionField extends JPanel {
 
         battleField = new BattleField();
 
+        int bfHeight = battleField.getBfHeight() / battleField.getSIZE_ONE_QUADRANT();
+        int bfWidth = battleField.getBfWidth() / battleField.getSIZE_ONE_QUADRANT();
+
         if (viewRepeatLastyGame) {
 
-            //get battleField
-            battleField.setBattleFieldTemplate(workWithLogFile.returnOldBattleField(logFile,
-                    battleField.getBfHeight() / battleField.getSIZE_ONE_QUADRANT(),
-                    battleField.getBfWidth() / battleField.getSIZE_ONE_QUADRANT()));
-            System.out.println(workWithLogFile.getStartLogick(logFile));
-//            aggressor = new BT7(battleField,
-//			Integer.parseInt(location.split("_")[1]), Integer.parseInt(location.split("_")[0]), Direction.RIGHT);
+            battleField.setBattleFieldTemplate(workWithLogFile.returnOldBattleField(logFile, bfHeight, bfWidth));
+            startLogick = workWithLogFile.getStartLogick(logFile);
 
+            String location = workWithLogFile.getCoordTank(logFile, bt7.getClass().getSimpleName());
+            bt7 = new BT7(battleField, Integer.parseInt(location.split("_")[0]),
+                    Integer.parseInt(location.split("_")[1]), Direction.DOWN);
 
-            //get coordinate t34
-//            int t34X = Integer.parseInt(workWithLogFile.getCoordTank(logFile, T34.class.getSimpleName()).split("_")[0]);
-//            int t34Y = Integer.parseInt(workWithLogFile.getCoordTank(logFile, T34.class.getSimpleName()).split("_")[1]);
-//
-//            t34 = new T34(battleField, t34X, t34Y, Direction.UP, logFile);
-//            t34 = new T34(battleField);
-            //get coordinate tiger
-//            int tigerX = Integer.parseInt(workWithLogFile.getCoordTank(logFile, Tiger.class.getSimpleName()).split("_")[0]);
-//            int tigerY = Integer.parseInt(workWithLogFile.getCoordTank(logFile, Tiger.class.getSimpleName()).split("_")[1]);
-//
-//            tiger = new Tiger(battleField, tigerX, tigerY, Direction.DOWN);
-//
-//            //get coordinate bt7
-//            int bt7X = Integer.parseInt(workWithLogFile.getCoordTank(logFile, BT7.class.getSimpleName()).split("_")[0]);
-//            int bt7Y = Integer.parseInt(workWithLogFile.getCoordTank(logFile, BT7.class.getSimpleName()).split("_")[1]);
-//
-//            bt7 = new BT7(battleField, bt7X, bt7Y, Direction.DOWN);
+//            bt7.setAct(workWithLogFile.returnActionList(logFile, bt7));
 
+            location = workWithLogFile.getCoordTank(logFile, tiger.getClass().getSimpleName());
+            tiger = new Tiger(battleField, Integer.parseInt(location.split("_")[0]),
+                    Integer.parseInt(location.split("_")[1]), Direction.DOWN);
+
+            tiger.setAct(workWithLogFile.returnActionList(logFile, tiger));
+
+            location = workWithLogFile.getCoordTank(logFile, t34.getClass().getSimpleName());
+            t34 = new T34(battleField, Integer.parseInt(location.split("_")[0]),
+                    Integer.parseInt(location.split("_")[1]), Direction.UP);
+
+            t34.setAct(workWithLogFile.returnActionList(logFile, t34));
         } else {
-
-//            workWithLogFile.addBattleFieldToFileBF(logFile, battleField);
-
             t34 = new T34(battleField);
-//            workWithLogFile.updateLogFile(logFile, "T34:" + t34.getX() + "_" + t34.getY());
-
             createBT7();
-//            workWithLogFile.updateLogFile(logFile, "BT7:" + bt7.getX() + "_" + bt7.getY());
-
             createTiger();
-//            workWithLogFile.updateLogFile(logFile, "Tiger:" + tiger.getX() + "_" + tiger.getY());
         }
 
         bullet = new Bullet(-100, -100, Direction.DOWN, bt7);
@@ -442,29 +426,10 @@ public class ActionField extends JPanel {
             viewRepeatLastyGame = true;
             createGamePanel();
         } else {
-            viewRepeatLastyGame  = false;
+            viewRepeatLastyGame = false;
             createStartPanel();
         }
     }
-
-//    public ActionField(JPanel panel) throws Exception {
-//        battleField = new BattleField();
-//        t34 = new T34(battleField);
-//        bullet = new Bullet(-100, -100, Direction.DOWN, bt7);
-//        createBT7();
-//        createTiger();
-//        JFrame frame = new JFrame("BATTLE FIELD");
-//        frame = new JFrame("BATTLE FIELD");
-//        frame.setLocation(350, 150);
-//        frame.setMinimumSize(new Dimension(battleField.getBfWidth() + 16, battleField.getBfHeight() + 38));
-//        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-//        String location = battleField.getAggressorLocation();
-//		  aggressor = new BT7(battleField,
-//			Integer.parseInt(location.split("_")[1]), Integer.parseInt(location.split("_")[0]), Direction.RIGHT);
-//        frame.getContentPane().add(panel);
-//        frame.pack();
-//        frame.setVisible(true);
-//    }
 
     @Override
     protected void paintComponent(Graphics g) {
@@ -485,17 +450,17 @@ public class ActionField extends JPanel {
         System.out.println(workWithLogFile.readLogFile(logFile));
     }
 
-    private void printActionList(){
+    private void printActionList() {
         System.out.println("****************************************************************************");
-        if(startLogick ==1) {
+        if (startLogick == 1) {
             System.out.println(Arrays.toString(workWithLogFile.returnActionList(logFile, bt7).toArray()));
-        }else if (startLogick == 2){
+        } else if (startLogick == 2) {
             System.out.println(Arrays.toString(workWithLogFile.returnActionList(logFile, tiger).toArray()));
         }
         System.out.println("****************************************************************************");
     }
 
-    private void initGameParametr(){
+    private void initGameParametr() {
 
     }
 }
