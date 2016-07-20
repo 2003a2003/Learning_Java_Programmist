@@ -17,6 +17,7 @@ public class WorkWithLogFile {
     public WorkWithLogFile() {
     }
 
+    //create, read, add, write
     public void createLogFile() throws IOException {
         logFile = new File(System.getProperty("user.dir") + (path + fileName).replace("/", File.separator));
         if (logFile.exists()) {
@@ -30,6 +31,17 @@ public class WorkWithLogFile {
                 BufferedWriter bw = new BufferedWriter(new FileWriter(file.getAbsolutePath(), true))
         ) {
             bw.newLine();
+            bw.append(data);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void writeLogFile(File file, String data) {
+        try (
+                BufferedWriter bw = new BufferedWriter(new FileWriter(file.getAbsolutePath()))
+        ) {
+
             bw.append(data);
         } catch (IOException e) {
             e.printStackTrace();
@@ -53,6 +65,7 @@ public class WorkWithLogFile {
         return builder.toString();
     }
 
+    //add Battlefieeld to file and get with file
     public void addBattleFieldToFileBF(File file, BattleField bf) throws IOException {
         for (int v = 0; v < bf.getBfHeight() / bf.getSIZE_ONE_QUADRANT(); v++) {
             for (int h = 0; h < bf.getBfWidth() / bf.getSIZE_ONE_QUADRANT(); h++) {
@@ -91,42 +104,7 @@ public class WorkWithLogFile {
         return bf;
     }
 
-//    public String[][] returnOldBattleField(File file, int bfv, int bfh) {
-//
-//        String[][] temp = new String[bfv][bfh];
-//
-//        boolean stop = true;
-//        int v = 0;
-//        int h = 0;
-//
-//        try (
-//                FileInputStream fis = new FileInputStream(file.getAbsolutePath());
-//                InputStreamReader isr = new InputStreamReader(fis, StandardCharsets.UTF_8);
-//                BufferedReader br = new BufferedReader(isr, 256)
-//        ) {
-//            String str;
-//
-//            while ((str = br.readLine()) != null && stop) {
-//                if (str.split("_")[0].equals("bf")) {
-//                    if (h == bfh) {
-//                        h = 0;
-//                        v++;
-//                    }
-//
-//                    if (v == bfv) {
-//                        stop = false;
-//                        continue;
-//                    }
-//                    temp[v][h] = str.split("_")[1];
-//                    h++;
-//                }
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        return temp;
-//    }
-
+    //get action list with file
     public ArrayList<Object> returnActionList(File file, AbstractTank tank) {
         String identifikator = "";
         if (tank instanceof BT7) {
@@ -169,6 +147,7 @@ public class WorkWithLogFile {
         return action;
     }
 
+    //add get coord tanks with file
     public String getCoordTank(File file, String search) {
         String temp = readLogFile(file);
         String res = "";
@@ -190,6 +169,7 @@ public class WorkWithLogFile {
         return res;
     }
 
+    //get start ligik with file
     public int getStartLogick(File file) {
         int rez = -1;
         String temp = readLogFile(file);
@@ -204,17 +184,6 @@ public class WorkWithLogFile {
         }
 
         return rez;
-    }
-
-    public void writeLogFile(File file, String data) {
-        try (
-                BufferedWriter bw = new BufferedWriter(new FileWriter(file.getAbsolutePath()))
-        ) {
-
-            bw.append(data);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     //get - set
