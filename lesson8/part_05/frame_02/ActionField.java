@@ -174,16 +174,16 @@ public class ActionField extends JPanel {
             while (covered < 64) {
                 if (direction == Direction.UP) {
                     tank.updateY(-step);
-                    System.out.println("[move up] direction: " + direction + " tankX: " + tank.getX() + ", tankY: " + tank.getY());
+//                    System.out.println("[move up] direction: " + direction + " tankX: " + tank.getX() + ", tankY: " + tank.getY());
                 } else if (direction == Direction.DOWN) {
                     tank.updateY(step);
-                    System.out.println("[move down] direction: " + direction + " tankX: " + tank.getX() + ", tankY: " + tank.getY());
+//                    System.out.println("[move down] direction: " + direction + " tankX: " + tank.getX() + ", tankY: " + tank.getY());
                 } else if (direction == Direction.LEFT) {
                     tank.updateX(-step);
-                    System.out.println("[move left] direction: " + direction + " tankX: " + tank.getX() + ", tankY: " + tank.getY());
+//                    System.out.println("[move left] direction: " + direction + " tankX: " + tank.getX() + ", tankY: " + tank.getY());
                 } else {
                     tank.updateX(step);
-                    System.out.println("[move right] direction: " + direction + " tankX: " + tank.getX() + ", tankY: " + tank.getY());
+//                    System.out.println("[move right] direction: " + direction + " tankX: " + tank.getX() + ", tankY: " + tank.getY());
                 }
                 covered += step;
 
