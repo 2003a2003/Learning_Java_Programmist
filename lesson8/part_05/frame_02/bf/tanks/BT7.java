@@ -56,9 +56,6 @@ public class BT7 extends AbstractTank {
 
     @Override
     public Action setUp() {
-
-        System.out.println(step);
-
         if (step >= act.size()) {
             //step = 0;
             return Action.NONE;

@@ -42,18 +42,6 @@ public class T34 extends AbstractTank {
             System.err.println("Can't find image of t34.");
         }
     }
-//    private Object[] actoins = new Object[]{
-//            Action.MOVE,
-//            Action.MOVE,
-//            Action.MOVE,
-//            Direction.DOWN,
-//            Action.MOVE,
-//            Action.MOVE,
-//            Action.MOVE,
-//            Direction.UP,
-//    };
-
-
 
     @Override
     public Action setUp() {
@@ -69,17 +57,6 @@ public class T34 extends AbstractTank {
             return Action.NONE;
         }
         return (Action) act.get(step++);
-//        if (step >= actoins.length) {
-//            step = 0;
-//        }
-//        if (!(actoins[step] instanceof Action)) {
-//            turn((Direction) actoins[step++]);
-//        }
-//        if (step >= actoins.length) {
-//            step = 0;
-//        }
-//        return (Action) actoins[step++];
-
     }
 
     public ArrayList<Object> getAct() {

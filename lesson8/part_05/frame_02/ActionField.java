@@ -66,10 +66,12 @@ public class ActionField extends JPanel {
                 if (!bt7.isDestroyed() && !t34.isDestroyed()) {
                     if (battleField.scanQuadrant(8, 4) instanceof Blank) {
                         i = false;
-                        System.out.println("Eagle Destroy!!!");
-                        readLogFileToConsole();
-                        printActionList();
-                        //repeatGame(bt7);
+//                        System.out.println("Eagle Destroy!!!");
+                        if (!viewRepeatLastyGame) {
+                            workWithLogFile.addDataToEndFile(logFile, "Eagle Destroy!!!");
+                            readLogFileToConsole();
+                            printActionList();
+                        }
                         createGameOverPanel();
                     }
                     if (!bt7.isDestroyed()) {
@@ -89,10 +91,12 @@ public class ActionField extends JPanel {
                     }
                 } else {
                     j = false;
-                    System.out.println("Defender was destroy!!!");
-                    readLogFileToConsole();
-                    printActionList();
-                    //repeatGame(tiger);
+//                    System.out.println("Defender was destroy!!!");
+                    if (!viewRepeatLastyGame) {
+                        workWithLogFile.addDataToEndFile(logFile, "Defender was destroy!!!");
+                        readLogFileToConsole();
+                        printActionList();
+                    }
                     createGameOverPanel();
                 }
             }
@@ -137,9 +141,6 @@ public class ActionField extends JPanel {
                     || (direction == Direction.LEFT && tank.getX() == 0) || (direction == Direction.RIGHT && tank.getX() >= 512)) {
                 System.out.println("[illegal move] direction: " + direction
                         + " tankX: " + tank.getX() + ", tankY: " + tank.getY());
-
-//                workWithLogFile.updateLogFile(logFile, "[illegal move] direction: " + direction
-//                        + " tankX: " + tank.getX() + ", tankY: " + tank.getY());
                 return;
             }
 
@@ -157,13 +158,8 @@ public class ActionField extends JPanel {
             BFObject bfobject = battleField.scanQuadrant(v, h);
 
             if (!(bfobject instanceof Blank) && !bfobject.isDestroyed()) {
-
                 System.out.println("[illegal move] direction: " + direction
                         + " tankX: " + tank.getX() + ", tankY: " + tank.getY());
-
-//                workWithLogFile.updateLogFile(logFile, "[illegal move] direction: " + direction
-//                        + " tankX: " + tank.getX() + ", tankY: " + tank.getY());
-
                 tank.fire();
                 return;
             }
@@ -178,24 +174,16 @@ public class ActionField extends JPanel {
             while (covered < 64) {
                 if (direction == Direction.UP) {
                     tank.updateY(-step);
-//                    System.out.println("[move up] direction: " + direction + " tankX: " + tank.getX() + ", tankY: " + tank.getY());
-//                    workWithLogFile.updateLogFile(logFile, ("[move up] direction: " + direction +
-//                            " tankX: " + tank.getX() + ", tankY: " + tank.getY()));
+                    System.out.println("[move up] direction: " + direction + " tankX: " + tank.getX() + ", tankY: " + tank.getY());
                 } else if (direction == Direction.DOWN) {
                     tank.updateY(step);
-//                    System.out.println("[move down] direction: " + direction + " tankX: " + tank.getX() + ", tankY: " + tank.getY());
-//                    workWithLogFile.updateLogFile(logFile, ("[move down] direction: " + direction +
-//                            " tankX: " + tank.getX() + ", tankY: " + tank.getY()));
+                    System.out.println("[move down] direction: " + direction + " tankX: " + tank.getX() + ", tankY: " + tank.getY());
                 } else if (direction == Direction.LEFT) {
                     tank.updateX(-step);
-//                    System.out.println("[move left] direction: " + direction + " tankX: " + tank.getX() + ", tankY: " + tank.getY());
-//                    workWithLogFile.updateLogFile(logFile, ("[move left] direction: " + direction +
-//                            " tankX: " + tank.getX() + ", tankY: " + tank.getY()));
+                    System.out.println("[move left] direction: " + direction + " tankX: " + tank.getX() + ", tankY: " + tank.getY());
                 } else {
                     tank.updateX(step);
-//                    System.out.println("[move right] direction: " + direction + " tankX: " + tank.getX() + ", tankY: " + tank.getY());
-//                    workWithLogFile.updateLogFile(logFile, ("[move right] direction: " + direction +
-//                            " tankX: " + tank.getX() + ", tankY: " + tank.getY()));
+                    System.out.println("[move right] direction: " + direction + " tankX: " + tank.getX() + ", tankY: " + tank.getY());
                 }
                 covered += step;
 
