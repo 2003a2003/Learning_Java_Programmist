@@ -1,9 +1,19 @@
 package lesson8.part_05.frame_04;
 
+import java.util.Arrays;
+
 public class Demo {
     public static void main(String[] args) {
         FileSimlpeList<String> list = new FileSimlpeList();
 
+        //add in file first information
+        list.writeFile("Alex01");
+        list.writeFile("Alex02");
+        list.writeFile("Alex03");
+        list.writeFile("Alex04");
+        list.writeFile("Alex05");
+
+        System.out.println(Arrays.toString(list.readFile().toArray()));
 //        //add last
 //        System.out.println("Add date to file:");
 //        list.add("Alex1");
