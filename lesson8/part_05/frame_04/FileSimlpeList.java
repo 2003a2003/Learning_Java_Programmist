@@ -13,31 +13,15 @@ public class FileSimlpeList<T> implements SimpleList<T> {
     private boolean fileExists;
 
     public FileSimlpeList() {
-        checkExistsFile();
-        createFile();
+        file = new File(System.getProperty("user.dir") + (path + fileName).replace("/", File.separator));
+        //createFile();
         emplyLine = false;
-    }
-
-    private boolean checkExistsFile() {
-        boolean rez;
-        if (file.exists()) {
-            rez = true;
-        } else {
-            rez = false;
-        }
-
-        return rez;
     }
 
     //create file
     private void createFile() {
-        file = new File(System.getProperty("user.dir") + (path + fileName).replace("/", File.separator));
         try {
-
-            if (!checkExistsFile()) {
-                file.createNewFile();
-            }
-
+            file.createNewFile();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -60,13 +44,12 @@ public class FileSimlpeList<T> implements SimpleList<T> {
 
     public ArrayList<T> readFile() {
         ArrayList<T> rez = new ArrayList<>();
-
         try (
                 BufferedReader br = new BufferedReader(new FileReader(file), 512)
         ) {
-
-            while (br.readLine() != null) {
-                rez.add((T) br.readLine());
+            String str;
+            while ((str = br.readLine()) != null) {
+                rez.add((T) str);
             }
 
         } catch (IOException e) {
@@ -80,10 +63,9 @@ public class FileSimlpeList<T> implements SimpleList<T> {
                 BufferedWriter bw = new BufferedWriter(new FileWriter(file, true), 512)
         ) {
 
-            if(checkExistsFile()) {
-                bw.newLine();
-            }
             bw.append(data);
+            bw.newLine();
+
         } catch (IOException e) {
             e.printStackTrace();
         }

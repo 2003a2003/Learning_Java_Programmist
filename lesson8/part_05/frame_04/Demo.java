@@ -1,6 +1,6 @@
 package lesson8.part_05.frame_04;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 
 public class Demo {
     public static void main(String[] args) {
@@ -13,7 +13,7 @@ public class Demo {
         list.writeFile("Alex04");
         list.writeFile("Alex05");
 
-        System.out.println(Arrays.toString(list.readFile().toArray()));
+
 //        //add last
 //        System.out.println("Add date to file:");
 //        list.add("Alex1");
@@ -66,6 +66,13 @@ public class Demo {
 //        for(Object l : list){
 //            System.out.println(l);
 //        }
+
+    }
+
+    private void printDate(ArrayList list){
+        for (Object str: list){
+            System.out.println(str);
+        }
 
     }
 }
