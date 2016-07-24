@@ -1,17 +1,30 @@
 package lesson8.part_05.frame_04;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Demo {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         FileSimlpeList<String> list = new FileSimlpeList();
-
+        WorkWithFile f = new WorkWithFile();
         //add in file first information
-        list.writeFile("Alex01");
-        list.writeFile("Alex02");
-        list.writeFile("Alex03");
-        list.writeFile("Alex04");
-        list.writeFile("Alex05");
+//        list.writeToFile("Alex01");
+//        list.writeToFile("Alex02");
+        //list.writeToFile("Alex08");
+//        list.writeToFile("Alex04");
+//        list.writeToFile("Alex05");
+
+//        System.out.println("Emply: " + list.checkEmplyLine());
+        System.out.println(f.read());
+        f.write("Alex11");
+        System.out.println(f.read());
+
+//        f.write("Alex02");
+//        f.write("Alex03");
+//        System.out.println(f.read());
+//
+//        System.out.println(f.getPositionToSave());
+//        System.out.println(f.readFrom((int) f.goTo(7)) + f.getPositionToSave());
 
 
 //        //add last

@@ -10,7 +10,7 @@ public class FileSimlpeList<T> implements SimpleList<T> {
     private String fileName = "list.txt";
     private String path = "/src/lesson8/part_05/frame_04/";
     private boolean emplyLine;
-    private boolean fileExists;
+    private int pozToAddOnEmplyPlace;
 
     public FileSimlpeList() {
         file = new File(System.getProperty("user.dir") + (path + fileName).replace("/", File.separator));
@@ -27,11 +27,16 @@ public class FileSimlpeList<T> implements SimpleList<T> {
         }
     }
 
-    private int checkEmplyLine() {
-        if (file.exists() && file.length() > 0) {
-
+    public int checkEmplyLine() {
+        ArrayList<T> temp = readFile();
+        int index = 0;
+        for (Object o : temp) {
+            if(o.equals("")){
+                pozToAddOnEmplyPlace = index;
+                return pozToAddOnEmplyPlace;
+            }
+            index++;
         }
-
         return -1;
     }
 
@@ -58,17 +63,64 @@ public class FileSimlpeList<T> implements SimpleList<T> {
         return rez;
     }
 
-    public void writeFile(String data) {
+    public void writeToFile(String data) {
+        ArrayList<T> temp = readFile();
+
         try (
                 BufferedWriter bw = new BufferedWriter(new FileWriter(file, true), 512)
         ) {
+            boolean hasEmpty = false;
+            for (Object o: temp) {
+                if(o.equals("")){
+                    hasEmpty = true;
+
+                }
+            }
+
+
 
             bw.append(data);
             bw.newLine();
-
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void removeDateFromName() {
+
+    }
+
+    public void removeDateForName() {
+
+    }
+
+    public void print() {
+        int index = 1;
+        ArrayList<T> print = readFile();
+        for (Object o : print) {
+            System.out.println(index++ + ") " + o);
+
+        }
+    }
+
+    public boolean chackExistFile(){
+        boolean res;
+        if(file.exists()){
+            chackEmplyPlase();
+            res = true;
+        }else {
+            res = false;
+            emplyLine = false;
+        }
+        return res;
+    }
+
+    public int chackEmplyPlase(){
+
+
+
+
+        return -1;
     }
 
     @Override
