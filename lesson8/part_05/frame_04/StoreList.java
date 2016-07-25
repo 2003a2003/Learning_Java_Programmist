@@ -3,7 +3,6 @@ package lesson8.part_05.frame_04;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.RandomAccess;
 
 public class StoreList implements SimpleList {
 
@@ -92,8 +91,9 @@ public class StoreList implements SimpleList {
         ) {
             String str;
             while ((str = br.readLine()) != null) {
-
-                res.add(str.split("_")[1]);
+                if(!str.trim().equals("")) {
+                    res.add(str.split("_")[1]);
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -173,22 +173,23 @@ public class StoreList implements SimpleList {
 
         ArrayList<String> temp = readDateFromFile();
 
-        for (int i = 0; i < index; i++ ){
+        for (int i = 0; i < index+1; i++ ){
+
             indexInFile += temp.get(i).length();
             size = temp.get(i).length();
+
         }
 
         System.out.println("Index in file: " + indexInFile);
 
         RandomAccessFile f = null;
-        String str = "\n";
+        String str = "";
         for (int i = 0; i < size + 1; i++){
             str = str + " ";
         }
-
         str = str + "\n";
 
-        System.out.println("TETTETETETE" + str);
+        //System.out.println("TETTETETETE" + str);
 
         try {
             f = new RandomAccessFile(file.getAbsolutePath(), "rw");
@@ -226,6 +227,7 @@ public class StoreList implements SimpleList {
             index++;
         }
 
+        l = readDateFromFile();
         System.out.println("Print file:");
         index = 1;
         for (Object data: l){
