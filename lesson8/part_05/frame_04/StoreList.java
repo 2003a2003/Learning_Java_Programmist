@@ -173,23 +173,20 @@ public class StoreList implements SimpleList {
 
         ArrayList<String> temp = readDateFromFile();
 
-        for (int i = 0; i < index+1; i++ ){
-
+        for (int i = 0; i < index; i++ ){
             indexInFile += temp.get(i).length();
             size = temp.get(i).length();
-
         }
 
         System.out.println("Index in file: " + indexInFile);
 
         RandomAccessFile f = null;
+
         String str = "";
-        for (int i = 0; i < size + 1; i++){
+        for (int i = 0; i < size; i++){
             str = str + " ";
         }
         str = str + "\n";
-
-        //System.out.println("TETTETETETE" + str);
 
         try {
             f = new RandomAccessFile(file.getAbsolutePath(), "rw");
@@ -214,7 +211,7 @@ public class StoreList implements SimpleList {
             }
         }
 
-//        System.out.println("Print Result: " + str);
+        System.out.println("Print Result: " + str);
 
     }
 
