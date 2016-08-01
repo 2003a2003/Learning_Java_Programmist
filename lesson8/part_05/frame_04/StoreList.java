@@ -182,11 +182,11 @@ public class StoreList implements SimpleList {
 
         RandomAccessFile f = null;
 
-        String str = "";
+        String str = "\n\r";
         for (int i = 0; i < size; i++){
             str = str + " ";
         }
-        str = str + "\n";
+        //str = str + "\n";
 
         try {
             f = new RandomAccessFile(file.getAbsolutePath(), "rw");

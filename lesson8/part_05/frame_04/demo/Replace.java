@@ -9,13 +9,28 @@ public class Replace {
     private String path = "/src/lesson8/part_05/frame_04/demo/";
     private ArrayList<String> memoryStorege;
     private File file;
-    private int index;
+    private boolean hasEmpty = false;
 
     public Replace() {
         file = new File(System.getProperty("user.dir") + (path + fileName).replace("/", File.separator));
         memoryStorege = new ArrayList<>();
         reloadMemory();
-        restoreIndex();
+    }
+
+    private void stateEmptyLine() {
+        try (
+                BufferedReader br = new BufferedReader(new FileReader(file.getAbsolutePath()), 512)
+        ) {
+            String line = null;
+            while ((line = br.readLine()) != null) {
+                if (line.trim().equals("")) {
+                    hasEmpty = true;
+                    break;
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void write(String data) {
@@ -24,6 +39,48 @@ public class Replace {
     }
 
     private void writeToFile(String data) {
+        if(hasEmpty){
+            writeToEmpty(data);
+        }else {
+            writeToEndFile(data);
+        }
+    }
+
+    private void writeToEmpty(String data){
+        long nextPozition = 0;
+        long lastPozition = 0;
+
+        try (
+                RandomAccessFile f = new RandomAccessFile(file.getAbsolutePath(), "rw");
+        ) {
+            String str = "";
+            while ((str = f.readLine()) != null) {
+                nextPozition = f.getFilePointer();
+
+                if (str.trim().equals("")) {
+
+
+                    long poz = nextPozition - lastPozition;
+                    f.seek(poz);
+                    if(str.length() < data.length()){
+                        f.setLength(f.length() + data.length() - str.length());
+                    }
+                    f.write(data.getBytes());
+                    break;
+                }
+                lastPozition = nextPozition;
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+    private void writeToEndFile(String data) {
+
         try (
                 FileWriter fw = new FileWriter(file.getAbsolutePath(), true);
                 BufferedWriter bw = new BufferedWriter(fw)
@@ -31,17 +88,10 @@ public class Replace {
             if (fileSize() > 0) {
                 bw.newLine();
             }
-            bw.write(index + "_" + data.length() + ":" + data);
-            index += data.length();
+            bw.write(data);
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    private void writeToFileRendome(String data){
-
-
-
     }
 
     private void writeToMemory(String data) {
@@ -55,9 +105,7 @@ public class Replace {
     }
 
     public String readFile() {
-
         StringBuilder sb = new StringBuilder();
-
         try (
                 BufferedReader br = new BufferedReader(new FileReader(file.getAbsolutePath()), 512)
         ) {
@@ -67,7 +115,6 @@ public class Replace {
                     sb.append("\n");
                 }
                 sb.append(line);
-//                sb.append("\n");
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -76,15 +123,17 @@ public class Replace {
     }
 
     public ArrayList readFileToRestoreMemory() {
-
         ArrayList<String> rez = new ArrayList<>();
-
         try (
                 BufferedReader br = new BufferedReader(new FileReader(file.getAbsolutePath()), 512)
         ) {
             String line = null;
             while ((line = br.readLine()) != null) {
-                rez.add(line.split(":")[1]);
+                if (!line.trim().equals("")) {
+                    rez.add(line);
+                } else {
+                    hasEmpty = true;
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -92,22 +141,22 @@ public class Replace {
         return rez;
     }
 
-    public void replace(String data, String who) {
-        String line = "";
-        try (
-                BufferedWriter bw = new BufferedWriter(new FileWriter(file.getAbsolutePath()), 512);
-                BufferedReader br = new BufferedReader(new FileReader(file.getAbsolutePath()), 512)
-        ) {
-            while ((line = br.readLine()) != null) {
-                if (line.equals(data)) {
-                    bw.write(who);
-                }
-                bw.write(line);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+//    public void replace(String data, String who) {
+//        String line = "";
+//        try (
+//                BufferedWriter bw = new BufferedWriter(new FileWriter(file.getAbsolutePath()), 512);
+//                BufferedReader br = new BufferedReader(new FileReader(file.getAbsolutePath()), 512)
+//        ) {
+//            while ((line = br.readLine()) != null) {
+//                if (line.equals(data)) {
+//                    bw.write(who);
+//                }
+//                bw.write(line);
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     private boolean fileExist(File f) {
         if (f.exists()) {
@@ -125,10 +174,10 @@ public class Replace {
     }
 
     public void print() {
-        if(fileExist(file)) {
+        if (fileExist(file)) {
             printColection();
             printFile();
-        }else {
+        } else {
             System.out.println("Colection not exist......");
         }
     }
@@ -155,38 +204,49 @@ public class Replace {
     }
 
     private void removeInMemory(String data) {
-        //memoryStorege.remove(getIndexObjectInMemory(data));
-        System.out.println(getIndexObjectInFile(data));
-
+        if(memoryStorege.contains(data)) {
+            memoryStorege.remove(getIndexObjectInMemory(data));
+        }
     }
 
     private void removeInFile(String data) {
-        int sizeData = data.length();
+        long nextPozition = 0;
+        long lastPozition = 0;
 
+        try (
+                RandomAccessFile f = new RandomAccessFile(file.getAbsolutePath(), "rw");
+        ) {
+            String str = "";
+            while ((str = f.readLine()) != null) {
+                nextPozition = f.getFilePointer();
 
+                if (str.trim().equals(data)) {
+                    long poz = nextPozition - lastPozition;
+                    f.seek(poz);
+                    String dataNex = "";
+                    for (int i = 0; i < data.length(); i++) {
+                        dataNex = dataNex + " ";
+                    }
+                    str = str.replaceAll(data, dataNex);
+                    f.write(str.getBytes());
+                    break;
+                }
+                lastPozition = nextPozition;
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
+        stateEmptyLine();
     }
 
     private int getIndexObjectInMemory(String data) {
         return memoryStorege.indexOf(data);
     }
 
-    private long getIndexObjectInFile(String data) {
-        long indexInFile = 0;
-        for (int i = 0; i < getIndexObjectInMemory(data); i++) {
-            indexInFile += memoryStorege.get(i).length();
-        }
-
-        if(indexInFile > 0){
-            return indexInFile;
-        }else {
-            return -1;
-        }
-    }
-
-    private void restoreIndex(){
-        if(fileExist(file) && fileSize() > 0){
-            index = memoryStorege.size();
-        }
+    public boolean isHasEmpty() {
+        return hasEmpty;
     }
 }
