@@ -46,11 +46,11 @@ public class ActionField extends JPanel {
             agressor.destroy();
             return true;
         }
-//        if (getQuadrant(defender.getX(), defender.getY()).equals(coorditateXY)) {
-//            defender.destroy();
-//            bullet.destroy();
-//            return false;
-//        }
+        if (getQuadrant(defender.getX(), defender.getY()).equals(coorditateXY) && bullet.getTank() != defender) {
+            defender.destroy();
+            bullet.destroy();
+            return false;
+        }
 
         return false;
     }
@@ -214,7 +214,7 @@ public class ActionField extends JPanel {
 //        agressor = new Tank(this,bf,Integer.parseInt(bf.getAgressorLocation().split("_")[1]),
 //                Integer.parseInt(bf.getAgressorLocation().split("_")[0]),Direction.MOVE_DOWN);
 
-        bullet = new Bullet();
+        bullet = new Bullet(defender);
 
         JFrame frame = new JFrame("BATTLE FIELD");
         frame.setLocation(350, 150);

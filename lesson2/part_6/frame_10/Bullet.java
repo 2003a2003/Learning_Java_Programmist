@@ -9,17 +9,19 @@ public class Bullet {
     private Direction direction;
     private int butlleStep = 5;
     private final int SIZE_BULLET = 14;
+    private Tank tank;
 
-    public Bullet() {
+    public Bullet(Tank tank) {
         x = -100;
         y = -100;
         direction = Direction.MOVE_UP;
     }
 
-    public Bullet(int x, int y, Direction direction) {
+    public Bullet(int x, int y, Direction direction, Tank tank) {
         this.x = x;
         this.y = y;
         this.direction = direction;
+        this.tank = tank;
     }
 
     public void updateX(int x) {
@@ -61,5 +63,9 @@ public class Bullet {
 
     public int getSIZE_BULLET() {
         return SIZE_BULLET;
+    }
+
+    public Tank getTank() {
+        return tank;
     }
 }

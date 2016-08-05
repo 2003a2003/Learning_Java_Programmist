@@ -36,7 +36,7 @@ public class Tank {
     }
 
     public void fire() throws Exception {
-        Bullet bullet = new Bullet(x + 25, y + 25, direction);
+        Bullet bullet = new Bullet(x + 25, y + 25, direction, this);
         af.processFire(bullet);
     }
 
