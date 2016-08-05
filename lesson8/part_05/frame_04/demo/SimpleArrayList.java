@@ -1,4 +1,4 @@
-package lesson8.part_05.frame_04;
+package lesson8.part_05.frame_04.demo;
 
 import java.util.Iterator;
 

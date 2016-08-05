@@ -1,10 +1,12 @@
-package lesson8.part_05.frame_04;
+package lesson8.part_05.frame_04.demo;
+
+import lesson8.part_05.frame_04.*;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class StoreList implements SimpleList {
+public class StoreList implements lesson8.part_05.frame_04.SimpleList {
 
     private String fileName = "list.txt";
     private String path = "/src/lesson8/part_05/frame_04/";

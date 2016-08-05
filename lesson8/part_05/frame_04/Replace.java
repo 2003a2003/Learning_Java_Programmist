@@ -1,4 +1,4 @@
-package lesson8.part_05.frame_04.demo;
+package lesson8.part_05.frame_04;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -39,16 +39,17 @@ public class Replace {
     }
 
     private void writeToFile(String data) {
-        if(hasEmpty){
+        if (hasEmpty) {
             writeToEmpty(data);
-        }else {
+        } else {
             writeToEndFile(data);
         }
     }
 
-    private void writeToEmpty(String data){
+    private void writeToEmpty(String data) {
         long nextPozition = 0;
         long lastPozition = 0;
+        StringBuilder sb = new StringBuilder();
 
         try (
                 RandomAccessFile f = new RandomAccessFile(file.getAbsolutePath(), "rw");
@@ -57,26 +58,28 @@ public class Replace {
             while ((str = f.readLine()) != null) {
                 nextPozition = f.getFilePointer();
 
-                if (str.trim().equals("")) {
-
-
+                if (str.trim().equals("") && hasEmpty) {
                     long poz = nextPozition - lastPozition;
                     f.seek(poz);
-                    if(str.length() < data.length()){
+                    if (str.length() < data.length()) {
                         f.setLength(f.length() + data.length() - str.length());
                     }
-                    f.write(data.getBytes());
-                    break;
+                    sb.append(data);
+                    hasEmpty = false;
+                } else {
+                    sb.append(str);
+                    sb.append("\n");
                 }
+
                 lastPozition = nextPozition;
             }
+            f.getChannel().position(0);
+            f.write(sb.toString().getBytes());
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
     }
 
     private void writeToEndFile(String data) {
@@ -141,23 +144,6 @@ public class Replace {
         return rez;
     }
 
-//    public void replace(String data, String who) {
-//        String line = "";
-//        try (
-//                BufferedWriter bw = new BufferedWriter(new FileWriter(file.getAbsolutePath()), 512);
-//                BufferedReader br = new BufferedReader(new FileReader(file.getAbsolutePath()), 512)
-//        ) {
-//            while ((line = br.readLine()) != null) {
-//                if (line.equals(data)) {
-//                    bw.write(who);
-//                }
-//                bw.write(line);
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
-
     private boolean fileExist(File f) {
         if (f.exists()) {
             return true;
@@ -204,7 +190,7 @@ public class Replace {
     }
 
     private void removeInMemory(String data) {
-        if(memoryStorege.contains(data)) {
+        if (memoryStorege.contains(data)) {
             memoryStorege.remove(getIndexObjectInMemory(data));
         }
     }
